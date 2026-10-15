@@ -1,0 +1,23 @@
+{
+  "class_name": "RDN",
+  "target": "co",
+  "layout_convention": "physical",
+  "model_type": "resnet3conv",
+  "model_overrides": {},
+  "n_params": 5766338,
+  "epochs": 150,
+  "lr": 0.0002,
+  "weight_decay": 1e-05,
+  "batch_size": 256,
+  "patience": 1000,
+  "loss_options": {
+    "db_floor": null,
+    "phase_mag_ref": null
+  },
+  "augment": true,
+  "n_train": 88800,
+  "n_val": 11100,
+  "best_val": 0.7550678173486177,
+  "epochs_run": 150,
+  "minutes": 91.0353368918101
+}

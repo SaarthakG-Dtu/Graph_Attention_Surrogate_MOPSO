@@ -1,0 +1,19 @@
+{
+  "designs_sha256": "14b586887a43d5d518a2f97ef85123c76395a24073ba80f60ac7b69240a43343",
+  "substrate": "FR-4 (lossy)",
+  "eps": 4.3,
+  "tand": 0.025,
+  "thickness_mm": 1.0,
+  "conductor": "copper",
+  "patch_mm": 0.5,
+  "padding_mm": 1.0,
+  "patch_t_mm": 0.018,
+  "ground_t_mm": 0.18,
+  "freq_ghz": [
+    2.0,
+    12.0
+  ],
+  "points": 1001,
+  "convention": "1 = copper",
+  "s_parameters": "s11_co = r_xx (mode1->mode1), s11_cross = mode2->mode1, s12 = mode1<-mode2, s22 = mode2->mode2, Zmax Floquet port"
+}

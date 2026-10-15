@@ -1,0 +1,3 @@
+sol 1: MSE 1.07e-3 phase 4.2 deg | pred B 16.5 L -0.75 | CST B 11.2 L -0.38 | D 3 fill 0.59
+sol 2: MSE 0.79e-3 phase 8.1 deg | pred B 14.9 L -1.07 | CST B 14.3 L -1.57 | D 1 fill 0.62
+sol 3: MSE 0.12e-3 phase 5.2 deg | pred B 14.0 L -0.51 | CST B 13.2 L -0.33 | D 1 fill 0.63

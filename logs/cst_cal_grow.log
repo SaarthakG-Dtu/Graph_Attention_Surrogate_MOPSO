@@ -1,0 +1,20 @@
+[calibrate] RDN_101796_t0.8_grow0.01
+--- Building template: cell=10mm (16x0.5mm + 2x1mm padding), t_sub=0.8mm, conductor=copper ---
+CPA: The specified project does not exist. A new project hasbeen created.
+Do not forget to use CST_MicrowaveStudio.saveFile() to save your project.
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+  m1x_off0_R_mse=0.03054  m1x_off0_T_mse=0.0735  m2x_off0_R_mse=0.02539  m2x_off0_T_mse=0.0735  m1x_off1_R_mse=0.01698  m1x_off1_T_mse=0.04993  m2x_off1_R_mse=0.01528  m2x_off1_T_mse=0.04993
+{
+ "0.8": {
+  "m1x_off0_R_mse": 0.030540921985896054,
+  "m1x_off0_T_mse": 0.0734964546797598,
+  "m2x_off0_R_mse": 0.02539005736227951,
+  "m2x_off0_T_mse": 0.07349645801554507,
+  "m1x_off1_R_mse": 0.01698178271416764,
+  "m1x_off1_T_mse": 0.04992758987191281,
+  "m2x_off1_R_mse": 0.015276268646457753,
+  "m2x_off1_T_mse": 0.04992758995720998
+ }
+} 
+best substrate thickness: 0.8 mm

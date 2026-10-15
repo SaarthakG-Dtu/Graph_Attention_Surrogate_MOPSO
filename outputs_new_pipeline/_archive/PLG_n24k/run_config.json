@@ -1,0 +1,23 @@
+{
+  "class_name": "PLG",
+  "target": "co",
+  "layout_convention": "physical",
+  "model_type": "resnet3conv_pga",
+  "model_overrides": {},
+  "n_params": 5831531,
+  "epochs": 300,
+  "lr": 0.0002,
+  "weight_decay": 1e-05,
+  "batch_size": 256,
+  "patience": 1000,
+  "loss_options": {
+    "db_floor": null,
+    "phase_mag_ref": null
+  },
+  "augment": true,
+  "n_train": 24000,
+  "n_val": 3000,
+  "best_val": 0.032202983471254505,
+  "epochs_run": 300,
+  "minutes": 46.15969487031301
+}

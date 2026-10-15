@@ -1,0 +1,41 @@
+
+VAE-MOIPSO [amc_x / latent] -> E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\PHASE2\mopso\amc_x_long
+  [surrogate] E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\COPOL\RDN_n108000\phase1_forward_best.pth (layout convention: physical)
+  [sanity] RDN test split n=3000: lin MSE=2.38e-03 R2=0.811 phase MAE=3.9 deg
+  objective: In-phase bandwidth (%)     ideal=30 worst=0 spec=10
+  objective: Lowest |r| in band (dB)    ideal=0 worst=-20 spec=-1
+  objective: Fragile features           ideal=0 worst=60 spec=5
+  [database] 111000 layouts: front=198  meeting the spec=0  HV=0.2952
+  gen    1/300  archive= 49  good=  0  best=11.8  -0.0381  12
+  gen   10/300  archive= 50  good=  0  best=11.8  -0.0367  12
+  gen   20/300  archive= 50  good=  0  best=11.8  -0.0347  12
+  gen   30/300  archive= 50  good=  0  best=12  -0.0347  12
+  gen   40/300  archive= 50  good=  0  best=12.6  -0.0347  10
+  gen   50/300  archive= 50  good=  0  best=12.6  -0.0347  8
+  gen   60/300  archive= 50  good=  0  best=12.6  -0.0347  8
+  gen   70/300  archive= 50  good=  0  best=12.6  -0.0347  8
+  gen   80/300  archive= 50  good=  0  best=12.6  -0.0347  8
+  gen   90/300  archive= 50  good=  0  best=12.6  -0.0341  8
+  gen  100/300  archive= 50  good=  0  best=13.5  -0.0341  8
+  gen  110/300  archive= 50  good=  0  best=14.9  -0.0341  8
+  gen  120/300  archive= 50  good=  0  best=14.9  -0.0341  8
+  gen  130/300  archive= 50  good=  0  best=14.9  -0.0341  8
+  gen  140/300  archive= 50  good=  0  best=14.9  -0.0327  8
+  gen  150/300  archive= 50  good=  0  best=14.9  -0.0327  6
+  gen  160/300  archive= 50  good=  0  best=14.9  -0.0327  6
+  gen  170/300  archive= 50  good=  0  best=15.1  -0.0327  6
+  gen  180/300  archive= 50  good=  0  best=15.1  -0.0327  6
+  gen  190/300  archive= 50  good=  0  best=15.1  -0.0327  6
+  gen  200/300  archive= 50  good=  0  best=15.1  -0.0327  6
+  gen  210/300  archive= 50  good=  0  best=15.1  -0.032  6
+  gen  220/300  archive= 50  good=  0  best=15.1  -0.032  6
+  gen  230/300  archive= 50  good=  0  best=15.1  -0.032  5
+  gen  240/300  archive= 50  good=  0  best=15.8  -0.032  5
+  gen  250/300  archive= 50  good=  1  best=15.8  -0.032  5
+  gen  260/300  archive= 50  good=  0  best=16.9  -0.032  3
+  gen  270/300  archive= 50  good=  0  best=16.9  -0.032  3
+  gen  280/300  archive= 50  good=  0  best=18  -0.032  1
+  gen  290/300  archive= 50  good=  0  best=18.5  -0.032  1
+  gen  300/300  archive= 50  good=  0  best=18.5  -0.032  1
+  done: 301,000 surrogate evaluations in 48.5s, archive = 50
+  unique designs evaluated: 300,999/301,000  meeting the spec: 0  best values: In-phase bandwidth (%) = 18.5, Lowest |r| in band (dB) = -0.032, Fragile features = 1  HV=0.4549 (database 0.2952)

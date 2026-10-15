@@ -1,0 +1,716 @@
+%=====================================================================
+%  A Graph-Attention Surrogate for Solver-Free Multi-Objective
+%  Inverse Design of Pixelated Metasurfaces
+%  Flow: dataset -> surrogate -> MSDCNN comparison -> VAE -> inverse
+%  design pipeline -> design results -> CST verification.
+%  Figures: paper/figures/ (make_figures.py for data plots,
+%  schematics.py for the TikZ schematics). Compile with pdfLaTeX.
+%=====================================================================
+\documentclass[journal]{IEEEtran}
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{siunitx}
+\usepackage{balance}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+\graphicspath{{figures/}}
+\sisetup{group-minimum-digits=4,group-separator={,},per-mode=symbol}
+% compact float spacing (less white space around figures and tables)
+\setlength{\textfloatsep}{7pt plus 2pt minus 2pt}
+\setlength{\dbltextfloatsep}{7pt plus 2pt minus 2pt}
+\setlength{\floatsep}{5pt plus 2pt minus 1pt}
+\setlength{\dblfloatsep}{5pt plus 2pt minus 1pt}
+\setlength{\intextsep}{6pt plus 2pt minus 2pt}
+\setlength{\abovecaptionskip}{3pt}
+\renewcommand{\topfraction}{0.9}\renewcommand{\dbltopfraction}{0.9}
+\renewcommand{\textfraction}{0.08}\renewcommand{\floatpagefraction}{0.85}\renewcommand{\dblfloatpagefraction}{0.85}
+
+% \fig[opts]{name}: figures/name.pdf (or .png) if present, else a placeholder.
+\newcommand{\fig}[2][width=\columnwidth]{%
+  \IfFileExists{figures/#2.pdf}{\includegraphics[#1]{#2.pdf}}{%
+  \IfFileExists{figures/#2.png}{\includegraphics[#1]{#2.png}}{%
+  \fbox{\parbox[c][3cm][c]{0.9\columnwidth}{\centering\footnotesize\textcolor{gray}{[figure \detokenize{#2} pending]}}}}}}
+% \RES marks a number still to be filled from the final runs. Remove before submission.
+\newcommand{\RES}[1]{\textcolor{blue}{#1}}
+\newcommand{\Sc}{\hat{S}}
+\newcommand{\Lloss}[1]{\mathcal{L}_{\mathrm{#1}}}
+\newcommand{\e}[2]{#1{\times}10^{#2}}
+
+\begin{document}
+
+\title{A Graph-Attention Surrogate for Solver-Free\\
+Multi-Objective Inverse Design of Pixelated Metasurfaces}
+
+\author{Saarthak~Gupta,~M.~Gopal~Krishna,~Anand~Kumar,~and~Debdeep~Sarkar%
+\thanks{S.~Gupta and M.~Gopal~Krishna contributed equally to this work.}%
+\thanks{S.~Gupta, M.~Gopal~Krishna, A.~Kumar and D.~Sarkar are with the Department of Electrical Communication Engineering, Indian Institute of Science, Bengaluru 560012, India. S.~Gupta is also with the Department of Applied Mathematics and M.~Gopal~Krishna with the Department of Electrical Engineering, Delhi Technological University, New Delhi 110042, India (e-mail: saarthakgupta2006@gmail.com; mgopalkrishna0007@gmail.com; anandkumar13@iisc.ac.in; debdeep@iisc.ac.in).}}
+
+\markboth{Manuscript draft, 2026}{Gupta \MakeLowercase{\textit{et al.}}: Graph-Attention Surrogate for Inverse Design of Pixelated Metasurfaces}
+
+\maketitle
+
+%=====================================================================
+\begin{abstract}
+Optimizing a pixelated metasurface with a full-wave solver in the loop is slow, because every candidate layout needs its own simulation. This paper presents a neural network, a surrogate model, that predicts the complex reflection of a layout in a fraction of a millisecond and replaces the solver. The network reads the $16\times16$ layout with convolutional layers and graph-attention blocks, which let every pixel exchange information with its neighbours, and then predicts the co-polarized reflection coefficient at every frequency from 2 to 12\,GHz. Trained separately on each of the four layout classes of the SUTD-PRCM dataset, on the same number of layouts as the MSDCNN reference models and with one architecture and one set of settings, it has a lower test error than the class-specific MSDCNN models with half or less of their parameters: 48\,\% lower for shape combinations and 61\,\% lower for random layouts. A reproduced edge-aware cross-attention surrogate, which encodes the layout with a shallow convolutional network, works on polygons but fails on shape combinations and random layouts, where the proposed surrogate is 2.8--4.1 times more accurate. The surrogate is then used to design in-phase reflectors (artificial magnetic conductors) for X-band made of random pixel layouts. A variational autoencoder (VAE) maps the layouts to continuous vectors, and a multi-objective particle swarm optimizer (MOIPSO) searches these vectors for three goals: a wide in-phase band around 10\,GHz, a reflection close to 0\,dB in that band, and few fragile pixel features. The paper shows why such a VAE fails for random layouts when its latent space is too small and how to choose its size. A search over \num{301000} layouts takes 49\,s, and its Pareto front has a hypervolume of 0.455, against 0.295 for the 111,000 CST-simulated layouts of the dataset. CST simulation of nine selected designs confirms the predictions: the magnitude and phase errors are no larger than the surrogate's test errors, and the in-phase band edges agree within 0.2\,GHz. Two designs meet the full specification in CST, an in-phase bandwidth of 11.4\,\% and 13.1\,\% with less than 0.5\,dB in-band loss and only 3 fragile features, which no dataset layout achieves, and five designs have wider in-phase bands (up to 16.3\,\%) than any dataset layout.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Metasurfaces, inverse design, surrogate model, graph attention, variational autoencoder, particle swarm optimization, artificial magnetic conductor.
+\end{IEEEkeywords}
+
+%=====================================================================
+\section{Introduction}
+\IEEEPARstart{M}{etasurfaces}, thin periodic arrays of sub-wavelength scatterers, control the amplitude, phase and polarization of reflected and transmitted waves \cite{holloway,glybovski}. A pixelated metasurface divides the unit cell into an $N\times N$ grid of small metal patches, each either present or absent \cite{cui_coding}. Common unit-cell shapes such as square patches, rings, crosses and split rings are all special cases of such a grid, and the grid can be printed directly on a circuit board. This freedom comes at a price: the number of possible layouts is $2^{N^2}$, i.e., $2^{256}$ for a $16\times16$ grid, far too many to try one by one.
+
+Pixelated layouts are therefore found by optimization. A genetic algorithm \cite{jafar_ga} or a particle swarm \cite{kennedy,robinson} proposes layouts, a full-wave solver computes their response, and the optimizer uses the result to propose better layouts \cite{zhang_sr2017,khatib_review}. The optimizer itself is cheap; the solver is not. A swarm of 100 particles run for 100 generations needs $10^4$ simulations, and multi-objective problems, whose result is a set of trade-off designs (a Pareto front) rather than one design \cite{coello_book,nsga2}, need even more. The number of simulations one can afford, not the optimizer, then decides how well the design space is explored.
+
+A surrogate model is a neural network trained on simulated data to predict the response of a layout \cite{khatib_review}. Once trained, it answers in milliseconds and can replace the solver inside the optimization loop. For unit cells described by a few dimensions (a patch length, a gap) this approach is well established \cite{liu_tandem,malkiel,nadell,an_acsphot}, and generative networks have been used to propose new shapes \cite{liu_gan,ma_vae,jiang_glonet}. For free-form pixel layouts surrogate modeling is harder, because the response depends on how the pixels connect over the whole cell \cite{qiu_advsci}. The reference study for such layouts is the metasurface design deep convolutional neural network (MSDCNN) of Zhang \textit{et al.} \cite{msdcnn}, which led to the public SUTD-PRCM dataset \cite{sutd}. MSDCNN found that no single network worked well for all classes of layouts: a deeper ResNet-34 \cite{resnet} was needed for shape combinations, and random layouts needed four times more training data and were still predicted least accurately. A convolutional network looks at a small neighbourhood of pixels in each layer and must stack many layers before it can relate distant parts of the layout, which is what determines current paths and resonances.
+
+The proposed surrogate extends a convolutional network in two simple ways. The first is pixel-wise graph attention (PGA) \cite{pganet}, related to graph attention networks \cite{gat} and non-local blocks \cite{nonlocal}: each pixel learns, for the specific layout, how strongly to use each of its eight neighbours, so that connected metal regions can be followed explicitly. The second, taken from the edge-aware cross-attention surrogate \cite{edgeaware}, is a set of learned frequency queries that use attention \cite{vaswani}: each output frequency picks out the parts of the layout that matter for the response at that frequency. The trained surrogate is then used to design in-phase reflectors without a solver in the loop, and the final designs are checked in CST.
+
+The contributions are:
+\begin{enumerate}
+\item \textbf{A compact surrogate model with graph attention.} One architecture, trained separately on each of the four SUTD-PRCM layout classes with the same settings and on the same number of layouts as MSDCNN, has a lower test error than the MSDCNN model built for each class, with half or less of its parameters, and than a reproduced edge-aware surrogate whose shallow convolutional encoder fails on the two complex classes.
+\item \textbf{A VAE design space for random layouts.} A VAE of random layouts is shown to ignore its input when its latent space is too small; a simple rule gives the required size, and a VAE that represents random layouts is trained.
+\item \textbf{A design method without a solver in the loop.} MOIPSO \cite{moipso} searches the VAE space and the surrogate scores each layout against three practical goals of an in-phase reflector, all derived from the co-polarized reflection and the layout itself. Such optimizers usually run a full-wave solver in the loop, so that the number of simulations limits the swarm size and the number of generations; here the solver is only used to check the selected designs, and the prediction errors on them are reported.
+\end{enumerate}
+
+The paper is organized as follows. Section~\ref{sec:datasets} describes the dataset and the unit cell. Section~\ref{sec:survey} reviews surrogate models of earlier work. Section~\ref{sec:fwd} describes the surrogate model and its training, and Section~\ref{sec:fwdresults} compares it with MSDCNN and with the edge-aware surrogate. Section~\ref{sec:vae} introduces the VAE, Section~\ref{sec:inverse} the inverse design method, and Section~\ref{sec:invresults} the design results. Section~\ref{sec:cst} reports the CST model and the CST check of the designs.
+
+%=====================================================================
+\section{Dataset and Unit Cell}\label{sec:datasets}
+
+\subsection{Unit Cell and Reflection Coefficient}
+The SUTD-PRCM unit cell \cite{sutd} is shown in Fig.~\ref{fig:unitcell}. A $16\times16$ grid of copper pixels, each $0.5\times0.5$\,mm and 0.018\,mm thick, sits inside a 1\,mm margin, giving a 10\,mm square cell. The pixels are printed on a dielectric substrate with $\varepsilon_r=2.65$ and $\tan\delta=0.003$, backed by a 0.18\,mm copper ground plane. The cell is repeated periodically in $x$ and $y$ and illuminated by a normally incident plane wave polarized along $x$. Because of the ground plane, no power is transmitted.
+
+The modeled quantity is the co-polarized reflection coefficient $r_{xx}(f)$, the reflected $x$-polarized field normalized to the incident field. It is complex: its magnitude tells how much of the wave is reflected with the same polarization, and its phase how the reflected wave is delayed. A layout is written as a $16\times16$ binary matrix $x$, with 1 for copper and 0 for no copper.
+
+\begin{figure}[!t]
+\centering
+\fig[width=\columnwidth]{fig_unitcell}
+\caption{SUTD-PRCM unit cell with an RDN layout from the test set. An $x$-polarized plane wave illuminates the cell and is reflected; the co-polarized reflection coefficient $r_{xx}$ is the modeled quantity.}
+\label{fig:unitcell}
+\end{figure}
+
+\subsection{Layout Classes}
+The dataset contains four classes of layouts (Table~\ref{tab:sutd}, Fig.~\ref{fig:dataset}). PLG layouts are filled polygons, PLR layouts polygon rings, PTN layouts combinations of simple shapes, and RDN layouts random pixels in which every pixel is copper with probability one half. RDN contains every possible layout and is the hardest class for a surrogate. It is also the class used for inverse design.
+
+\begin{figure}[!t]
+\centering
+\fig[width=\columnwidth]{fig_dataset}
+\caption{One layout of each SUTD-PRCM class (copper in orange).}
+\label{fig:dataset}
+\end{figure}
+
+\begin{table}[!t]
+\caption{SUTD-PRCM Layout Classes}
+\label{tab:sutd}
+\centering
+\footnotesize
+\begin{tabular}{@{}llr@{}}
+\toprule
+Class & Layouts & Samples \\
+\midrule
+PLG & filled polygons & \num{30000} \\
+PLR & polygon rings & \num{60000} \\
+PTN & combinations of simple shapes & \num{60000} \\
+RDN & random pixels & \num{111000} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table*}[!t]
+\caption{Surrogate Models for Metasurface and Antenna Design}
+\label{tab:survey}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.95cm}>{\raggedright\arraybackslash}p{3.65cm}>{\raggedright\arraybackslash}p{3.6cm}>{\raggedright\arraybackslash}p{3.5cm}>{\raggedright\arraybackslash}p{3.5cm}@{}}
+\toprule
+Work & Design space & Network & Predicted output & Used with \\
+\midrule
+\multicolumn{5}{@{}l}{\textbf{(a) Parametric design spaces}} \\
+Liu \cite{liu_tandem}, 2018 & thin-film stack (thicknesses) & fully connected, tandem & transmission spectrum & inverse network \\
+Kiarashinejad \cite{kiarash_npj}, 2020 & nanostructure (dimensions) & autoencoder + fully connected & reflection spectrum & reduced-space inverse design \\
+Niu \cite{niu_rcs}, 2026 & 1-bit cell (parameters) & tandem + deep Q-network & absorption, polarization conversion & array arrangement \\
+Yu \cite{yu_fss}, 2026 & square-loop FSS (9 parameters) & graph attention + LSTM & $|S_{21}|$, 201 frequencies & VAE-PSO \\
+\midrule
+\multicolumn{5}{@{}l}{\textbf{(b) Pixel design spaces: forward surrogates (own datasets)}} \\
+Zhu \cite{zhu_phase}, 2021 & $16\times16$ coding cell, $8\times8$ free & Inception-V3, transfer learning & reflection phase, one frequency & phase-to-pattern lookup \\
+Zhang \cite{zhang_vaepso}, 2022 & $16\times16$ isotropic cell, $8\times8$ free & encoder + fully connected & $|S_{11}|$, 0--20\,GHz & VAE-PSO \\
+Gupta \cite{gupta_tandem}, 2023 & $12\times12$ pixel antenna & CNN + tandem inverse & $|S_{11}|$ & inverse network \\
+Gupta \cite{gupta_tl}, 2024 & $12\times12$ pixel antenna & CNN, transfer learning & $|S_{11}|$ & binary PSO \\
+Chen \cite{chen_bpso}, 2025 & $10\times10$ pixel patch & CNN & $|S_{11}|$ & binary PSO \\
+Aoun \cite{aoun_thz}, 2026 & $256\times256$ antenna mask & CNN on VAE latent code & bandwidth, efficiency & reinforcement learning \\
+\midrule
+\multicolumn{5}{@{}l}{\textbf{(c) Pixel design spaces: generative (inverse) models}} \\
+Tang \cite{tang_cvae}, 2020 & $20\times20$ holes, photonic splitter & conditional VAE & layout from target spectrum & -- \\
+Niu \cite{niu_diffusion}, 2023 & three $128\times128$ layers & diffusion model & layout from target $S$-parameters & -- \\
+Lyu \cite{lyu_fss}, 2026 & multilayer pixelated loop FSS & multichannel conditional GAN & layout from target $|S_{21}|$ & -- \\
+\midrule
+\multicolumn{5}{@{}l}{\textbf{(d) Graph networks for large arrays}} \\
+Khoram \cite{khoram_gnn}, 2023 & arrays of meta-atoms & graph neural network & near field & hologram design \\
+Bao \cite{bao_gatnet}, 2025 & $15\times15$ meta-atom blocks & graph attention network & near field & metalens design \\
+\midrule
+\multicolumn{5}{@{}l}{\textbf{(e) SUTD-PRCM: public free-form $16\times16$ dataset, four classes, 2--12\,GHz}} \\
+MSDCNN \cite{msdcnn}, 2021 & PLG, PTN, RDN; one network per class & ResNet18S / ResNet34S & $|r_{xx}|$, 32 frequencies & inverse network \\
+NAS \cite{sutd,zhang_nas}, 2022 & all four classes & searched shallow, wide CNN & resonance locations, $|r_{xx}|$ curve & -- \\
+Edge-aware \cite{edgeaware}, 2026 & PLR only & shallow CNN + cross-attention + BiGRU & complex $r_{xx}$, 101 frequencies & -- \\
+\textbf{This work} & \textbf{all four classes, one architecture} & \textbf{PGA-ResNet + cross-attention + BiGRU} & \textbf{complex $r_{xx}$, 101 frequencies} & \textbf{VAE-MOIPSO, 3 objectives} \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\subsection{Data Preparation}
+For each layout, the dataset stores $r_{xx}$ from 2 to 12\,GHz at 1001 frequencies. As in \cite{edgeaware}, every tenth frequency is kept, i.e., $K=101$ frequencies 0.1\,GHz apart; the responses are smooth enough at this spacing. For a direct comparison with MSDCNN \cite{msdcnn}, its protocol is followed: 27,000 training and 3,000 test layouts per class. The layouts of each class are put in a fixed random order. A network is trained on the first 27,000 layouts of this order, and a second RDN network on the first 108,000 RDN layouts; following \cite{msdcnn}, the networks are named after their training set, e.g., PTN27000 or RDN108000. Every network is tested on the last 3,000 layouts of each class, which none of the networks sees during training. As in \cite{msdcnn}, no validation set is used.
+
+%=====================================================================
+\section{Surrogate Models in Earlier Work}\label{sec:survey}
+Table~\ref{tab:survey} lists surrogate models used for metasurface and antenna design, grouped by design space and by what the network predicts. Reviews of the field are given in \cite{khatib_review,yang_review,chen_gadreview}.
+
+\emph{Parametric design spaces} (Table~\ref{tab:survey}(a)). When the structure is described by a few dimensions, a fully connected network maps them to a spectrum. It is used inside an optimizer \cite{yu_fss}, paired with an inverse network \cite{liu_tandem,niu_rcs}, or combined with dimensionality reduction \cite{kiarash_npj}. A few thousand simulations suffice, but the shapes are fixed in advance.
+
+\emph{Pixel design spaces} (Table~\ref{tab:survey}(b)--(d)). When the cell is a grid of metal pixels, the layout is treated as an image. Forward CNN surrogates predict the reflection phase at one frequency \cite{zhu_phase} or the magnitude $|S_{11}|$ of $10\times10$ to $16\times16$ layouts \cite{zhang_vaepso,gupta_tandem,gupta_tl,chen_bpso}, and are used with binary or latent-space particle swarms, inverse networks or reinforcement learning \cite{aoun_thz}. Generative models \cite{tang_cvae,niu_diffusion,lyu_fss} produce a layout directly from one target response. Graph networks model the coupling between meta-atoms of large arrays \cite{khoram_gnn,bao_gatnet}. Each of these studies uses its own dataset of one family of patterns, often reduced by symmetry to $8\times8$ free pixels, so their accuracies cannot be compared.
+
+\emph{SUTD-PRCM} (Table~\ref{tab:survey}(e)). The dataset of Section~\ref{sec:datasets} is the only public set of free-form $16\times16$ layouts with four classes of increasing complexity. Three surrogates have been reported on it, and they are the directly comparable references of this paper. MSDCNN \cite{msdcnn} needed one ResNet per class, a deeper one for shape combinations, and had its largest errors on random layouts. A network architecture search \cite{sutd,zhang_nas} found shallow, wide networks best for locating the resonances. The edge-aware surrogate \cite{edgeaware} predicts the complex reflection with learned frequency queries, but was tested on one class (PLR) and encodes the layout with a shallow CNN. Both MSDCNN and the edge-aware model are therefore reproduced or quoted under one protocol in Section~\ref{sec:fwdresults}.
+
+\begin{figure*}[!t]
+\centering
+\fig[width=0.96\textwidth]{fig_architecture}
+\caption{Surrogate model. (a) Backbone: a stem convolution and three stages of residual blocks (BB, blue) and PGA blocks (orange); the height of each block shows the size of its feature map and its width the number of channels. Top right: one residual block in detail. Below: frequency cross-attention, bidirectional GRU and output layer; the attention weights, the token values and the spectra are those of the trained network RDN108000 for the layout shown. (b) PGA block, with the score, neighbour and attention matrices of one block of the second stage. (c) GRU cell.}
+\label{fig:arch}
+\end{figure*}
+
+\emph{What this work requires.} The inverse design of Sections~\ref{sec:inverse}--\ref{sec:cst} places three demands on the surrogate that no entry of Table~\ref{tab:survey} meets together. First, the objectives are the in-phase bandwidth and the in-band loss of a reflector, so the surrogate must predict the complex co-polarized reflection, magnitude and phase, at every frequency of the band; most surrogates above predict only a magnitude or a single-frequency phase. Second, the designs are free-form random layouts, whose response depends on how metal pixels connect across the whole cell; a shallow or purely local encoder cannot follow this, which is why graph attention between neighbouring pixels is added to the convolutional backbone. Third, MOIPSO scores $10^4$--$10^5$ layouts per search against three objectives at once, which needs a fast forward model rather than a generative model that returns one layout per target. The surrogate of Section~\ref{sec:fwd} is built for these three requirements, and one architecture serves all four SUTD-PRCM classes.
+
+%=====================================================================
+\section{Surrogate Model}\label{sec:fwd}
+The surrogate takes a layout $x$ and returns the complex reflection $\Sc(f_k)$ at the 101 frequencies. It has three parts (Fig.~\ref{fig:arch}): a convolutional backbone with graph-attention blocks that turns the layout into 16 feature vectors, a frequency cross-attention module and a bidirectional GRU that turn these vectors into one feature vector per frequency, and an output layer that turns each frequency's vector into a complex reflection coefficient.
+
+\subsection{Convolutional Backbone}
+The layout enters a $3\times3$ convolution with 64 output channels, followed by batch normalization \cite{batchnorm} and a $\tanh$ activation. The stride is 1, so the full $16\times16$ resolution is kept. Three stages of residual blocks \cite{resnet} (BB in Fig.~\ref{fig:arch}(a)) follow. A residual block, as in MSDCNN \cite{msdcnn}, has two paths. The residual branch $\mathcal F$ applies a $3\times3$ convolution, batch normalization, a LeakyReLU activation (slope 0.2), a second $3\times3$ convolution and a second batch normalization. The shortcut $\mathcal S$ passes the block input $\mathbf u$ on unchanged. The two are added and a ReLU follows:
+\begin{equation}
+\mathbf y=\mathrm{ReLU}\big(\mathcal F(\mathbf u)+\mathcal S(\mathbf u)\big).
+\end{equation}
+The block therefore only has to learn a correction $\mathcal F$ to its input, and during training the gradient can flow back through the shortcut without passing through the convolutions. This is what allows many blocks to be stacked and trained reliably \cite{resnet}. Each $3\times3$ convolution combines a pixel with its eight neighbours, so every block widens the region of the layout that a feature can see by two pixels in each direction. The three stages have 3, 4 and 3 blocks with 64, 128 and 256 channels. The first block of the second and third stages uses a stride of 2, which halves the size of the feature map, and its shortcut is then a $1\times1$ convolution with stride 2 followed by batch normalization, so that the two paths have the same size. The feature maps therefore have $16\times16$, $8\times8$ and $4\times4$ positions. Each stage is followed by three PGA blocks (Section~\ref{sec:pga}). After the backbone, channel dropout with probability 0.2 is applied during training, and the 16 positions of the $4\times4$ map become 16 vectors of 256 numbers, called tokens. Each token describes one region of the layout together with its surroundings.
+
+\subsection{Pixel-Wise Graph Attention}\label{sec:pga}
+A PGA block \cite{pganet} lets every position of a feature map collect information from its neighbours with weights that depend on the layout. Let the feature map be $F$ with $C$ channels on an $H\times W$ grid, i.e., $N=HW$ positions with a vector of $C$ numbers each. The block works in five steps (Fig.~\ref{fig:arch}(b)).
+
+\emph{1) Neighbour graph.} Each position is a node, connected to its eight neighbours: $A_{ij}=1$ if position $j$ is one of the eight neighbours of position $i$, and 0 otherwise. $A$ depends only on the grid size and is computed once.
+
+\emph{2) Scores.} Two $1\times1$ convolutions, $\theta$ and $\varphi$, each followed by batch normalization and ReLU, reduce the $C$ channels to $C/8$. The score of node $j$ for node $i$ is the product of the two reduced vectors,
+\begin{equation}
+R_{ij}=\theta(F)_i^{\top}\,\varphi(F)_j .
+\end{equation}
+A high score means that the features at position $j$ are relevant to position $i$ for this particular layout.
+
+\emph{3) Attention weights.} Scores of positions that are not neighbours are removed, and the remaining scores of each node are turned into weights that sum to one (a softmax):
+\begin{equation}
+\tilde{A}_{ij}=\frac{A_{ij}\exp R_{ij}}{\sum_{j'}A_{ij'}\exp R_{ij'}} .
+\label{eq:masked}
+\end{equation}
+
+\emph{4) Collecting information.} Each node receives the weighted sum of its neighbours' features, $\sum_j\tilde{A}_{ij}F_j$, written $\tilde{A}F$. The original features are used here, not a transformed copy: $\theta$ and $\varphi$ only decide how much each neighbour contributes.
+
+\emph{5) Mixing with the input.} The result passes through an ELU activation and is mixed with the block input through a learned scalar $\gamma$,
+\begin{equation}
+F' = (1-\gamma)\,F + \gamma\,\mathrm{ELU}\big(\tilde{A}F\big).
+\label{eq:gate}
+\end{equation}
+$\gamma$ starts at 0, so each block initially passes its input through unchanged and the network only uses the neighbour information as far as it helps \cite{deepgcn}. After training, $|\gamma|$ is between 0.14 and 0.36 in every block of RDN108000, i.e., all blocks use it.
+
+Why does this help? A convolution applies the same fixed weights to every neighbourhood. In a PGA block, the weight given to a neighbour depends on the features, so the network can, for example, give more weight to a neighbour that continues a metal path than to one across a gap. Metal connectivity decides where surface currents flow and hence where the resonances lie. Since the graph only connects neighbours, a PGA block costs little: the three stages add 65\,k parameters to a 5.8\,M-parameter network.
+
+\subsection{Frequency Cross-Attention}
+The next step must turn 16 tokens, which describe regions of the layout, into 101 vectors, one per frequency. Following \cite{edgeaware}, each frequency $f_k$ has a learned query vector $q_k$ of 256 numbers, to which a fixed sinusoidal code of the frequency index is added so that the queries know their order \cite{vaswani}. Each query collects information from the tokens by attention:
+\begin{equation}
+\mathrm{Attn}(q_k,T)=\mathrm{softmax}\!\left(\frac{(W^{Q}q_k)(W^{K}T)^{\top}}{\sqrt{d}}\right)W^{V}T,
+\end{equation}
+where $T$ holds the 16 tokens (after layer normalization \cite{layernorm}), $W^Q$, $W^K$ and $W^V$ are learned matrices and $d$ is the vector length. The softmax gives, for every frequency, a weight for each of the 16 tokens; these weights are shown for the example layout in Fig.~\ref{fig:arch}(a). Four such attention ``heads'' run in parallel and their outputs are combined. A layer normalization and a linear layer follow. The cost grows linearly with the number of frequencies.
+
+\subsection{Bidirectional GRU}
+The 101 frequency vectors are then processed in frequency order by a bidirectional gated recurrent unit (GRU) \cite{gru} with 256 units in each direction. A GRU (Fig.~\ref{fig:arch}(c)) keeps a state vector $\mathbf h_k$ that it updates from one frequency to the next,
+\begin{equation}
+\mathbf h_k=(1-z_k)\odot\mathbf h_{k-1}+z_k\odot\tanh\!\big(W[r_k\odot\mathbf h_{k-1},\mathbf x_k]\big),
+\end{equation}
+where $\mathbf x_k$ is the input at frequency $f_k$ and the gates $r_k$ and $z_k$ (sigmoid functions of $\mathbf h_{k-1}$ and $\mathbf x_k$) decide how much of the old state is kept. One GRU runs from 2 to 12\,GHz and the other from 12 to 2\,GHz, so the prediction at each frequency knows about the response at lower and higher frequencies. This makes the predicted spectra smooth and keeps resonances consistent.
+
+\begin{table*}[!t]
+\caption{Terms of the Training Loss \eqref{eq:total}; $\Sc$ Is the Prediction and $S$ the Data, $k$ the Frequency Index}
+\label{tab:loss}
+\centering
+\small
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{@{}lllc@{}}
+\toprule
+Term & What it measures & Formula & Weight \\
+\midrule
+$\Lloss{reim}$ & error of real and imaginary parts & $\frac{1}{2K}\sum_k\big[(\mathrm{Re}\,\Sc_k-\mathrm{Re}\,S_k)^2+(\mathrm{Im}\,\Sc_k-\mathrm{Im}\,S_k)^2\big]$ & 1.00 \\
+$\Lloss{dB}$ & magnitude error in decibels & $\frac{1}{K}\sum_k\big(20\log_{10}|\Sc_k|-20\log_{10}|S_k|\big)^2$ & 0.50 \\
+$\Lloss{lin}$ & magnitude error in linear scale & $\frac{1}{K}\sum_k\big(|\Sc_k|-|S_k|\big)^2$ & 0.30 \\
+$\Lloss{ph}$ & phase error (no $2\pi$ jumps) & $\frac{1}{K}\sum_k\big|\Sc_k/|\Sc_k|-S_k/|S_k|\big|^2$ & 0.30 \\
+$\Lloss{pass}$ & reflection above one & $\frac{1}{K}\sum_k \max(0,|\Sc_k|-1)^2$ & 0.08 \\
+$\Lloss{TV}$ & frequency-to-frequency jumps & $\frac{1}{K-1}\sum_k |\Sc_{k+1}-\Sc_k|$ & 0.06 \\
+$\Lloss{curv}$ & ripple (curvature) & $\frac{1}{K-2}\sum_k |\Sc_{k+1}-2\Sc_k+\Sc_{k-1}|^2$ & 0.02 \\
+$\Lloss{KK}$ & Kramers--Kronig consistency & mean squared difference between $\Sc$ and its discrete Hilbert-transform estimate & 0.02 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\subsection{Passive Output Layer}
+After dropout with probability 0.2, a linear layer maps each frequency's 512 numbers to two numbers $(a_k,b_k)$, which give the reflection coefficient
+\begin{equation}
+\Sc(f_k)=\sigma(a_k)\big[\cos b_k+j\sin b_k\big],
+\label{eq:polar}
+\end{equation}
+where $\sigma(a)=1/(1+e^{-a})$ is the sigmoid function, which lies between 0 and 1. The predicted magnitude is $|\Sc|=\sigma(a_k)$ and the predicted phase $b_k$. The magnitude is therefore always below one: the predicted surface never reflects more power than it receives, whatever the layout. This matters because the optimizer will query the network with unusual layouts. The network has 5.83\,M parameters, and the same architecture is used for every class.
+
+\subsection{Training Loss}
+The network is trained with the physics-guided loss of \cite{edgeaware}, a weighted sum of eight terms,
+\begin{align}
+\mathcal{L} = \ &\Lloss{reim} + 0.5\,\Lloss{dB} + 0.3\,\Lloss{lin} + 0.3\,\Lloss{ph} \nonumber\\
+&+ 0.08\,\Lloss{pass} + 0.06\,\Lloss{TV} \nonumber\\
+&+ 0.02\,\Lloss{curv} + 0.02\,\Lloss{KK},
+\label{eq:total}
+\end{align}
+each averaged over the 101 frequencies and listed in Table~\ref{tab:loss}. A single error measure is not enough for reflection spectra: a prediction can have a small average error and still misplace a resonance, get its depth wrong, or produce a response that no physical surface could have. Each term therefore checks one property of the spectrum.
+
+\emph{Fidelity terms.} The real/imaginary term $\Lloss{reim}$ compares the complex values directly and is the main term (weight 1); it makes magnitude and phase right together. The magnitude is also compared on two scales. In decibels ($\Lloss{dB}$), a resonance dip from $-3$ to $-20$\,dB is a large difference, so this term makes the network place resonances at the right frequency and with the right depth. In linear scale ($\Lloss{lin}$), the same dip is a small difference, while errors near full reflection ($|S|\approx1$), where most of the band lies, count fully. Both are needed: a dip that is wrong by 10\,dB may differ by only 0.05 in linear magnitude. The phase term $\Lloss{ph}$ compares the unit phasors $\Sc/|\Sc|$ and $S/|S|$, i.e., points on the unit circle. Comparing phase angles directly would give a large error between $+179^\circ$ and $-179^\circ$, which are almost the same phase; the phasor form has no such jumps. The phase matters for any design that relies on the reflection phase, such as the in-phase reflector of Section~\ref{sec:inverse}.
+
+\emph{Physical-consistency terms.} The passivity term $\Lloss{pass}$ penalizes $|\Sc|>1$, i.e., a surface that reflects more power than it receives. With the output layer \eqref{eq:polar} this cannot happen, so the term only acts as a safeguard. The two smoothness terms penalize differences between neighbouring frequencies: $\Lloss{TV}$ the first difference, which removes spurious jumps, and $\Lloss{curv}$ the second difference, which removes ripple between resonances. Their weights are small, so that real narrow resonances are not smoothed away. The last term enforces causality: the reflection of a passive, causal structure has real and imaginary parts that are linked by the Kramers--Kronig relations \cite{lucarini}. For $S=r+jx$ sampled at angular frequencies $\omega_k$, a discrete form of these relations estimates each part from the other,
+\begin{equation}
+\hat{r}_k=\sum_{j\neq k}\frac{x_j\,\Delta\omega}{\pi(\omega_j-\omega_k)},
+\quad
+\hat{x}_k=-\sum_{j\neq k}\frac{r_j\,\Delta\omega}{\pi(\omega_j-\omega_k)},
+\label{eq:kkdisc}
+\end{equation}
+and $\Lloss{KK}$ is the mean squared difference between the predicted real and imaginary parts and these estimates. Because the band is finite (2--12\,GHz), the estimates are only approximate, and the term has a small weight; it discourages predictions whose real and imaginary parts are inconsistent with each other.
+
+The weights in \eqref{eq:total} are those of \cite{edgeaware} and are the same for every class.
+
+\begin{table*}[!t]
+\caption{Test MSE of $|r_{xx}|$ ($\times10^{-3}$) of Networks Trained on One Class (Rows) and Tested on Each Class (Columns)}
+\label{tab:fwd}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{9pt}
+\begin{tabular}{@{}llrrcccc@{}}
+\toprule
+ & Network (training set) & Layouts & Params & PLG & PLR & PTN & RDN \\
+\midrule
+\multirow{5}{*}{\rotatebox{90}{MSDCNN}}
+ & PLG27000 (ResNet18S) & 27,000 & 11.2\,M & 0.201$^{a}$ & -- & 7.517 & 17.436 \\
+ & PTN27000 (ResNet18S) & 27,000 & 11.2\,M & 16.809 & -- & 4.382 & 12.409 \\
+ & PTNRes34 (ResNet34S) & 27,000 & 21.3\,M & 18.426 & -- & 2.760 & 17.377 \\
+ & RDN27000 (ResNet18S) & 27,000 & 11.2\,M & 9.029 & -- & 5.257 & 10.971 \\
+ & RDN108000 (ResNet18S) & 108,000 & 11.2\,M & 14.721 & -- & 13.631 & 4.242 \\
+\midrule
+\multirow{5}{*}{\rotatebox{90}{Edge-aware}}
+ & PLG27000 & 27,000 & 1.88\,M & 0.145 & 13.0 & 25.7 & 14.0 \\
+ & PLR27000 & 27,000 & 1.88\,M & 0.647 & 0.193 & 21.1 & 24.3 \\
+ & PTN27000 & 27,000 & 1.88\,M & 9.16 & 15.0 & 3.96 & 14.0 \\
+ & RDN27000 & 27,000 & 1.88\,M & 21.1 & 13.6 & 4.89 & 13.2 \\
+ & RDN108000 & 108,000 & 1.88\,M & 5.97 & 7.67 & 3.62 & 9.43 \\
+\midrule
+\multirow{5}{*}{\rotatebox{90}{Proposed}}
+ & PLG27000 & 27,000 & 5.83\,M & \textbf{0.083} & 20.4 & 14.4 & 16.2 \\
+ & PLR27000 & 27,000 & 5.83\,M & 0.426 & \textbf{0.065} & 19.4 & 25.3 \\
+ & PTN27000 & 27,000 & 5.83\,M & 10.5 & 9.18 & 1.43 & 9.58 \\
+ & RDN27000 & 27,000 & 5.83\,M & 3.63 & 3.22 & 1.78 & 4.33 \\
+ & RDN108000 & 108,000 & 5.83\,M & 1.32 & 0.986 & \textbf{0.736} & \textbf{2.32} \\
+\bottomrule
+\end{tabular}
+
+\vspace{2pt}
+\parbox{0.86\textwidth}{\scriptsize MSDCNN values from \cite[Table~I]{msdcnn}, parameter counts from \cite[Table~2]{sutd}. Edge-aware: reproduction of \cite{edgeaware}, trained and tested like the proposed networks. All entries: 3,000 test layouts per class. MSDCNN evaluates 32 frequencies, the other networks 101 frequencies over 2--12\,GHz. $^{a}$MSDCNN evaluates PLG over 9.5--12\,GHz only. Bold: lowest error in each column.}
+
+\end{table*}
+
+\subsection{Training Details}
+Each network is trained on the training layouts of one class only. Training uses the AdamW optimizer \cite{adamw} with learning rate $\e{2}{-4}$, weight decay $10^{-5}$, batches of 256 layouts and gradient clipping at 1. The learning rate decreases along a cosine curve to $\e{2}{-6}$ over 300 epochs, and the network after the last epoch is used; the test layouts play no part in training or in the choice of any setting.
+
+The unit cell is symmetric and the wave arrives at normal incidence, so mirroring a layout about the $x$- or $y$-axis does not change $r_{xx}$. This is used in two ways. During training, each layout is mirrored at random, which gives the network more examples for free. At test time, the network predicts all four mirror images of a layout and the four predictions are averaged. Training uses one NVIDIA RTX PRO 4000 GPU and takes about 50\,min for 27,000 layouts and 3.3\,h for 108,000 layouts.
+
+%=====================================================================
+\section{Surrogate Results and Comparison}\label{sec:fwdresults}
+
+\subsection{Comparison With MSDCNN}
+Table~\ref{tab:fwd} has the same form as Table~I of MSDCNN \cite{msdcnn}: each row is a network trained on one class, each column the class on which it is tested, and each entry the mean-squared error (MSE) of $|r_{xx}|$ on the 3,000 test layouts of that class. The upper rows are the MSDCNN results, the middle rows those of the edge-aware surrogate (Section~\ref{sec:fwdresults}-B), and the lower rows those of the proposed surrogate. Each proposed network is trained on the same number of layouts as the MSDCNN network of the same name, and all of them are the same 5.83\,M-parameter network, whereas MSDCNN needed a larger network for PTN (ResNet34S, 21.3\,M parameters) than for the other classes (ResNet18S, 11.2\,M).
+
+On its own class (diagonal entries), the proposed network has the lower error for every class. On PTN, PTN27000 reaches $\e{1.43}{-3}$, 48\,\% below the $\e{2.76}{-3}$ of MSDCNN's larger PTNRes34, with 27\,\% of its parameters. On RDN, RDN27000 reaches $\e{4.33}{-3}$ against $\e{10.97}{-3}$ (61\,\% lower), and RDN108000 $\e{2.32}{-3}$ against $\e{4.24}{-3}$ (45\,\% lower). On PLG the errors are $\e{0.083}{-3}$ (proposed, 2--12\,GHz) and $\e{0.201}{-3}$ (MSDCNN, 9.5--12\,GHz only). PLR is not part of Table~I of \cite{msdcnn}; PLR27000 reaches $\e{0.065}{-3}$. The mean phase error is 0.9--4.9$^\circ$.
+
+The off-diagonal entries show how well a network predicts a class it has not seen. As for MSDCNN, the networks trained on filled polygons or rings fail on the other classes (errors above $\e{14}{-3}$). The networks trained on random layouts behave differently: RDN108000 predicts PLG, PLR and PTN with errors of $\e{1.32}{-3}$, $\e{0.99}{-3}$ and $\e{0.74}{-3}$; on PTN this is even lower than the error of PTN27000 on its own class. MSDCNN's RDN108000 has $\e{14.7}{-3}$ and $\e{13.6}{-3}$ on PLG and PTN. Random layouts contain every kind of shape, and with graph attention the network learns from them responses that carry over to the structured classes. RDN108000 is the surrogate used for inverse design in Section~\ref{sec:inverse}. Fig.~\ref{fig:fwd} compares the predicted and simulated spectra over the test sets in the form of MSDCNN's Fig.~9.
+
+\begin{figure*}[!t]
+\centering
+\fig[width=\textwidth]{fig_forward_predictions}
+\caption{Predicted and simulated $|r_{xx}|$ over the 3,000 test layouts of each class, as in MSDCNN's Fig.~9: mean (line) and $\pm1$ standard deviation (band) of the CST data of the dataset and of the predictions of the proposed networks PLG27000, PLR27000, PTN27000 and RDN27000. The number in each panel is the test MSE.}
+\label{fig:fwd}
+\end{figure*}
+
+\subsection{Comparison With the Edge-Aware Surrogate}
+The edge-aware cross-attention surrogate \cite{edgeaware} was evaluated on one class (PLR) only. It has the same frequency cross-attention, bidirectional GRU and polar output layer as the proposed surrogate, but it encodes the layout with a shallow convolutional network: a $3\times3$ convolution, two blocks of convolution and max pooling, and a final convolution turn the layout into 16 tokens, with 1.88\,M parameters in total. To test whether such an encoder is enough for all four classes, the network was reproduced from its description (Fig.~1 and the loss (5) of \cite{edgeaware}, including the 4$\times$ weighting of the band edges) and trained and tested in exactly the same way as the proposed surrogate. Its results form the middle block of Table~\ref{tab:fwd}.
+
+On filled polygons and rings it works well, with $\e{0.145}{-3}$ on PLG and $\e{0.193}{-3}$ on PLR. On the two harder classes it fails: PTN27000 reaches $\e{3.96}{-3}$ and RDN27000 $\e{13.2}{-3}$, with a coefficient of determination $R^2$ of only 0.01 and $-0.05$. $R^2$ is the share of the layout-to-layout variation of $|r_{xx}|$ that a model explains: 1 for a perfect model and 0 for one that predicts the same average spectrum for every layout. The edge-aware model therefore barely does better than predicting the mean spectrum of the class. On RDN it is worse than MSDCNN ($\e{10.97}{-3}$), and even 108,000 training layouts lower its error only to $\e{9.43}{-3}$. The shallow encoder applies only four local convolutions before pooling the layout into tokens; this is enough for a single filled shape, but not to represent how metal regions connect across the cell, which decides the current paths and resonances of shape combinations and random layouts. The proposed surrogate keeps the frequency head and replaces the shallow encoder by the residual backbone with graph attention. With 5.83\,M parameters, about three times those of the edge-aware model and half those of ResNet18S, its error is 1.7--3.0 times lower than that of the edge-aware model on PLG and PLR, 2.8--4.1 times lower on PTN and RDN, and lower than that of MSDCNN on every class.
+
+\subsection{Contribution of the Graph Attention}
+To see how much the PGA blocks contribute, RDN108000 was trained once more with all PGA blocks removed and everything else unchanged. Without PGA blocks the test error increases from $\e{2.32}{-3}$ to $\e{2.37}{-3}$, i.e., by 2.2\,\%, and the mean phase error rises from $3.41^\circ$ to $3.49^\circ$. The graph-attention blocks give a small but consistent gain for 1.1\,\% of the parameters (\num{65193} of 5.83\,M).
+
+\subsection{Speed}
+The RDN network predicts a layout in about 0.15\,ms on the GPU, in batches of 2048 layouts. One CST simulation of the same cell takes about 10\,min on the workstation used here, i.e., about $4\times10^6$ times longer.
+
+%=====================================================================
+\section{A VAE Design Space for Random Layouts}\label{sec:vae}
+
+\subsection{Why a Latent Space}
+A particle swarm moves particles through a continuous space by adding velocities to positions, whereas a layout is a binary matrix. If the swarm works directly on the 256 pixels, every particle position must be rounded to 0 or 1 before it can be scored, and small moves often change nothing while others flip many pixels at once. A variational autoencoder (VAE) \cite{kingma} offers a continuous alternative, and VAEs have been used to describe metamaterial shapes before \cite{ma_vae}. Its encoder maps a layout to a vector $z$ of $d$ real numbers (the latent vector), and its decoder maps any $z$ back to a layout. The swarm then moves in the space of $z$, and every point it visits decodes to a valid layout. The VAE is trained on RDN layouts, which can represent any layout, and use it together with the RDN surrogate.
+
+\subsection{Architecture and Training}
+The VAE is a convolutional encoder--decoder (Fig.~\ref{fig:pipeline}(a)). The encoder has a $3\times3$ convolution with 32 channels at $16\times16$, then $3\times3$ convolutions with stride 2 to 64 channels at $8\times8$ and 128 channels at $4\times4$, each with batch normalization and LeakyReLU. Two linear layers map the result to the mean $\boldsymbol\mu$ and the log-variance $\log\boldsymbol\sigma^2$ of $z$. During training, $z$ is drawn as $z=\boldsymbol\mu+\boldsymbol\sigma\odot\boldsymbol\epsilon$ with random $\boldsymbol\epsilon\sim\mathcal{N}(0,I)$. The decoder mirrors the encoder: a linear layer to $128\times4\times4$, two transposed convolutions back to $16\times16$, and a final convolution that gives, for every pixel, the probability that it is copper. Pixels with probability above 0.5 become copper.
+
+The VAE is trained with the loss
+\begin{equation}
+\mathcal{L}_{\mathrm{VAE}}=2\,\mathrm{BCE}+\beta\,\mathrm{KL},
+\label{eq:vae}
+\end{equation}
+where the binary cross-entropy (BCE) measures how well the decoded layout matches the input, and the Kullback--Leibler (KL) divergence measures how far the distribution of $z$ is from a standard normal distribution. The KL term keeps the latent space compact and smooth, so that random points and points between two layouts also decode to meaningful layouts. Both terms are averaged, the BCE over the 256 pixels and the KL over the $d$ latent values, and $\beta=1$ \cite{betavae}. For the first five epochs $\beta$ is zero, and it then increases smoothly to 1 over 30 epochs, which helps the VAE learn to reconstruct first \cite{bowman}. Training uses Adam \cite{adam} (learning rate $10^{-3}$ decreasing to $10^{-5}$), batches of 512, random rotations and mirrors of the layouts, and stops when the validation loss has not improved for 30 epochs.
+
+\subsection{Choosing the Size of the Latent Space}
+For random layouts, the size $d$ of the latent space decides whether the VAE works at all. Every RDN pixel is an independent coin flip, so a layout carries 256 bits of information and cannot be described by fewer. A VAE stores information about the input in $z$; each unit of information stored in $z$ costs at least one unit of KL and saves at most one unit of BCE \cite{alemi}. With the averaging in \eqref{eq:vae}, the KL term written per layout has the weight
+\begin{equation}
+\beta_{\mathrm{eff}}=\beta\,\frac{N}{2d},
+\end{equation}
+where $N$ is the number of pixels. If $\beta_{\mathrm{eff}}>1$, storing information costs more than it saves, and the best the VAE can do is to ignore its input and output random layouts, a failure known as posterior collapse \cite{bowman}. If $\beta_{\mathrm{eff}}<1$, it pays to store the layout in $z$.
+
+For $16\times16$ layouts ($N=256$) and $\beta=1$, a latent size of $d=64$ gives $\beta_{\mathrm{eff}}=2$. Such a VAE indeed ignores its input: only 50\,\% of the pixels are reconstructed correctly, which is chance, and none of its 64 latent values carries information. The latent size must therefore exceed $d=128$; $d=150$ is used, which gives $\beta_{\mathrm{eff}}=0.85$ and leaves some margin.
+
+\subsection{VAE Quality}
+With $d=150$, the VAE reconstructs 97.4\,\% of the pixels of the test layouts correctly, and 149 of its 150 latent values carry information. Layouts decoded from random vectors $z\sim\mathcal{N}(0,I)$ look like RDN layouts: they are random pixel patterns with 53\,\% copper, against 50\,\% in the dataset. Decoded layouts therefore lie in the region where the surrogate was trained. Fig.~\ref{fig:vae} shows test layouts, their reconstructions by the two VAEs, and layouts decoded from random vectors.
+
+\begin{figure}[!t]
+\centering
+\fig[width=\columnwidth]{fig_vae}
+\caption{RDN test layouts, their reconstructions by the VAE with $d=150$ and with $d=64$ (wrong pixels in red; right: share of correct pixels), and layouts decoded from random vectors $z$.}
+\label{fig:vae}
+\end{figure}
+
+%=====================================================================
+\begin{figure*}[!t]
+\centering
+\fig[width=0.96\textwidth]{fig_pipeline}
+\caption{Design method. (a) VAE of RDN layouts and (b) surrogate RDN108000, both trained once. (c) One generation of MOIPSO in the VAE space, steps 1--6: the particles are decoded into layouts, the surrogate predicts their reflection, the three objectives are computed, the archive (drawn over the RDN dataset) is updated, and the PSO update moves the particles to the next generation. (d) CST check of the designs selected from the final archive.}
+\label{fig:pipeline}
+\end{figure*}
+
+\section{Inverse Design Method}\label{sec:inverse}
+
+\subsection{Design Goal: In-Phase Reflector}
+A metal ground plane reflects a wave with a phase of $180^\circ$: the reflected field cancels the incident one at the surface, so an antenna placed close to a metal plane radiates poorly. An artificial magnetic conductor (AMC), or high-impedance surface, reflects instead with a phase near $0^\circ$ (in phase), which allows low-profile antennas to be placed directly above it \cite{sievenpiper,yang_ebg}. The usable band of an AMC is commonly taken as the band in which the reflection phase lies between $-90^\circ$ and $+90^\circ$ \cite{sievenpiper}. For a thin ground-backed cell like this one, the bandwidth is limited by the substrate thickness, and achieving a wide in-phase band without losses is the main design challenge. Since this goal depends only on the co-polarized reflection, it suits the co-polarized surrogate directly. The design targets X-band, with the in-phase band around $f_0=10$\,GHz.
+
+\subsection{Phase Reference}
+The phase stored in the dataset, and computed by the CST model of this work in the same way, refers to the plane of the Floquet port, a distance $\Delta$ above the top of the cell. Moving the reference to the cell surface multiplies the reflection coefficient by $e^{j2k\Delta}$, with $k=2\pi f/c$. $\Delta$ was determined by simulating the empty cell (substrate and ground only) in CST and comparing its phase with the analytic reflection coefficient of a grounded dielectric slab, $(Z_{\mathrm{in}}-\eta_0)/(Z_{\mathrm{in}}+\eta_0)$ with $Z_{\mathrm{in}}=j(\eta_0/\sqrt{\varepsilon_r})\tan(\beta t)$: with $\Delta=10.705$\,mm the two agree to within $0.03^\circ$ on average over 2--12\,GHz. The same reference is used for the dataset, the surrogate and the CST results, and all phases below refer to the cell surface.
+
+\subsection{Three Objectives}
+Each design is scored by three numbers, all with a physical unit:
+\begin{enumerate}
+\item \emph{In-phase bandwidth} $B$ (\%), to be maximized: the fractional bandwidth $2(f_{\mathrm{hi}}-f_{\mathrm{lo}})/(f_{\mathrm{hi}}+f_{\mathrm{lo}})$ of the band around $f_0=10$\,GHz in which the surface reflection phase stays within $\pm90^\circ$. If the phase at $f_0$ is outside $\pm90^\circ$, $B=0$.
+\item \emph{Lowest reflection in the band} $L$ (dB), to be maximized: the smallest $20\log_{10}|r_{xx}|$ inside that band. A random layout can produce narrow resonances in which power is absorbed or converted to the other polarization; such dips inside the band make the reflector lossy. $L$ close to 0\,dB means the band is free of them.
+\item \emph{Fragile features} $D$ (count), to be minimized: the number of places in which two copper pixels touch only at a corner, plus the number of isolated single copper pixels. A corner-only contact has zero width: whether it conducts depends on the etching tolerance of the board and, in simulation, on the meshing. An isolated pixel is easily lost in etching. Both make the fabricated response uncertain. A typical RDN layout has about 38 such features.
+\end{enumerate}
+For the optimizer, each objective is mapped to a penalty between 0 (ideal) and 1 (poor): $(30-B)/30$, $-L/20$\,dB and $D/60$. A design whose phase at $f_0$ lies outside $\pm90^\circ$ receives an additional penalty proportional to the phase error, which guides the swarm towards the in-phase condition. A design is regarded as meeting the specification when $B\geq10\,\%$, $L\geq-1$\,dB and $D\leq5$.
+
+The three objectives compete. In the RDN dataset, the layouts with the widest in-phase bands around 10\,GHz have deep dips inside the band and many fragile features: no dataset layout with $B\geq10\,\%$ and $L\geq-1$\,dB has fewer than 17 fragile features. The result of the optimization is therefore a Pareto front: a set of designs in which none is better than another in all three objectives.
+
+\subsection{Comparing Fronts: The Hypervolume}
+Design $a$ dominates design $b$ if $a$ is at least as good as $b$ in every objective and better in at least one. A design that no other design dominates is Pareto-optimal, and the set of such designs among all designs found is the Pareto front. Two fronts are hard to compare by eye, because each consists of many designs and one front can be better in one region of the objective space and worse in another. The fronts are therefore compared by the hypervolume (HV) \cite{zitzler_hv}, the standard single-number measure of a front in multi-objective optimization. Let $\mathbf p=(p_1,p_2,p_3)$ be the three penalties of a design, so that $\mathbf 0$ is the ideal point and $\mathbf 1=(1,1,1)$ the reference point, the worst value of every objective. Each design of the front $P$ dominates the box between its penalty point and the reference point, and the HV is the volume of the union of these boxes,
+\begin{equation}
+\mathrm{HV}(P)=\mathrm{vol}\Big(\bigcup_{\mathbf p\in P}\,[p_1,1]\times[p_2,1]\times[p_3,1]\Big).
+\label{eq:hv}
+\end{equation}
+Because the penalties lie between 0 and 1, the HV lies between 0 and 1. It is 1 only if one design is ideal in all three objectives, and it grows whenever a design is added that is not dominated by the front, whether it moves the front closer to the ideal point or extends it to a new trade-off. A larger HV therefore means a front that is better, wider, or both. Equation~\eqref{eq:hv} is computed by Monte Carlo integration: \num{200000} random points are drawn uniformly in the unit cube, and the HV is the fraction of them that is dominated by at least one design of the front. The statistical error of this estimate is below 0.002 (below 0.003 for the progress curves of Fig.~\ref{fig:pareto}(b), which use \num{40000} points). The fronts of the searches (scored by the surrogate) and the front of the RDN dataset (scored with its CST spectra) are evaluated with the same penalties and the same reference point, so their HVs can be compared directly.
+
+\subsection{MOIPSO in the Latent Space}
+The improved multi-objective particle swarm optimizer (MOIPSO) of \cite{moipso} is used with the settings of Table~\ref{tab:moipso}. Each particle $i$ has a position $z_i$ in the latent space, restricted to $[-3,3]^{150}$, and a velocity $v_i$. In every generation,
+\begin{equation}
+v_i\leftarrow\omega v_i+c_1(p_i-z_i)+c_2(g_i-z_i),\qquad z_i\leftarrow z_i+v_i ,
+\end{equation}
+where $p_i$ is the best position the particle has found itself and $g_i$ a leader taken from the archive described below. The inertia $\omega$ decreases linearly from 0.9 to 0.4, so that the swarm first explores and later converges. The factors $c_1=2.05|\cos2\pi\rho_1|$ and $c_2=2.05|\sin2\pi\rho_2|$, with random $\rho_1,\rho_2$ drawn every generation, balance the pull towards the particle's own best and towards the leader; this is the main change of MOIPSO over the standard swarm.
+
+\emph{Archive and leaders.} An external archive keeps the best trade-off designs found so far, up to 50. The objective space is divided into a grid of boxes, and leaders are chosen preferably from boxes with few archive members, which keeps the front spread out \cite{mopso}. When the archive is full, members in crowded regions are removed first \cite{nsga2}. Since many latent vectors decode to the same layout, the archive keeps one entry per layout.
+
+\emph{Mutation and bounds.} In every generation, half of the particles receive a random Gaussian step, whose size decreases from 10\,\% to 2\,\% of the search range over the run, to escape local optima. Particles that leave the box $[-3,3]^{150}$ are reflected back, and each velocity component is limited to 0.5.
+
+\emph{Personal best.} A particle's best position $p_i$ is replaced when the new position is better in all objectives, and with probability 0.5 when neither is better.
+
+\begin{table}[!t]
+\caption{MOIPSO Settings}
+\label{tab:moipso}
+\centering
+\footnotesize
+\begin{tabular}{@{}ll@{}}
+\toprule
+Setting & Value \\
+\midrule
+Search space & VAE latent vector, $z\in[-3,3]^{150}$ \\
+Particles / generations & 200 / 150 (standard); 1000 / 300 (long) \\
+Objectives & $B$ (\%), $L$ (dB), $D$ (count) \\
+Archive size & 50, grid-based leader selection \\
+Inertia $\omega$ & 0.9 to 0.4, linear \\
+Acceleration $c_1$, $c_2$ & $2.05|\cos2\pi\rho_1|$, $2.05|\sin2\pi\rho_2|$ \\
+Mutation & half of the swarm, step 10\,\% to 2\,\% of range \\
+Maximum velocity & 0.5 per component \\
+Initial positions & random, $z\sim\mathcal{N}(0,I)$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{The Complete Loop}
+One generation of the design loop (Fig.~\ref{fig:pipeline}(c), steps 2--6) has five steps:
+\begin{enumerate}
+\item the decoder turns the latent vectors of all particles into binary layouts;
+\item the surrogate predicts $r_{xx}$ of all layouts in one batch;
+\item the three objectives are computed for each layout;
+\item the archive and the personal bests are updated;
+\item leaders are chosen and the velocities and positions are updated.
+\end{enumerate}
+No full-wave simulation is needed inside the loop. After the last generation, the archive is the predicted Pareto front, and the designs closest to the ideal (smallest sum of the three penalties) are simulated in CST (Section~\ref{sec:cst}).
+
+%=====================================================================
+\begin{figure*}[!t]
+\centering
+\fig[width=\textwidth]{fig_pareto}
+\caption{MOIPSO results. (a) Pareto fronts of the long VAE-space search and of the pixel-space search (predicted) and of the RDN dataset (CST) in the three objectives; stars: CST results of the simulated designs of Table~\ref{tab:cst}. Dips below $-20$\,dB are drawn at $-20$\,dB. (b) Hypervolume of the best front among all layouts scored so far, against the number of layouts scored; square and dotted line: the 111,000 CST-simulated dataset layouts. (c) Front of the long search after 10, 50, 150 and 300 generations, shown as in-phase bandwidth against fragile features; dashed: $B=10\,\%$ and $D=5$.}
+\label{fig:pareto}
+\end{figure*}
+
+\section{Design Results}\label{sec:invresults}
+
+\subsection{Search Cost}
+One search with 200 particles over 150 generations scores \num{30200} layouts in 7--9\,s on one GPU, including decoding; a longer search with 1000 particles over 300 generations scores \num{301000} layouts in 49\,s (Table~\ref{tab:search}). At about 10\,min per CST simulation, the long search would take almost six years of simulation. All searches use the surrogate RDN108000. The standard search was run three times with different random seeds, once with the longer budget, and once directly in pixel space for comparison.
+
+\subsection{Comparison With the Dataset}
+The 111,000 RDN layouts of the dataset, with their CST spectra, are the baseline: they show what the best existing random layout achieves for the same objectives. No dataset layout meets all three specifications at once; the outcome of each search is a set of trade-offs (Fig.~\ref{fig:pareto}).
+
+Table~\ref{tab:search} compares the searches by the hypervolume \eqref{eq:hv} of their final archives. The long search raises it from 0.295 for the dataset to 0.455, and the best in-phase bandwidth from 13.6\,\% to 18.5\,\%. Its front also reaches far fewer fragile features: it contains a design with 10.7\,\% in-phase bandwidth and a single fragile feature, and designs with 15--17\,\% bandwidth and 5--8 fragile features, whereas every dataset layout with at least 10\,\% bandwidth has 17 or more. Among the layouts it scored, \num{9077} have $B\geq10\,\%$ and $L\geq-1$\,dB, the best of them with only 4 fragile features; its final archive, which keeps 50 designs spread over the whole front, favours wider bands with deeper dips and holds none of them. The pixel-space search keeps one such design in its archive, which according to the surrogate meets the full specification: an in-phase band from 9.4 to 10.6\,GHz ($B=12.0$\,\%), a lowest reflection of $-0.70$\,dB in the band and 3 fragile features. In the dataset, the layouts with $B\geq10\,\%$ and $L\geq-1$\,dB have 17 or more fragile features. The standard VAE searches reach about the level of the dataset (HV 0.29--0.32). All search values are predicted by the surrogate; the CST check follows in Section~\ref{sec:cst}.
+
+\begin{table}[!t]
+\caption{Search Results for the X-Band In-Phase Reflector}
+\label{tab:search}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3.2pt}
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+Search & Layouts & Time & HV & Best $B$ & Fewest $D^{a}$ \\
+\midrule
+RDN dataset (CST) & \num{111000} & -- & 0.295 & 13.6\,\% & 17 \\
+VAE space (3 runs) & \num{30200} & 7--9\,s & 0.29--0.32 & 12.7--13.1\,\% & 12--14 \\
+VAE space, long & \num{301000} & 49\,s & 0.455 & \textbf{18.5\,\%} & 4 \\
+Pixel space & \num{30200} & 7\,s & \textbf{0.464} & 17.8\,\% & \textbf{3} \\
+\bottomrule
+\multicolumn{6}{@{}p{0.95\columnwidth}@{}}{\scriptsize HV: hypervolume \eqref{eq:hv} (ideal design: 1). The dataset front scored by the surrogate gives 0.282. $^{a}$Fewest fragile features among all layouts with $B\geq10\,\%$ and $L\geq-1$\,dB that the search scored (dataset: among all its layouts). Search values are predicted by the surrogate.}
+\end{tabular}
+\end{table}
+
+\subsection{Progress Over the Iterations}
+Fig.~\ref{fig:pareto}(b) shows how fast each search improves on the dataset. Its horizontal axis is the number of layouts scored by the surrogate; the dataset appears as a single point, \num{111000} layouts each simulated in CST, with a hypervolume of 0.295. The pixel-space search passes this value after about \num{12000} layouts, the standard VAE searches after \num{14000}--\num{24000} and the long search after about \num{50000}, i.e., after scoring 11--45\,\% as many layouts as the dataset contains, at a fraction of a second instead of ten minutes per layout. The standard VAE searches then level off at 0.31--0.32. The pixel-space search and the long VAE search keep improving until their last generation, to 0.48 and 0.49. (These curves count every layout scored, so their final values lie slightly above those of the 50-design archives in Table~\ref{tab:search}.) Fig.~\ref{fig:pareto}(c) shows how the front of the long search moves. After 10 generations the in-phase bandwidth is at most 11.8\,\%, and designs with $B\geq10\,\%$ have 23 or more fragile features, as the dataset layouts do. After 50 and 150 generations this number falls to 19 and 12, and after 300 generations the front reaches 18.5\,\% bandwidth and holds several designs with $B\geq10\,\%$ and 5 or fewer fragile features: the swarm moves step by step towards the target corner of the plot, and in 3-D (Fig.~\ref{fig:pareto}(a)) both searched fronts lie below the dataset front in the fragile-feature direction.
+
+\begin{figure*}[!t]
+\centering
+\fig[width=\textwidth]{fig_cst_verification}
+\caption{All nine designs of Table~\ref{tab:cst}, designs 1--6 of the long VAE search and P1--P3 of the pixel-space search: layout, $|r_{xx}|$ and surface reflection phase, predicted by the surrogate (dashed) and simulated in CST (solid). Shaded: in-phase band (blue: predicted, orange: CST). Dotted lines: $\pm90^\circ$.}
+\label{fig:cst}
+\end{figure*}
+
+\subsection{VAE Space or Pixel Space}
+For comparison, the swarm was also run directly on the 256 pixels, rounding every particle position to 0 or 1 before scoring. With the same number of evaluations as a standard VAE search, it reaches a larger hypervolume (0.464 against 0.29--0.32), slightly above the long VAE search with ten times the budget, and it is the only search whose final archive holds a design predicted to meet the full specification. For random layouts, therefore, the VAE does not make the search easier. As shown in Section~\ref{sec:vae}, its latent space must be about as large as the layout itself, and since many latent vectors decode to the same layout, part of the swarm's moves do not change the layout at all. What makes a search over $10^4$--$10^5$ layouts affordable is the surrogate, in either space.
+
+%=====================================================================
+\section{CST Verification}\label{sec:cst}
+
+\subsection{CST Model of the Unit Cell}
+To simulate the designs, the unit cell was rebuilt in CST Studio Suite with the published geometry and materials: $16\times16$ copper pixels of $0.5\times0.5\times0.018$\,mm with a 1\,mm margin, $\varepsilon_r=2.65$, $\tan\delta=0.003$, a 0.18\,mm copper ground, unit-cell boundaries in $x$ and $y$, Floquet ports for the two polarizations, and the frequency-domain solver from 2 to 12\,GHz. The substrate is 1.0\,mm thick. The phase reference of the model, 10.705\,mm above the cell, was determined from the empty cell (Section~\ref{sec:inverse}). A difference between surrogate and CST for a new design therefore shows the error of the surrogate on that design.
+
+\begin{table}[!t]
+\caption{Prediction vs.\ CST for the Selected Designs}
+\label{tab:cst}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lccccccc@{}}
+\toprule
+ & \multicolumn{2}{c}{Error} & \multicolumn{2}{c}{$B$ (\%)} & \multicolumn{2}{c}{$L$ (dB)} & \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+Design & MSE & Phase & Pred. & CST & Pred. & CST & $D$ \\
+\midrule
+\multicolumn{8}{@{}l}{\emph{VAE space, long search}} \\
+1 & 0.56 & 2.3$^\circ$ & 10.7 & 10.8 & $-1.55$ & $-1.41$ & 1 \\
+2 & 0.10 & 3.0$^\circ$ & 9.2 & \textbf{11.4} & $-0.62$ & $\mathbf{-0.38}$ & \textbf{3} \\
+3 & 0.28 & 3.9$^\circ$ & 12.9 & 12.0 & $-2.41$ & $-2.66$ & 14 \\
+4 & 1.18 & 2.3$^\circ$ & 12.8 & 13.7 & $-3.08$ & $-4.75$ & 12 \\
+5 & 1.76 & 2.8$^\circ$ & 14.2 & 16.3 & $-3.53$ & $-5.28$ & 18 \\
+6 & 0.91 & 2.4$^\circ$ & 13.7 & 15.7 & $-6.55$ & $-8.06$ & 11 \\
+\multicolumn{8}{@{}l}{\emph{Pixel space}} \\
+P1 & 0.12 & 2.3$^\circ$ & 12.0 & \textbf{13.1} & $-0.70$ & $\mathbf{-0.49}$ & \textbf{3} \\
+P2 & 0.45 & 4.0$^\circ$ & 12.9 & 14.8 & $-2.59$ & $-3.25$ & 4 \\
+P3 & 0.59 & 2.3$^\circ$ & 13.2 & 14.1 & $-1.98$ & $-3.03$ & 7 \\
+\midrule
+RDN test set & 2.4 & 3.9$^\circ$ & -- & -- & -- & -- & -- \\
+\bottomrule
+\multicolumn{8}{@{}p{0.95\columnwidth}@{}}{\scriptsize MSE of $|r_{xx}|$ ($\times10^{-3}$) and mean phase difference over 2--12\,GHz between prediction and CST. $D$: fragile features, a property of the layout. Bold: designs that meet the full specification ($B\geq10\,\%$, $L\geq-1$\,dB, $D\leq5$) in CST.}
+\end{tabular}
+\end{table}
+
+\subsection{Verification of the Designs}
+The optimizer looks for layouts with the best predicted response. Among hundreds of thousands of layouts it may also find some whose response the surrogate predicts too optimistically, so the test error alone does not tell how accurate the predictions for the selected designs are. The six designs of the long VAE search and the three designs of the pixel-space search closest to the ideal (smallest sum of the three penalties) were simulated in CST, one simulation each of about 10\,min. Table~\ref{tab:cst} reports, for each design, the MSE of $|r_{xx}|$ and the mean phase difference between prediction and CST over 2--12\,GHz, and the three objectives as predicted and as simulated. Fig.~\ref{fig:cst} compares the spectra of all nine designs.
+
+\emph{Magnitude.} The MSE of $|r_{xx}|$ between prediction and CST lies between $\e{0.10}{-3}$ and $\e{1.8}{-3}$, with a mean of $\e{0.66}{-3}$, for all nine designs below the surrogate's test error on RDN ($\e{2.4}{-3}$). The optimizer has therefore not driven the designs into a region where the surrogate is unreliable. Where the surrogate predicts no strong dip in the band (designs 1, 2 and P1), the simulated in-band loss is even lower than predicted, e.g., $-0.38$ instead of $-0.62$\,dB for design~2. Where it predicts a dip (designs 3--6, P2 and P3), the dip is at the right frequency but 0.3--1.8\,dB deeper in CST (Fig.~\ref{fig:cst}, designs 4--6).
+
+\emph{Phase.} The mean phase difference is 2.3--4.0$^\circ$, the same as the test error of $3.9^\circ$. Even where the reflection phase falls steeply through $\pm90^\circ$, the edges of the in-phase band are predicted within 0.2\,GHz (Table~\ref{tab:cst} and Fig.~\ref{fig:cst}).
+
+\emph{Objectives.} The simulated in-phase bandwidths are within 1 percentage point of the prediction for designs 1, 3, 4 and P3 and 1.1--2.2 points wider for the others; every simulated design has at least 10.8\,\% in-phase bandwidth. Two designs meet the full specification in CST: design~2 (11.4\,\%, $-0.38$\,dB, 3 fragile features) and design~P1 (13.1\,\%, $-0.49$\,dB, 3 fragile features). No layout of the dataset meets it, and no dataset layout has both a wider in-phase band and a lower in-band loss than either of them. Designs 4, 5, 6, P2 and P3 have simulated in-phase bands of 13.7--16.3\,\%, wider than that of any dataset layout (at most 13.6\,\%), at the price of deeper dips in the band. Design~1 (10.8\,\%, $-1.41$\,dB) has a single fragile feature, whereas the 43 dataset layouts that are at least as good in bandwidth and loss have 17 or more.
+
+%=====================================================================
+\section{Discussion}
+\emph{Accuracy where the optimizer searches.} The optimizer selects the best predictions among many thousands, so the selected designs are where an over-optimistic surrogate would show first. In CST the magnitude and phase errors of the selected designs are no larger than the test errors, and the in-phase band edges are predicted within 0.2\,GHz, so the surrogate can be trusted for the bandwidth objective. The one systematic difference is the depth of predicted in-band dips: a narrow resonance that the surrogate places correctly is up to 1.8\,dB deeper in CST, because the training loss averages over all 101 frequencies and a sharp minimum covers only a few of them. A larger weight of the decibel term near resonances, or a margin on the in-band loss objective, would address this.
+
+\emph{Scope.} The surrogate is trained for normal incidence and one substrate. Other substrates, cell sizes or incidence angles need new training data, but no change to the architecture or the training settings.
+
+\emph{Design space.} For random layouts the VAE gives no compression of the search space, because the layouts cannot be compressed, and a swarm working directly on the pixels did at least as well. The VAE's value lies in structured design spaces, where the latent space is much smaller than the layout.
+
+%=====================================================================
+\section{Conclusion}
+This paper presented a surrogate model for pixelated metasurfaces that combines a convolutional backbone with pixel-wise graph attention, frequency cross-attention, a bidirectional GRU and a passive output layer. Trained separately on each of the four SUTD-PRCM layout classes with one architecture, one set of settings and the same number of layouts as MSDCNN, it has a lower error than the class-specific MSDCNN models with half or less of their parameters (48\,\% lower on shape combinations, 61\,\% lower on random layouts with 27,000 and 45\,\% with 108,000 training layouts), and the network trained on random layouts also predicts the structured classes. A reproduced edge-aware surrogate with a shallow convolutional encoder, trained in the same way, matches it only on polygons and fails on shape combinations and random layouts, which shows that the backbone, not the frequency head, decides whether one architecture suits all classes. It was shown that a VAE of random layouts needs an effective KL weight below one, and sized it accordingly. Used in place of the solver, the surrogate lets a multi-objective particle swarm explore \num{301000} layouts in 49\,s and find X-band in-phase reflectors whose Pareto front dominates that of the 111,000-layout dataset. CST simulation of nine selected designs confirms the predictions: the magnitude and phase errors are no larger than the surrogate's test errors and the in-phase band edges agree within 0.2\,GHz. Two designs meet the full specification in CST, with 11.4\,\% and 13.1\,\% in-phase bandwidth, less than 0.5\,dB in-band loss and 3 fragile features, which no dataset layout achieves, and five designs have wider in-phase bands (up to 16.3\,\%) than any dataset layout.
+
+%=====================================================================
+\begin{thebibliography}{99}
+
+\bibitem{holloway} C. L. Holloway, E. F. Kuester, J. A. Gordon, J. O'Hara, J. Booth, and D. R. Smith, ``An overview of the theory and applications of metasurfaces: The two-dimensional equivalents of metamaterials,'' \textit{IEEE Antennas Propag. Mag.}, vol. 54, no. 2, pp. 10--35, Apr. 2012.
+
+\bibitem{glybovski} S. B. Glybovski, S. A. Tretyakov, P. A. Belov, Y. S. Kivshar, and C. R. Simovski, ``Metasurfaces: From microwaves to visible,'' \textit{Phys. Rep.}, vol. 634, pp. 1--72, 2016.
+
+\bibitem{cui_coding} T. J. Cui, M. Q. Qi, X. Wan, J. Zhao, and Q. Cheng, ``Coding metamaterials, digital metamaterials and programmable metamaterials,'' \textit{Light Sci. Appl.}, vol. 3, Art. no. e218, 2014.
+
+\bibitem{sievenpiper} D. Sievenpiper, L. Zhang, R. F. J. Broas, N. G. Alexopolous, and E. Yablonovitch, ``High-impedance electromagnetic surfaces with a forbidden frequency band,'' \textit{IEEE Trans. Microw. Theory Techn.}, vol. 47, no. 11, pp. 2059--2074, Nov. 1999.
+
+\bibitem{yang_ebg} F. Yang and Y. Rahmat-Samii, ``Reflection phase characterizations of the EBG ground plane for low profile wire antenna applications,'' \textit{IEEE Trans. Antennas Propag.}, vol. 51, no. 10, pp. 2691--2703, Oct. 2003.
+
+\bibitem{khatib_review} O. Khatib, S. Ren, J. Malof, and W. J. Padilla, ``Deep learning the electromagnetic properties of metamaterials---A comprehensive review,'' \textit{Adv. Funct. Mater.}, vol. 31, no. 31, Art. no. 2101748, 2021.
+
+\bibitem{jafar_ga} S. Jafar-Zanjani, S. Inampudi, and H. Mosallaei, ``Adaptive genetic algorithm for optical metasurfaces design,'' \textit{Sci. Rep.}, vol. 8, Art. no. 11040, 2018.
+
+\bibitem{kennedy} J. Kennedy and R. Eberhart, ``Particle swarm optimization,'' in \textit{Proc. IEEE Int. Conf. Neural Netw. (ICNN)}, 1995, pp. 1942--1948.
+
+\bibitem{robinson} J. Robinson and Y. Rahmat-Samii, ``Particle swarm optimization in electromagnetics,'' \textit{IEEE Trans. Antennas Propag.}, vol. 52, no. 2, pp. 397--407, Feb. 2004.
+
+\bibitem{zhang_sr2017} Q. Zhang, X. Wan, S. Liu, J. Y. Yin, L. Zhang, and T. J. Cui, ``Shaping electromagnetic waves using software-automatically-designed metasurfaces,'' \textit{Sci. Rep.}, vol. 7, Art. no. 3588, 2017.
+
+\bibitem{coello_book} C. A. Coello Coello, G. B. Lamont, and D. A. Van Veldhuizen, \textit{Evolutionary Algorithms for Solving Multi-Objective Problems}, 2nd ed. New York, NY, USA: Springer, 2007.
+
+\bibitem{nsga2} K. Deb, A. Pratap, S. Agarwal, and T. Meyarivan, ``A fast and elitist multiobjective genetic algorithm: NSGA-II,'' \textit{IEEE Trans. Evol. Comput.}, vol. 6, no. 2, pp. 182--197, Apr. 2002.
+
+\bibitem{liu_tandem} D. Liu, Y. Tan, E. Khoram, and Z. Yu, ``Training deep neural networks for the inverse design of nanophotonic structures,'' \textit{ACS Photon.}, vol. 5, no. 4, pp. 1365--1369, 2018.
+
+\bibitem{malkiel} I. Malkiel, M. Mrejen, A. Nagler, U. Arieli, L. Wolf, and H. Suchowski, ``Plasmonic nanostructure design and characterization via deep learning,'' \textit{Light Sci. Appl.}, vol. 7, Art. no. 60, 2018.
+
+\bibitem{nadell} C. C. Nadell, B. Huang, J. M. Malof, and W. J. Padilla, ``Deep learning for accelerated all-dielectric metasurface design,'' \textit{Opt. Express}, vol. 27, no. 20, pp. 27523--27535, 2019.
+
+\bibitem{an_acsphot} S. An, C. Fowler, B. Zheng, M. Y. Shalaginov, H. Tang, H. Li, L. Zhou, J. Ding, A. M. Agarwal, C. Rivero-Baleine, K. A. Richardson, T. Gu, J. Hu, and H. Zhang, ``A deep learning approach for objective-driven all-dielectric metasurface design,'' \textit{ACS Photon.}, vol. 6, no. 12, pp. 3196--3207, 2019.
+
+\bibitem{liu_gan} Z. Liu, D. Zhu, S. P. Rodrigues, K.-T. Lee, and W. Cai, ``Generative model for the inverse design of metasurfaces,'' \textit{Nano Lett.}, vol. 18, no. 10, pp. 6570--6576, 2018.
+
+\bibitem{ma_vae} W. Ma, F. Cheng, Y. Xu, Q. Wen, and Y. Liu, ``Probabilistic representation and inverse design of metamaterials based on a deep generative model with semi-supervised learning,'' \textit{Adv. Mater.}, vol. 31, no. 35, Art. no. 1901111, 2019.
+
+\bibitem{jiang_glonet} J. Jiang and J. A. Fan, ``Global optimization of dielectric metasurfaces using a physics-driven neural network,'' \textit{Nano Lett.}, vol. 19, no. 8, pp. 5366--5372, 2019.
+
+\bibitem{qiu_advsci} T. Qiu, X. Shi, J. Wang, Y. Li, S. Qu, Q. Cheng, T. Cui, and S. Sui, ``Deep learning: A rapid and efficient route to automatic metasurface design,'' \textit{Adv. Sci.}, vol. 6, no. 12, Art. no. 1900128, 2019.
+
+\bibitem{msdcnn} T. Zhang, C. Y. Kee, Y. S. Ang, and L. K. Ang, ``Deep learning-based design of broadband GHz complex and random metasurfaces,'' \textit{APL Photon.}, vol. 6, no. 10, Art. no. 106101, 2021.
+
+\bibitem{sutd} T. Zhang, Y. S. Ang, E. Li, C. Y. Kee, and L. K. Ang, ``SUTD-PRCM dataset and neural architecture search approach for complex metasurface design,'' \textit{IEEE Antennas Wireless Propag. Lett.}, vol. 21, no. 7, pp. 1317--1321, Jul. 2022.
+
+\bibitem{resnet} K. He, X. Zhang, S. Ren, and J. Sun, ``Deep residual learning for image recognition,'' in \textit{Proc. IEEE Conf. Comput. Vis. Pattern Recognit. (CVPR)}, 2016, pp. 770--778.
+
+\bibitem{pganet} W. Zhang, Q. Ding, J. Hu, Y. Ma, and M. Lu, ``Pixel-wise graph attention networks for person re-identification,'' 2023, \textit{arXiv:2307.09183}.
+
+\bibitem{gat} P. Veli\v{c}kovi\'{c}, G. Cucurull, A. Casanova, A. Romero, P. Li\`{o}, and Y. Bengio, ``Graph attention networks,'' in \textit{Proc. Int. Conf. Learn. Represent. (ICLR)}, 2018.
+
+\bibitem{nonlocal} X. Wang, R. Girshick, A. Gupta, and K. He, ``Non-local neural networks,'' in \textit{Proc. IEEE Conf. Comput. Vis. Pattern Recognit. (CVPR)}, 2018, pp. 7794--7803.
+
+\bibitem{edgeaware} C. Zhang, W. Zhu, L. Wu, and F. Long, ``Edge-aware cross-attention surrogate for phase-stable metasurface reflection,'' \textit{IEEE Antennas Wireless Propag. Lett.}, vol. 25, no. 6, pp. 2461--2465, Jun. 2026.
+
+\bibitem{vaswani} A. Vaswani, N. Shazeer, N. Parmar, J. Uszkoreit, L. Jones, A. N. Gomez, {\L}. Kaiser, and I. Polosukhin, ``Attention is all you need,'' in \textit{Proc. Adv. Neural Inf. Process. Syst. (NeurIPS)}, 2017, pp. 5998--6008.
+
+\bibitem{kiarash_npj} Y. Kiarashinejad, S. Abdollahramezani, and A. Adibi, ``Deep learning approach based on dimensionality reduction for designing electromagnetic nanostructures,'' \textit{npj Comput. Mater.}, vol. 6, Art. no. 12, 2020.
+
+\bibitem{niu_rcs} R. Niu, L. Si, W. Zhu, X. Bao, K. Zhu, H. Sun, and F. Yang, ``Hybrid neural network-driven inverse design of metasurface for ultrabroadband RCS reduction,'' \textit{IEEE Trans. Antennas Propag.}, vol. 74, no. 1, pp. 837--847, Jan. 2026.
+
+\bibitem{yu_fss} C. Yu, K. Yang, X. Wu, Y. Wang, Q. Chen, W. Chen, and N. Ma, ``Hybrid VAE-PSO strategy for rapid and reliable inverse design of square-loop FSS,'' \textit{IEEE Antennas Wireless Propag. Lett.}, early access, 2026, doi: 10.1109/LAWP.2026.3691960.
+
+\bibitem{zhu_phase} R. Zhu, T. Qiu, J. Wang, S. Sui, C. Hao, T. Liu, Y. Li, M. Feng, A. Zhang, C.-W. Qiu, and S. Qu, ``Phase-to-pattern inverse design paradigm for fast realization of functional metasurfaces via transfer learning,'' \textit{Nat. Commun.}, vol. 12, Art. no. 2974, 2021.
+
+\bibitem{zhang_vaepso} J. Zhang, J. Yuan, C. Li, and B. Li, ``An inverse design framework for isotropic metasurfaces based on representation learning,'' \textit{Electronics}, vol. 11, no. 12, Art. no. 1844, 2022.
+
+\bibitem{gupta_tandem} A. Gupta, E. A. Karahan, C. Bhat, K. Sengupta, and U. K. Khankhoje, ``Tandem neural network based design of multiband antennas,'' \textit{IEEE Trans. Antennas Propag.}, vol. 71, no. 8, pp. 6308--6317, Aug. 2023.
+
+\bibitem{gupta_tl} A. Gupta and U. K. Khankhoje, ``Transfer learning based rapid design of frequency and dielectric agile antennas,'' \textit{IEEE J. Multiscale Multiphys. Comput. Techn.}, vol. 10, pp. 47--57, 2024.
+
+\bibitem{chen_bpso} S. Chen, G.-H. Sun, and K. Wang, ``Inverse design of microstrip antennas based on deep learning,'' \textit{Electronics}, vol. 14, no. 13, Art. no. 2510, 2025.
+
+\bibitem{aoun_thz} M. Aoun and A. Hussain, ``Automated optimization of terahertz nanoantenna design using a VAE--CNN reinforcement learning framework,'' \textit{Opt. Quantum Electron.}, vol. 58, Art. no. 147, 2026.
+
+\bibitem{tang_cvae} Y. Tang, K. Kojima, T. Koike-Akino, Y. Wang, P. Wu, Y. Xie, M. H. Tahersima, D. K. Jha, K. Parsons, and M. Qi, ``Generative deep learning model for inverse design of integrated nanophotonic devices,'' \textit{Laser Photon. Rev.}, vol. 14, no. 12, Art. no. 2000287, 2020.
+
+\bibitem{niu_diffusion} C. Niu, M. Phaneuf, and P. Mojabi, ``A diffusion model for multi-layered metasurface unit cell synthesis,'' \textit{IEEE Open J. Antennas Propag.}, vol. 4, pp. 654--666, 2023.
+
+\bibitem{lyu_fss} Y. Lyu, Y. Hong, and Z. N. Chen, ``Generative deep learning-enabled multiobjective synthesis of dual-polarized wide-angle loop-family frequency-selective surfaces,'' \textit{IEEE Trans. Antennas Propag.}, vol. 74, no. 1, pp. 456--466, Jan. 2026.
+
+\bibitem{khoram_gnn} E. Khoram, Z. Wu, Y. Qu, M. Zhou, and Z. Yu, ``Graph neural networks for metasurface modeling,'' \textit{ACS Photon.}, vol. 10, pp. 892--899, 2023.
+
+\bibitem{bao_gatnet} Q. Bao, D. Zhang, X. Liu, T. Ma, and J.-J. Xiao, ``GAT-Net: Inverse design of multifunctional metasurface based on graph attention network,'' \textit{Opt. Laser Technol.}, vol. 183, Art. no. 112273, 2025.
+
+\bibitem{zhang_nas} T. Zhang, C. Y. Kee, Y. S. Ang, E. Li, and L. K. Ang, ``Symmetry enhanced network architecture search for complex metasurface design,'' \textit{IEEE Access}, vol. 10, pp. 73533--73547, 2022.
+
+\bibitem{yang_review} G. Yang, Q. Xiao, Z. Zhang, Z. Yu, X. Wang, and Q. Lu, ``Exploring AI in metasurface structures with forward and inverse design,'' \textit{iScience}, vol. 28, Art. no. 111995, 2025.
+
+\bibitem{chen_gadreview} Z. N. Chen, P. Liu, Y. Kuang, Y. Lyu, B. Zhang, D. Yang, Y. He, and J.-M. Jin, ``Deep learning-enabled generative antenna design: Review and prospects,'' \textit{IEEE Trans. Antennas Propag.}, vol. 74, no. 5, pp. 4051--4066, May 2026.
+
+\bibitem{batchnorm} S. Ioffe and C. Szegedy, ``Batch normalization: Accelerating deep network training by reducing internal covariate shift,'' in \textit{Proc. Int. Conf. Mach. Learn. (ICML)}, 2015, pp. 448--456.
+
+\bibitem{layernorm} J. L. Ba, J. R. Kiros, and G. E. Hinton, ``Layer normalization,'' 2016, \textit{arXiv:1607.06450}.
+
+\bibitem{gru} K. Cho, B. van Merri\"{e}nboer, C. Gulcehre, D. Bahdanau, F. Bougares, H. Schwenk, and Y. Bengio, ``Learning phrase representations using RNN encoder--decoder for statistical machine translation,'' in \textit{Proc. Conf. Empir. Methods Nat. Lang. Process. (EMNLP)}, 2014, pp. 1724--1734.
+
+\bibitem{deepgcn} G. Li, M. M\"{u}ller, A. Thabet, and B. Ghanem, ``DeepGCNs: Can GCNs go as deep as CNNs?,'' in \textit{Proc. IEEE/CVF Int. Conf. Comput. Vis. (ICCV)}, 2019, pp. 9266--9275.
+
+\bibitem{lucarini} V. Lucarini, J. J. Saarinen, K.-E. Peiponen, and E. M. Vartiainen, \textit{Kramers--Kronig Relations in Optical Materials Research}. Berlin, Germany: Springer, 2005.
+
+\bibitem{adamw} I. Loshchilov and F. Hutter, ``Decoupled weight decay regularization,'' in \textit{Proc. Int. Conf. Learn. Represent. (ICLR)}, 2019.
+
+\bibitem{adam} D. P. Kingma and J. Ba, ``Adam: A method for stochastic optimization,'' in \textit{Proc. Int. Conf. Learn. Represent. (ICLR)}, 2015.
+
+\bibitem{kingma} D. P. Kingma and M. Welling, ``Auto-encoding variational Bayes,'' in \textit{Proc. Int. Conf. Learn. Represent. (ICLR)}, 2014.
+
+\bibitem{betavae} I. Higgins, L. Matthey, A. Pal, C. Burgess, X. Glorot, M. Botvinick, S. Mohamed, and A. Lerchner, ``$\beta$-VAE: Learning basic visual concepts with a constrained variational framework,'' in \textit{Proc. Int. Conf. Learn. Represent. (ICLR)}, 2017.
+
+\bibitem{bowman} S. R. Bowman, L. Vilnis, O. Vinyals, A. M. Dai, R. Jozefowicz, and S. Bengio, ``Generating sentences from a continuous space,'' in \textit{Proc. SIGNLL Conf. Comput. Natural Lang. Learn. (CoNLL)}, 2016, pp. 10--21.
+
+\bibitem{alemi} A. A. Alemi, B. Poole, I. Fischer, J. V. Dillon, R. A. Saurous, and K. Murphy, ``Fixing a broken ELBO,'' in \textit{Proc. Int. Conf. Mach. Learn. (ICML)}, 2018, pp. 159--168.
+
+\bibitem{zitzler_hv} E. Zitzler and L. Thiele, ``Multiobjective evolutionary algorithms: A comparative case study and the strength Pareto approach,'' \textit{IEEE Trans. Evol. Comput.}, vol. 3, no. 4, pp. 257--271, Nov. 1999.
+
+\bibitem{mopso} C. A. Coello Coello, G. T. Pulido, and M. S. Lechuga, ``Handling multiple objectives with particle swarm optimization,'' \textit{IEEE Trans. Evol. Comput.}, vol. 8, no. 3, pp. 256--279, Jun. 2004.
+
+\bibitem{moipso} J. Shao, Y. Lu, Y. Sun, and L. Zhao, ``An improved multi-objective particle swarm optimization algorithm for the design of foundation pit of rail transit upper cover project,'' \textit{Sci. Rep.}, vol. 15, Art. no. 10403, 2025.
+
+\end{thebibliography}
+
+\end{document}

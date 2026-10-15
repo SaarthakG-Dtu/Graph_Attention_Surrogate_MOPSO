@@ -1,0 +1,543 @@
+[desktop-42qia8u] range 0-30000: 7 done, 29993 to go (substrate FR-4 (lossy), t = 1 mm)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 16:34:00  sample      7 saved    528 s  | this run 1, left in range 29992, ETA 4400.6 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 16:48:46  sample      8 saved    886 s  | this run 2, left in range 29991, ETA 5889.8 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 16:51:12  sample      9 saved    146 s  | this run 3, left in range 29990, ETA 4332.8 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 17:02:56  sample     10 saved    704 s  | this run 4, left in range 29989, ETA 4715.9 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 17:30:35  sample     11 saved   1659 s  | this run 5, left in range 29988, ETA 6536.6 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 17:44:36  sample     12 saved    840 s  | this run 6, left in range 29987, ETA 6613.8 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 17:48:39  sample     13 saved    243 s  | this run 7, left in range 29986, ETA 5958.5 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 18:05:22  sample     14 saved   1003 s  | this run 8, left in range 29985, ETA 6257.7 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 18:08:50  sample     15 saved    208 s  | this run 9, left in range 29984, ETA 5754.8 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 18:15:05  sample     16 saved    375 s  | this run 10, left in range 29983, ETA 5491.4 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 18:19:42  sample     17 saved    277 s  | this run 11, left in range 29982, ETA 5201.4 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 18:32:33  sample     18 saved    772 s  | this run 12, left in range 29981, ETA 5303.3 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 18:36:19  sample     19 saved    225 s  | this run 13, left in range 29980, ETA 5039.5 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 18:39:30  sample     20 saved    191 s  | this run 14, left in range 29979, ETA 4793.2 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 18:43:35  sample     21 saved    244 s  | this run 15, left in range 29978, ETA 4609.2 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 18:57:09  sample     22 saved    815 s  | this run 16, left in range 29977, ETA 4744.8 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 19:00:18  sample     23 saved    189 s  | this run 17, left in range 29976, ETA 4558.2 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 19:12:21  sample     24 saved    723 s  | this run 18, left in range 29975, ETA 4639.2 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 19:33:51  sample     25 saved   1290 s  | this run 19, left in range 29974, ETA 4960.3 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 19:43:32  sample     26 saved    580 s  | this run 20, left in range 29973, ETA 4953.7 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 19:51:42  sample     27 saved    490 s  | this run 21, left in range 29972, ETA 4912.1 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 19:57:14  sample     28 saved    332 s  | this run 22, left in range 29971, ETA 4814.3 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 20:11:58  sample     29 saved    884 s  | this run 23, left in range 29970, ETA 4924.7 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 20:17:09  sample     30 saved    311 s  | this run 24, left in range 29969, ETA 4827.3 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 20:25:26  sample     31 saved    497 s  | this run 25, left in range 29968, ETA 4799.6 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 20:37:12  sample     32 saved    706 s  | this run 26, left in range 29967, ETA 4840.8 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 20:41:55  sample     33 saved    283 s  | this run 27, left in range 29966, ETA 4748.6 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 20:47:02  sample     34 saved    307 s  | this run 28, left in range 29965, ETA 4670.2 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 20:58:13  sample     35 saved    670 s  | this run 29, left in range 29964, ETA 4701.4 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 21:01:42  sample     36 saved    209 s  | this run 30, left in range 29963, ETA 4602.5 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 21:16:09  sample     37 saved    867 s  | this run 31, left in range 29962, ETA 4686.7 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 21:18:35  sample     38 saved    146 s  | this run 32, left in range 29961, ETA 4578.1 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 21:26:13  sample     39 saved    458 s  | this run 33, left in range 29960, ETA 4554.8 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 21:29:28  sample     40 saved    195 s  | this run 34, left in range 29959, ETA 4468.3 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 21:33:00  sample     41 saved    212 s  | this run 35, left in range 29958, ETA 4390.8 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 21:35:12  sample     42 saved    132 s  | this run 36, left in range 29957, ETA 4299.3 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 21:40:09  sample     43 saved    298 s  | this run 37, left in range 29956, ETA 4249.9 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 21:55:37  sample     44 saved    927 s  | this run 38, left in range 29955, ETA 4341.0 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 22:11:19  sample     45 saved    942 s  | this run 39, left in range 29954, ETA 4430.5 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 22:13:51  sample     46 saved    152 s  | this run 40, left in range 29953, ETA 4351.2 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 22:17:53  sample     47 saved    242 s  | this run 41, left in range 29952, ETA 4294.0 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 22:21:21  sample     48 saved    208 s  | this run 42, left in range 29951, ETA 4232.8 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 22:26:20  sample     49 saved    299 s  | this run 43, left in range 29950, ETA 4192.2 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 22:31:38  sample     50 saved    318 s  | this run 44, left in range 29949, ETA 4156.9 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 22:43:33  sample     51 saved    715 s  | this run 45, left in range 29948, ETA 4196.5 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 22:47:38  sample     52 saved    244 s  | this run 46, left in range 29947, ETA 4149.4 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 22:52:03  sample     53 saved    265 s  | this run 47, left in range 29946, ETA 4107.9 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 22:54:25  sample     54 saved    142 s  | this run 48, left in range 29945, ETA 4046.8 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 23:01:10  sample     55 saved    405 s  | this run 49, left in range 29944, ETA 4032.9 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 23:09:53  sample     56 saved    522 s  | this run 50, left in range 29943, ETA 4039.0 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 23:24:26  sample     57 saved    874 s  | this run 51, left in range 29942, ETA 4096.3 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 23:31:02  sample     58 saved    396 s  | this run 52, left in range 29941, ETA 4014.7 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 23:38:13  sample     59 saved    431 s  | this run 53, left in range 29940, ETA 4061.9 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-12 23:52:33  sample     60 saved    859 s  | this run 54, left in range 29939, ETA 4087.6 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 00:06:20  sample     61 saved    827 s  | this run 55, left in range 29938, ETA 3949.1 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 00:17:35  sample     62 saved    676 s  | this run 56, left in range 29937, ETA 3921.5 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 00:19:58  sample     63 saved    143 s  | this run 57, left in range 29936, ETA 3904.6 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 00:32:27  sample     64 saved    749 s  | this run 58, left in range 29935, ETA 3862.3 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 00:34:53  sample     65 saved    145 s  | this run 59, left in range 29934, ETA 3851.7 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 00:44:46  sample     66 saved    593 s  | this run 60, left in range 29933, ETA 3887.9 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 00:59:00  sample     67 saved    854 s  | this run 61, left in range 29932, ETA 3983.8 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 01:01:02  sample     68 saved    122 s  | this run 62, left in range 29931, ETA 3875.6 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 01:03:28  sample     69 saved    147 s  | this run 63, left in range 29930, ETA 3862.4 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 01:12:41  sample     70 saved    553 s  | this run 64, left in range 29929, ETA 3922.4 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 01:21:28  sample     71 saved    527 s  | this run 65, left in range 29928, ETA 3969.2 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 01:24:02  sample     72 saved    154 s  | this run 66, left in range 29927, ETA 3859.3 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 01:28:24  sample     73 saved    262 s  | this run 67, left in range 29926, ETA 3871.3 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 01:30:31  sample     74 saved    127 s  | this run 68, left in range 29925, ETA 3772.0 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 01:38:10  sample     75 saved    459 s  | this run 69, left in range 29924, ETA 3633.7 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 01:50:42  sample     76 saved    753 s  | this run 70, left in range 29923, ETA 3662.2 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 02:01:42  sample     77 saved    660 s  | this run 71, left in range 29922, ETA 3690.3 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 02:04:49  sample     78 saved    187 s  | this run 72, left in range 29921, ETA 3666.0 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 02:06:52  sample     79 saved    123 s  | this run 73, left in range 29920, ETA 3539.4 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 02:17:41  sample     80 saved    650 s  | this run 74, left in range 29919, ETA 3595.5 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 02:19:48  sample     81 saved    126 s  | this run 75, left in range 29918, ETA 3533.8 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 02:22:15  sample     82 saved    147 s  | this run 76, left in range 29917, ETA 3440.7 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 02:29:23  sample     83 saved    429 s  | this run 77, left in range 29916, ETA 3464.9 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 02:33:46  sample     84 saved    263 s  | this run 78, left in range 29915, ETA 3457.4 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 02:39:27  sample     85 saved    340 s  | this run 79, left in range 29914, ETA 3402.4 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 02:53:11  sample     86 saved    824 s  | this run 80, left in range 29913, ETA 3504.6 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 02:56:09  sample     87 saved    178 s  | this run 81, left in range 29912, ETA 3389.9 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 03:01:31  sample     88 saved    322 s  | this run 82, left in range 29911, ETA 3419.1 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 03:03:47  sample     89 saved    136 s  | this run 83, left in range 29910, ETA 3365.4 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 03:14:57  sample     90 saved    670 s  | this run 84, left in range 29909, ETA 3444.2 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 03:22:21  sample     91 saved    444 s  | this run 85, left in range 29908, ETA 3482.7 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 03:32:48  sample     92 saved    627 s  | this run 86, left in range 29907, ETA 3564.8 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 03:45:39  sample     93 saved    771 s  | this run 87, left in range 29906, ETA 3643.3 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 03:53:05  sample     94 saved    446 s  | this run 88, left in range 29905, ETA 3563.3 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 04:03:05  sample     95 saved    600 s  | this run 89, left in range 29904, ETA 3506.2 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 04:13:08  sample     96 saved    603 s  | this run 90, left in range 29903, ETA 3581.1 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 04:20:43  sample     97 saved    455 s  | this run 91, left in range 29902, ETA 3616.4 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 04:24:29  sample     98 saved    226 s  | this run 92, left in range 29901, ETA 3619.3 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 04:28:32  sample     99 saved    243 s  | this run 93, left in range 29900, ETA 3609.8 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 04:38:20  sample    100 saved    588 s  | this run 94, left in range 29899, ETA 3654.5 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 04:40:41  sample    101 saved    140 s  | this run 95, left in range 29898, ETA 3559.0 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 04:56:20  sample    102 saved    940 s  | this run 96, left in range 29897, ETA 3674.4 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 05:00:52  sample    103 saved    272 s  | this run 97, left in range 29896, ETA 3675.3 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 05:03:02  sample    104 saved    130 s  | this run 98, left in range 29895, ETA 3673.1 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 05:05:04  sample    105 saved    122 s  | this run 99, left in range 29894, ETA 3626.0 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 05:07:33  sample    106 saved    149 s  | this run 100, left in range 29893, ETA 3563.8 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 05:09:38  sample    107 saved    125 s  | this run 101, left in range 29892, ETA 3439.4 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 05:12:44  sample    108 saved    187 s  | this run 102, left in range 29891, ETA 3404.5 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 05:22:41  sample    109 saved    597 s  | this run 103, left in range 29890, ETA 3431.9 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 05:36:25  sample    110 saved    824 s  | this run 104, left in range 29889, ETA 3426.0 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 05:45:22  sample    111 saved    537 s  | this run 105, left in range 29888, ETA 3377.6 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 05:59:48  sample    112 saved    866 s  | this run 106, left in range 29887, ETA 3409.2 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 06:06:43  sample    113 saved    415 s  | this run 107, left in range 29886, ETA 3454.2 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 06:09:36  sample    114 saved    174 s  | this run 108, left in range 29885, ETA 3358.5 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 06:15:56  sample    115 saved    380 s  | this run 109, left in range 29884, ETA 3397.3 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 06:28:28  sample    116 saved    752 s  | this run 110, left in range 29883, ETA 3423.5 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 06:39:40  sample    117 saved    672 s  | this run 111, left in range 29882, ETA 3393.3 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 06:52:55  sample    118 saved    794 s  | this run 112, left in range 29881, ETA 3504.8 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 07:05:40  sample    119 saved    765 s  | this run 113, left in range 29880, ETA 3607.3 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 07:14:53  sample    120 saved    553 s  | this run 114, left in range 29879, ETA 3607.2 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 07:27:00  sample    121 saved    727 s  | this run 115, left in range 29878, ETA 3640.3 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 07:29:51  sample    122 saved    171 s  | this run 116, left in range 29877, ETA 3643.1 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 07:39:47  sample    123 saved    596 s  | this run 117, left in range 29876, ETA 3698.3 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 07:54:56  sample    124 saved    909 s  | this run 118, left in range 29875, ETA 3828.1 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 07:57:30  sample    125 saved    154 s  | this run 119, left in range 29874, ETA 3777.4 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 08:01:00  sample    126 saved    210 s  | this run 120, left in range 29873, ETA 3687.2 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 08:03:49  sample    127 saved    169 s  | this run 121, left in range 29872, ETA 3605.6 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 08:12:39  sample    128 saved    530 s  | this run 122, left in range 29871, ETA 3662.5 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 08:19:58  sample    129 saved    439 s  | this run 123, left in range 29870, ETA 3714.8 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 08:23:02  sample    130 saved    183 s  | this run 124, left in range 29869, ETA 3637.3 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 08:25:57  sample    131 saved    175 s  | this run 125, left in range 29868, ETA 3645.3 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 08:34:16  sample    132 saved    499 s  | this run 126, left in range 29867, ETA 3703.7 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 08:41:49  sample    133 saved    453 s  | this run 127, left in range 29866, ETA 3707.6 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 08:48:04  sample    134 saved    375 s  | this run 128, left in range 29865, ETA 3726.0 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 09:03:56  sample    135 saved    952 s  | this run 129, left in range 29864, ETA 3827.5 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 09:11:47  sample    136 saved    470 s  | this run 130, left in range 29863, ETA 3768.6 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 09:18:43  sample    137 saved    416 s  | this run 131, left in range 29862, ETA 3807.9 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 09:22:37  sample    138 saved    234 s  | this run 132, left in range 29861, ETA 3793.2 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 09:35:33  sample    139 saved    775 s  | this run 133, left in range 29860, ETA 3899.2 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 09:42:16  sample    140 saved    403 s  | this run 134, left in range 29859, ETA 3854.9 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 09:49:26  sample    141 saved    430 s  | this run 135, left in range 29858, ETA 3852.5 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 09:51:27  sample    142 saved    121 s  | this run 136, left in range 29857, ETA 3768.5 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 09:55:00  sample    143 saved    213 s  | this run 137, left in range 29856, ETA 3675.7 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 10:10:12  sample    144 saved    912 s  | this run 138, left in range 29855, ETA 3752.8 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 10:12:58  sample    145 saved    166 s  | this run 139, left in range 29854, ETA 3680.8 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 10:16:16  sample    146 saved    198 s  | this run 140, left in range 29853, ETA 3613.5 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 10:28:34  sample    147 saved    738 s  | this run 141, left in range 29852, ETA 3660.4 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 10:31:20  sample    148 saved    166 s  | this run 142, left in range 29851, ETA 3650.3 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 10:37:49  sample    149 saved    389 s  | this run 143, left in range 29850, ETA 3674.2 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 10:53:25  sample    150 saved    936 s  | this run 144, left in range 29849, ETA 3731.8 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 11:06:06  sample    151 saved    762 s  | this run 145, left in range 29848, ETA 3834.6 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 11:22:26  sample    152 saved    979 s  | this run 146, left in range 29847, ETA 3841.1 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 11:25:19  sample    153 saved    173 s  | this run 147, left in range 29846, ETA 3824.6 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 11:34:34  sample    154 saved    555 s  | this run 148, left in range 29845, ETA 3895.0 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 11:46:30  sample    155 saved    716 s  | this run 149, left in range 29844, ETA 3993.4 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 11:48:40  sample    156 saved    130 s  | this run 150, left in range 29843, ETA 3990.1 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 11:52:33  sample    157 saved    234 s  | this run 151, left in range 29842, ETA 4008.0 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 12:01:34  sample    158 saved    541 s  | this run 152, left in range 29841, ETA 4066.5 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 12:09:27  sample    159 saved    473 s  | this run 153, left in range 29840, ETA 4045.9 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 12:22:13  sample    160 saved    766 s  | this run 154, left in range 29839, ETA 4036.0 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 12:29:11  sample    161 saved    419 s  | this run 155, left in range 29838, ETA 4016.4 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 12:34:02  sample    162 saved    290 s  | this run 156, left in range 29837, ETA 3920.7 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 12:42:12  sample    163 saved    490 s  | this run 157, left in range 29836, ETA 3933.1 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 12:44:24  sample    164 saved    132 s  | this run 158, left in range 29835, ETA 3926.1 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 12:57:03  sample    165 saved    759 s  | this run 159, left in range 29834, ETA 3988.9 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 13:00:32  sample    166 saved    209 s  | this run 160, left in range 29833, ETA 3898.7 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 13:07:18  sample    167 saved    406 s  | this run 161, left in range 29832, ETA 3854.4 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 13:13:43  sample    168 saved    385 s  | this run 162, left in range 29831, ETA 3786.5 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 13:26:53  sample    169 saved    790 s  | this run 163, left in range 29830, ETA 3790.5 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 13:39:10  sample    170 saved    737 s  | this run 164, left in range 29829, ETA 3820.9 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 13:46:45  sample    171 saved    454 s  | this run 165, left in range 29828, ETA 3775.6 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 13:50:54  sample    172 saved    249 s  | this run 166, left in range 29827, ETA 3788.5 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 14:07:13  sample    173 saved    979 s  | this run 167, left in range 29826, ETA 3851.8 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 14:12:00  sample    174 saved    287 s  | this run 168, left in range 29825, ETA 3748.6 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 14:26:12  sample    175 saved    852 s  | this run 169, left in range 29824, ETA 3864.2 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 14:28:49  sample    176 saved    157 s  | this run 170, left in range 29823, ETA 3855.2 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 14:46:48  sample    177 saved   1079 s  | this run 171, left in range 29822, ETA 4005.8 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+[desktop-42qia8u] range 0-30000: 178 done, 29822 to go (substrate FR-4 (lossy), t = 1 mm)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 16:02:30  sample    179 saved    173 s  | this run 1, left in range 29821, ETA 1432.2 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 16:10:28  sample    180 saved    477 s  | this run 2, left in range 29820, ETA 2693.3 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 16:14:47  sample    181 saved    259 s  | this run 3, left in range 29819, ETA 2511.3 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+[desktop-42qia8u] range 0-30000: 181 done, 29819 to go (substrate FR-4 (lossy), t = 1 mm)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 17:20:47  sample    178 saved    797 s  | this run 1, left in range 29818, ETA 6602.0 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 17:30:51  sample    183 saved    604 s  | this run 2, left in range 29817, ETA 5801.4 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 17:47:41  sample    184 saved   1009 s  | this run 3, left in range 29816, ETA 6654.2 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+2026-10-13 17:52:28  sample    185 saved    287 s  | this run 4, left in range 29815, ETA 5584.6 h (this worker)
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.

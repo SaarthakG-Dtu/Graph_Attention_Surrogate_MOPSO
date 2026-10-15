@@ -1,0 +1,38 @@
+{
+  "classes": [
+    "RDN"
+  ],
+  "latent_dim": 200,
+  "n_test": 11100,
+  "pixel_accuracy_mean": 1.0,
+  "pixel_accuracy_std": 0.0,
+  "exact_reconstruction_frac": 1.0,
+  "pixel_accuracy_per_class": {
+    "RDN": 1.0
+  },
+  "exact_reconstruction_per_class": {
+    "RDN": 1.0
+  },
+  "active_latent_dims": 192,
+  "prior_samples_unique_frac": 1.0,
+  "prior_min_hamming_to_train_median": 94.0,
+  "prior_copies_of_train_frac": 0.0,
+  "stats_data": {
+    "fill_mean": 0.5001826286315918,
+    "fill_std": 0.03104979544878006,
+    "neighbour_agreement": 0.4992486861861862,
+    "islands_mean": 22.4725
+  },
+  "stats_reconstruction": {
+    "fill_mean": 0.5001826286315918,
+    "fill_std": 0.03104979544878006,
+    "neighbour_agreement": 0.4992486861861862,
+    "islands_mean": 22.4725
+  },
+  "stats_prior_samples": {
+    "fill_mean": 0.5174398422241211,
+    "fill_std": 0.030968446284532547,
+    "neighbour_agreement": 0.49933291666666674,
+    "islands_mean": 20.807
+  }
+}

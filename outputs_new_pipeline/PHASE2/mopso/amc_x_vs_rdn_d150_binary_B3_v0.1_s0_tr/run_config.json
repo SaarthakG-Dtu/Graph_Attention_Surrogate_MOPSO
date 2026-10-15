@@ -1,0 +1,69 @@
+{
+  "config": {
+    "LATENT_BOUND": 3.0,
+    "LATENT_MAXVEL": 0.1,
+    "MOPSO_INIT": "prior",
+    "MOPSO_MAXGEN": 150,
+    "MOPSO_NP": 200,
+    "MOPSO_NR": 50,
+    "MOPSO_PROBLEM": "amc_x",
+    "MOPSO_SAVE_EVERY": 25,
+    "MOPSO_SEARCH_SPACE": "latent",
+    "MOPSO_SEED": 0,
+    "MOPSO_SURROGATE": "RDN:n108000",
+    "MOPSO_TRUST": 0.01,
+    "MOPSO_TRUST_CHECKERS": [
+      "RDN:n108000_nopga",
+      "RDN:n27000"
+    ],
+    "MOPSO_U_MUT": 0.5,
+    "MOPSO_VAE_TAG": "rdn_d200",
+    "MOPSO_W_END": 0.4,
+    "MOPSO_W_START": 0.9,
+    "PHASE_REF_SHIFT_MM": 10.705
+  },
+  "objectives": [
+    {
+      "name": "In-phase bandwidth (%)",
+      "kind": "inphase_fbw",
+      "f0": 10.0,
+      "ideal": 30.0,
+      "worst": 0.0,
+      "good": 10.0
+    },
+    {
+      "name": "Lowest |r| in band (dB)",
+      "kind": "inband_db",
+      "f0": 10.0,
+      "ideal": 0.0,
+      "worst": -20.0,
+      "good": -1.0
+    },
+    {
+      "name": "Fragile features",
+      "kind": "fragile",
+      "ideal": 0.0,
+      "worst": 60.0,
+      "good": 5.0
+    }
+  ],
+  "args": {
+    "problem": "amc_x",
+    "space": "binary",
+    "surrogate": "RDN:n108000",
+    "vae_tag": "rdn_d150",
+    "tag": "vs_rdn_d150_binary_B3_v0.1_s0_tr",
+    "database_only": false,
+    "gens": 150,
+    "swarm": 200,
+    "seed": 0
+  },
+  "sanity": {
+    "key": "E:\\SUTD_BENCHMARK_NOVEL_GNN\\outputs_new_pipeline\\COPOL\\RDN_n108000\\phase1_forward_best.pth@1791064396",
+    "n": 3000,
+    "split": "test",
+    "lin_mse": 0.002381807193160057,
+    "r2": 0.8106381148099899,
+    "phase_mae_deg": 3.948143243789673
+  }
+}

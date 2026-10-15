@@ -1,0 +1,19 @@
+[verify] solution_001_t1
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+[verify] solution_002_t1
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+[verify] solution_003_t1
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+[verify] solution_004_t1
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+[verify] solution_005_t1
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+[verify] solution_006_t1
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+6 designs verified -> outputs_new_pipeline/PHASE2/mopso/amc_x_sc_latent_N1000_G300_s0_tr\CST_verification

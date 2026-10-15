@@ -1,0 +1,7 @@
+  [surrogate] E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\COPOL\RDN_n108000\phase1_forward_best.pth (layout convention: physical)
+  example RDN #8144; PGA gammas [[0.20852874219417572, 0.22176070511341095, 0.23776446282863617], [0.2999291718006134, 0.35719266533851624, 0.3323376774787903], [-0.1552959382534027, -0.14815087616443634, -0.142861470580101]]
+  database front: 198 designs; example = long-search design #1: In-phase bandwidth (%) = 10.7, Lowest |r| in band (dB) = -1.55, Fragile features = 1
+warning: The `fitz` API is deprecated and will be removed in future. Use `import pymupdf` instead.
+  -> paper/figures/fig_architecture.pdf
+  -> paper/figures/fig_pipeline.pdf
+  -> paper/figures/fig_unitcell.pdf

@@ -1,0 +1,26 @@
+
+VAE-MOIPSO [amc_x / latent] -> E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\PHASE2\mopso\amc_x_s2
+  [surrogate] E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\COPOL\RDN_n108000\phase1_forward_best.pth (layout convention: physical)
+  [sanity] RDN test split n=3000: lin MSE=2.38e-03 R2=0.811 phase MAE=3.9 deg
+  objective: In-phase bandwidth (%)     ideal=30 worst=0 spec=10
+  objective: Lowest |r| in band (dB)    ideal=0 worst=-20 spec=-1
+  objective: Fragile features           ideal=0 worst=60 spec=5
+  [database] 111000 layouts: front=198  meeting the spec=0  HV=0.2952
+  gen    1/150  archive= 48  good=  0  best=11.4  -0.0595  16
+  gen   10/150  archive= 50  good=  0  best=11.4  -0.0399  12
+  gen   20/150  archive= 49  good=  0  best=11.4  -0.0376  12
+  gen   30/150  archive= 50  good=  0  best=12.4  -0.0376  12
+  gen   40/150  archive= 50  good=  0  best=12.4  -0.0374  12
+  gen   50/150  archive= 50  good=  0  best=12.4  -0.0318  12
+  gen   60/150  archive= 50  good=  0  best=12.4  -0.0318  12
+  gen   70/150  archive= 50  good=  0  best=12.4  -0.0318  10
+  gen   80/150  archive= 50  good=  0  best=12.4  -0.0318  10
+  gen   90/150  archive= 50  good=  0  best=12.4  -0.0318  10
+  gen  100/150  archive= 50  good=  0  best=12.4  -0.0318  9
+  gen  110/150  archive= 50  good=  0  best=12.7  -0.0318  9
+  gen  120/150  archive= 50  good=  0  best=12.7  -0.0318  9
+  gen  130/150  archive= 50  good=  0  best=12.7  -0.0318  9
+  gen  140/150  archive= 50  good=  0  best=12.7  -0.0318  9
+  gen  150/150  archive= 50  good=  0  best=12.7  -0.0318  9
+  done: 30,200 surrogate evaluations in 6.8s, archive = 50
+  unique designs evaluated: 30,200/30,200  meeting the spec: 0  best values: In-phase bandwidth (%) = 12.7, Lowest |r| in band (dB) = -0.0318, Fragile features = 9  HV=0.3151 (database 0.2952)

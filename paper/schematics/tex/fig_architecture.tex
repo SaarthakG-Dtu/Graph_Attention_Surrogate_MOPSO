@@ -1,0 +1,342 @@
+% Forward surrogate architecture. Textures and data in ../data/ come from the
+% trained pooled surrogate (python paper/schematics.py data:architecture).
+\documentclass[border=2pt]{standalone}
+\usepackage{newtxtext,newtxmath}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta,calc,backgrounds,positioning,shadows}
+\graphicspath{{../data/}}
+\input{../data/graph.tex}
+
+\definecolor{ink}{HTML}{2B2B2B}
+\definecolor{muted}{HTML}{3C3C3C}
+\definecolor{bbC}{HTML}{3D74B8}
+\definecolor{pgaC}{HTML}{E0704A}
+\definecolor{attC}{HTML}{1E9E77}
+\definecolor{gruC}{HTML}{D99A0B}
+\definecolor{headC}{HTML}{7A5BA8}
+\definecolor{copper}{HTML}{CC8033}
+\definecolor{subst}{HTML}{EDE8D6}
+
+\tikzset{
+  >={Stealth[length=3.6pt,width=3.2pt]},
+  arr/.style={->,line width=0.65pt,draw=ink},
+  thin arr/.style={->,line width=0.45pt,draw=ink!80},
+  lbl/.style={font=\fontsize{8.2}{9.4}\selectfont,text=ink,align=center,inner sep=1pt},
+  sub/.style={font=\fontsize{7.5}{8.5}\selectfont,text=muted,align=center,inner sep=1pt},
+  ttl/.style={font=\fontsize{9.1}{10.6}\selectfont\bfseries,text=ink,inner sep=1pt},
+  panel/.style={font=\fontsize{10.0}{11.3}\selectfont\bfseries,text=ink},
+  op/.style={circle,draw=ink,line width=0.5pt,fill=white,inner sep=0pt,minimum size=9pt,
+             font=\fontsize{8.9}{9.0}\selectfont},
+  blk/.style={rounded corners=1.6pt,draw=#1!75!black,fill=#1!16,line width=0.5pt,
+              font=\fontsize{8.0}{9.2}\selectfont,text=ink,align=center,inner sep=2pt},
+  grp/.style={rounded corners=5pt,fill=#1!6,draw=#1!55,line width=0.6pt,drop shadow={opacity=0.18,shadow xshift=0.8pt,shadow yshift=-0.8pt,fill=black!40}},
+}
+
+% stack of channel cards: #1 x, #2 y (front card, lower-left), #3 size, #4 cards, #5 texture prefix, #6 colour
+\newcommand{\cardstack}[6]{%
+  \pgfmathtruncatemacro{\nlast}{#4-1}%
+  \foreach \k in {\nlast,...,0}{%
+    \pgfmathsetmacro{\ox}{#1+\k*0.085}\pgfmathsetmacro{\oy}{#2+\k*0.075}%
+    \fill[black!13] (\ox+0.035,\oy-0.035) rectangle ++(#3,#3);
+    \ifnum\k<3
+      \node[anchor=south west,inner sep=0] at (\ox,\oy) {\includegraphics[width=#3cm,height=#3cm]{#5_c\k}};
+    \else
+      \fill[#6!22] (\ox,\oy) rectangle ++(#3,#3);
+    \fi
+    \draw[#6!85!black,line width=0.55pt] (\ox,\oy) rectangle ++(#3,#3);
+  }}
+
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1.12cm]
+\def\yc{9.5}
+
+% ═══════════════════════ (a) row 1: PGA-ResNet backbone ═══════════════════════
+\node[panel,anchor=north west] at (-0.15,11.35) {(a)};
+\begin{scope}[on background layer]
+  \fill[grp=bbC] (2.35,7.95) rectangle (17.25,11.3);
+  \fill[white,rounded corners=3pt,draw=bbC!45,line width=0.4pt] (10.55,8.1) rectangle (17.1,11.15);
+\end{scope}
+\node[ttl,text=bbC!80!black,anchor=north west] at (2.5,11.22) {PGA-ResNet backbone};
+
+% input layout as a 3-D plate
+\begin{scope}[shift={(0.05,\yc-0.5)}]
+  \fill[subst!70!black] (0,0) -- (1.45,0) -- (1.45,-0.13) -- (0,-0.13) -- cycle;
+  \fill[subst!55!black] (1.45,0) -- (2.0,0.75) -- (2.0,0.62) -- (1.45,-0.13) -- cycle;
+  \begin{scope}[cm={1.45,0,0.55,0.75,(0,0)}]
+    \node[transform shape,anchor=south west,inner sep=0] at (0,0) {\includegraphics[width=1cm,height=1cm]{layout}};
+    \draw[ink,line width=0.4pt] (0,0) rectangle (1,1);
+  \end{scope}
+\end{scope}
+\node[lbl] at (1.0,8.45) {layout $\mathbf{x}$\\[-1pt]$16\times16$, binary};
+
+% layer blocks: front width ~ channels, height ~ feature-map size
+\foreach \x/\w/\h/\d/\c in {
+    2.62/0.13/1.5/0.38/bbC,
+    3.42/0.11/1.5/0.38/bbC, 3.6/0.11/1.5/0.38/bbC, 3.78/0.11/1.5/0.38/bbC,
+    4.0/0.11/1.5/0.38/pgaC, 4.18/0.11/1.5/0.38/pgaC, 4.36/0.11/1.5/0.38/pgaC,
+    5.32/0.14/1.05/0.27/bbC, 5.53/0.14/1.05/0.27/bbC, 5.74/0.14/1.05/0.27/bbC, 5.95/0.14/1.05/0.27/bbC,
+    6.2/0.14/1.05/0.27/pgaC, 6.41/0.14/1.05/0.27/pgaC, 6.62/0.14/1.05/0.27/pgaC,
+    7.55/0.17/0.7/0.18/bbC, 7.79/0.17/0.7/0.18/bbC, 8.03/0.17/0.7/0.18/bbC,
+    8.3/0.17/0.7/0.18/pgaC, 8.54/0.17/0.7/0.18/pgaC, 8.78/0.17/0.7/0.18/pgaC}{
+  \fill[\c!32,draw=\c!80!black,line width=0.35pt]
+    (\x,\yc+\h/2) -- ++(\d,0.6*\d) -- ++(\w,0) -- ++(-\d,-0.6*\d) -- cycle;
+  \fill[\c!62,draw=\c!80!black,line width=0.35pt]
+    (\x+\w,\yc-\h/2) -- ++(\d,0.6*\d) -- ++(0,\h) -- ++(-\d,-0.6*\d) -- cycle;
+  \shade[top color=\c!48,bottom color=\c!18,draw=\c!80!black,line width=0.35pt]
+    (\x,\yc-\h/2) rectangle ++(\w,\h);
+}
+% tokens
+\node[anchor=south west,inner sep=0] (tok) at (9.55,\yc-0.85) {\includegraphics[width=0.42cm,height=1.7cm]{tokens}};
+\draw[ink,line width=0.4pt] (tok.south west) rectangle (tok.north east);
+\foreach \i in {1,...,15} \draw[white,line width=0.35pt] ($(tok.south west)+(0,\i*1.7/16)$) -- ++(0.42,0);
+
+\foreach \a/\b in {2.08/2.55, 3.05/3.36, 4.82/5.26, 6.98/7.49, 9.08/9.5}
+  \draw[arr] (\a,\yc) -- (\b,\yc);
+
+% stage brackets and labels
+\foreach \x/\w/\t in {3.4/1.45/{3\textcolor{bbC!85!black}{BB}$+$3\textcolor{pgaC!85!black}{PGA}},
+                      5.3/1.65/{4\textcolor{bbC!85!black}{BB}$+$3\textcolor{pgaC!85!black}{PGA}},
+                      7.53/1.6/{3\textcolor{bbC!85!black}{BB}$+$3\textcolor{pgaC!85!black}{PGA}}}{
+  \draw[muted,line width=0.4pt] (\x,10.55) -- ++(0,0.08) -- ++(\w,0) -- ++(0,-0.08);
+  \node[lbl,anchor=south,font=\fontsize{7.8}{9}\selectfont] at (\x+\w/2,10.63) {\t};
+}
+\node[lbl,anchor=north] at (2.86,8.68) {stem\\[-2pt]{\color{muted}\fontsize{7.3}{8.0}\selectfont $3{\times}3$ conv}};
+\node[lbl,anchor=north] at (4.3,8.62) {stage 1\\[-1pt]{\color{muted}$64\times16\times16$}};
+\node[lbl,anchor=north] at (6.1,8.62) {stage 2\\[-1pt]{\color{muted}$128\times8\times8$}};
+\node[lbl,anchor=north] at (8.25,8.62) {stage 3\\[-1pt]{\color{muted}$256\times4\times4$}};
+\node[lbl,anchor=north] at (9.76,8.62) {tokens\\[-1pt]{\color{muted}$16\times256$}};
+
+% ── residual block (BB) in detail ──
+\node[ttl,text=bbC!80!black,anchor=north west] at (10.65,11.08) {residual block (BB)};
+\def\yb{9.55}
+\coordinate (bin) at (10.75,\yb);
+\node[lbl,anchor=east] at (bin) {$\mathbf u$};
+\foreach \x/\c/\t/\n in {11.2/bbC/{conv $3{\times}3$}/c1, 11.85/bbC!60!headC/{BN}/b1, 12.5/gruC/{LReLU}/a1,
+                          13.15/bbC/{conv $3{\times}3$}/c2, 13.8/bbC!60!headC/{BN}/b2}{
+  \fill[\c!55!black] (\x+0.035,\yb-0.62-0.035) rectangle ++(0.4,1.24);
+  \shade[left color=\c!40,right color=\c!14,draw=\c!80!black,line width=0.45pt] (\x,\yb-0.62) rectangle ++(0.4,1.24);
+  \node[rotate=90,font=\fontsize{7.0}{8.0}\selectfont\bfseries,text=ink] (\n) at (\x+0.2,\yb) {\t};
+}
+\foreach \a/\b in {10.8/11.2, 11.6/11.85, 12.25/12.5, 12.9/13.15, 13.55/13.8} \draw[thin arr] (\a,\yb) -- (\b,\yb);
+\node[op] (badd) at (14.6,\yb) {$+$};
+\draw[thin arr] (14.2,\yb) -- (badd);
+\fill[pgaC!55!black] (15.035,\yb-0.62-0.035) rectangle ++(0.4,1.24);
+\shade[left color=pgaC!35,right color=pgaC!12,draw=pgaC!80!black,line width=0.45pt] (15.0,\yb-0.62) rectangle ++(0.4,1.24);
+\node[rotate=90,font=\fontsize{7.5}{8.0}\selectfont\bfseries,text=ink] at (15.2,\yb) {ReLU};
+\draw[thin arr] (badd) -- (15.0,\yb);
+\draw[arr] (15.4,\yb) -- (15.95,\yb) node[lbl,anchor=west] {$\mathbf y$};
+% shortcut
+\draw[thin arr,rounded corners=4pt,line width=0.6pt] (10.95,\yb) -- (10.95,10.42) -- (14.6,10.42) -- (badd.north);
+\node[sub,fill=white,anchor=center] at (12.75,10.42) {shortcut $\mathcal S(\mathbf u)$};
+\node[sub,anchor=north] at (12.75,8.82) {residual branch $\mathcal F(\mathbf u)$};
+\node[lbl,anchor=north] at (13.8,8.47) {$\mathbf y=\mathrm{ReLU}\big(\mathcal F(\mathbf u)+\mathcal S(\mathbf u)\big)$};
+\node[sub,anchor=north west,align=left,text width=1.5cm] at (15.55,11.0) {$\mathcal S$: identity;\\[-1pt]$1{\times}1$ conv\\[-1pt]+ BN at a\\[-1pt]stage start\\[-1pt](stride 2)};
+
+% tokens -> row 2 (K, V)
+\draw[arr,rounded corners=5pt] (9.97,\yc) -- (10.3,\yc) -- (10.3,7.78) -- (1.1,7.78) -- (1.1,6.0) -- (1.27,6.0);
+\node[sub,fill=white,anchor=center] at (5.6,7.78) {geometry tokens $\to$ keys and values};
+
+% ═══════════════════ (a) row 2: frequency reasoning and output ═══════════════════
+\begin{scope}[on background layer]
+  \fill[grp=attC] (-0.1,4.4) rectangle (7.15,7.62);
+  \fill[grp=gruC] (7.35,4.4) rectangle (11.0,7.62);
+  \fill[grp=headC] (11.2,4.4) rectangle (18.15,7.62);
+\end{scope}
+\node[ttl,text=attC!75!black,anchor=north east] at (7.05,7.6) {cross-attention};
+\node[ttl,text=gruC!75!black,anchor=north west] at (7.45,7.6) {BiGRU over frequency};
+\node[ttl,text=headC!80!black,anchor=north west] at (11.3,7.6) {passive polar head and output};
+
+% learned frequency queries
+\shade[bottom color=attC!15,top color=attC!80,draw=attC!80!black,line width=0.4pt] (0.23,5.65) rectangle (0.61,7.0);
+\foreach \i in {1,...,8} \draw[white,line width=0.3pt] (0.23,5.65+\i*0.15) -- (0.61,5.65+\i*0.15);
+\node[lbl,anchor=north,align=center,font=\fontsize{7.8}{9}\selectfont] at (0.42,5.58) {101\\queries\\$\mathbf{q}_k{+}$PE};
+\node[blk=attC,minimum width=0.62cm] (wq) at (1.6,6.45) {$W_Q$};
+\node[blk=attC,minimum width=0.62cm] (wk) at (1.6,6.0) {$W_K$};
+\node[blk=attC,minimum width=0.62cm] (wv) at (1.6,4.72) {$W_V$};
+\draw[arr] (0.61,6.45) -- (wq.west);
+\draw[thin arr] (1.1,6.0) |- (wv.west);
+% attention map
+\node[anchor=south west,inner sep=0] (att) at (2.45,5.55) {\includegraphics[width=2.9cm,height=1.12cm]{xattn}};
+\draw[ink,line width=0.4pt] (att.south west) rectangle (att.north east);
+\draw[thin arr] (wq.east) -- (2.45,6.45);
+\draw[thin arr] (wk.east) -- (2.45,6.0);
+\node[sub,anchor=north] at (3.9,5.53) {16 tokens $\times$ 101 frequencies};
+\node[lbl,anchor=south] at (3.9,6.72) {$\mathrm{softmax}(QK^{\!\top}\!/\sqrt{d})$, 4 heads};
+\node[op] (mul) at (5.75,6.11) {$\times$};
+\draw[arr] (5.35,6.11) -- (mul);
+\draw[thin arr] (wv.east) -| (mul.south);
+\node[blk=attC,minimum height=1.5cm,minimum width=0.55cm] (ln) at (6.6,6.0) {\rotatebox{90}{LN $\to$ Linear}};
+\draw[arr] (mul) -- (ln.west |- mul);
+\node[sub,anchor=north] at (6.45,5.0) {$101\times256$};
+
+% BiGRU unrolled
+\foreach \i/\x/\t in {1/7.95/f_1, 2/8.7/f_2, 3/9.45/f_3, 4/10.45/f_K}{
+  \node[circle,draw=gruC!80!black,fill=gruC!30,line width=0.5pt,minimum size=0.36cm,inner sep=0] (fw\i) at (\x,6.55) {};
+  \node[circle,draw=gruC!80!black,fill=gruC!12,line width=0.5pt,minimum size=0.36cm,inner sep=0] (bw\i) at (\x,5.6) {};
+  \node[sub] at (\x,4.75) {$\t$};
+  \draw[thin arr] (\x,4.9) -- (bw\i);
+  \draw[thin arr] (bw\i) -- (fw\i);
+}
+\draw[thin arr] (fw1) -- (fw2); \draw[thin arr] (fw2) -- (fw3);
+\draw[thin arr,dashed] (fw3) -- (fw4);
+\draw[thin arr] (bw2) -- (bw1); \draw[thin arr] (bw3) -- (bw2);
+\draw[thin arr,dashed] (bw4) -- (bw3);
+\node[sub,anchor=west] at (7.45,7.05) {$\overrightarrow{\mathbf{h}}_k$, $\overleftarrow{\mathbf{h}}_k\in\mathbb{R}^{256}$, one step per $f_k$};
+\draw[arr] (ln.east) -- ++(0.32,0) |- (7.62,4.98) -- (7.95,4.98);
+\draw[arr] (fw4.east) -- ++(0.32,0) |- (11.5,6.0);
+
+% polar head
+\node[blk=headC,minimum width=1.05cm,minimum height=1.25cm,inner sep=1.5pt] (head) at (12.0,5.95) {Linear\\$(a_k,b_k)$\\[2pt]$\hat r_k=\sigma(a_k)$\\$\times[\cos b_k$\\$+\,j\sin b_k]$};
+% unit disk with the predicted trajectory
+\begin{axis}[at={(12.72cm,5.174cm)},anchor=south west,width=2.95cm,height=2.95cm,scale only axis=false,
+  axis equal image,xmin=-1.15,xmax=1.15,ymin=-1.15,ymax=1.15,axis lines=none,clip=false,
+  colormap={fq}{color=(attC) color=(gruC) color=(pgaC)}]
+  \fill[headC!7] (axis cs:0,0) circle[radius=1];
+  \draw[headC!80!black,line width=0.5pt] (axis cs:0,0) circle[radius=1];
+  \draw[muted,line width=0.3pt] (axis cs:-1.12,0) -- (axis cs:1.12,0);
+  \draw[muted,line width=0.3pt] (axis cs:0,-1.12) -- (axis cs:0,1.12);
+  \addplot[black!55,dashed,line width=0.5pt] table[x=re,y=im] {../data/spectrum.dat};
+  \addplot[mesh,point meta=\thisrow{f},line width=1.1pt] table[x=rep,y=imp] {../data/spectrum.dat};
+  \node[font=\fontsize{7.3}{7.8}\selectfont,text=headC!80!black,anchor=south west] at (axis cs:0.62,0.85) {$|\hat r|{=}1$};
+  \node[font=\fontsize{7.3}{7.8}\selectfont,text=muted,anchor=west] at (axis cs:1.05,0.0) {Re};
+  \node[font=\fontsize{7.3}{7.8}\selectfont,text=muted,anchor=south] at (axis cs:0,1.05) {Im};
+\end{axis}
+\node[sub] at (13.85,4.55) {$\hat r_{xx}(f)$, unit disk};
+
+% spectra
+\begin{axis}[at={(15.45cm,6.664cm)},anchor=south west,width=2.2cm,height=1.05cm,scale only axis,
+  xmin=2,xmax=12,ymin=0,ymax=1.05,xtick={2,7,12},xticklabels={},ytick={0,1},
+  tick label style={font=\fontsize{7.1}{7.8}\selectfont},tick align=inside,major tick length=1.5pt,
+  axis line style={muted,line width=0.4pt},ylabel={},ylabel style={font=\fontsize{7.7}{7.8}\selectfont,yshift=-12pt}]
+  \addplot[black!60,dashed,line width=0.55pt] table[x=f,y=absR] {../data/spectrum.dat};
+  \addplot[pgaC,line width=0.85pt] table[x=f,y=absRp] {../data/spectrum.dat};
+  \node[font=\fontsize{7.7}{8.0}\selectfont,text=ink,anchor=south west] at (axis cs:2.3,0.08) {$|r_{xx}|$};
+\end{axis}
+\begin{axis}[at={(15.45cm,5.432cm)},anchor=south west,width=2.2cm,height=0.85cm,scale only axis,
+  xmin=2,xmax=12,ymin=-180,ymax=180,xtick={2,7,12},ytick={-180,180},
+  tick label style={font=\fontsize{7.1}{7.8}\selectfont},tick align=inside,major tick length=1.5pt,
+  axis line style={muted,line width=0.4pt},ylabel={},ylabel style={font=\fontsize{7.7}{7.8}\selectfont,yshift=-10pt},
+  xticklabels={2,7,12\,GHz}]
+  \addplot[black!60,dashed,line width=0.55pt,unbounded coords=jump] table[x=f,y=phR] {../data/spectrum.dat};
+  \addplot[pgaC,line width=0.85pt] table[x=f,y=phRp] {../data/spectrum.dat};
+  \node[font=\fontsize{7.7}{8.0}\selectfont,text=ink,anchor=south west] at (axis cs:2.3,-170) {$\angle r_{xx}$};
+\end{axis}
+\node[sub,anchor=south east] at (18.1,7.05) {\textcolor{pgaC}{\rule[1.5pt]{8pt}{0.9pt}} surrogate\enspace
+  \textcolor{black!60}{\rule[1.5pt]{2.5pt}{0.6pt}\,\rule[1.5pt]{2.5pt}{0.6pt}} CST};
+
+% ═════════════════════════════ (b) PGA block ═════════════════════════════
+\begin{scope}[xshift=0.25cm]
+\begin{scope}[on background layer]
+  \fill[grp=pgaC] (-0.35,-0.25) rectangle (11.55,4.15);
+\end{scope}
+\node[ttl,text=pgaC!80!black,anchor=north west] at (-0.3,4.1) {(b) pixel-wise graph attention (PGA) block};
+
+\node[anchor=south west,inner sep=0] (F) at (0.05,1.15) {\includegraphics[width=1.15cm,height=1.15cm]{bb2_c0}};
+\draw[bbC!85!black,line width=0.55pt] (F.south west) rectangle (F.north east);
+\node[lbl,anchor=south] at (0.62,2.25) {$F\in\mathbb{R}^{C\times H\times W}$};
+\node[blk=pgaC,minimum width=1.05cm] (th) at (2.45,2.62) {$\theta$: $1{\times}1$ conv};
+\node[blk=pgaC,minimum width=1.05cm] (ph) at (2.45,1.92) {$\varphi$: $1{\times}1$ conv};
+\node[sub,anchor=north] at (2.45,1.6) {BN, ReLU,\\[-1pt]$C\!\to\!C/8$};
+\draw[arr] (1.2,1.72) -- (1.45,1.72) |- (th.west);
+\draw[arr] (1.45,1.92) -- (ph.west);
+\node[op] (o1) at (3.5,2.27) {$\times$};
+\draw[thin arr] (th.east) -- (o1); \draw[thin arr] (ph.east) -- (o1);
+
+\node[anchor=south west,inner sep=0] (Rm) at (3.82,1.67) {\includegraphics[width=1.2cm,height=1.2cm]{pga_R}};
+\draw[ink,line width=0.4pt] (Rm.south west) rectangle (Rm.north east);
+\node[lbl,anchor=north] at (4.42,1.62) {$R=\theta\varphi^{\!\top}$\\[-1pt]{\color{muted}$N\times N$, $N{=}HW$}};
+\draw[thin arr] (o1) -- (3.82,2.27);
+
+\node[anchor=south west,inner sep=0] (Am) at (5.5,2.85) {\includegraphics[width=0.78cm,height=0.78cm]{pga_A}};
+\draw[ink,line width=0.4pt] (Am.south west) rectangle (Am.north east);
+\node[lbl,anchor=west] at (6.35,3.24) {adjacency $A$\\[-1pt]{\color{muted}8 neighbours}};
+\node[op] (o2) at (5.78,2.27) {$\odot$};
+\draw[thin arr] (5.02,2.27) -- (o2); \draw[thin arr] (Am.south) -- (o2);
+
+\node[anchor=south west,inner sep=0] (Am2) at (6.3,1.67) {\includegraphics[width=1.2cm,height=1.2cm]{pga_att}};
+\draw[ink,line width=0.4pt] (Am2.south west) rectangle (Am2.north east);
+\draw[thin arr] (o2) -- (6.3,2.27);
+\node[lbl,anchor=north] at (6.9,1.62) {$\tilde A=\mathrm{softmax}_{\mathrm{row}}$\\[-1pt]{\color{muted}masked $R$}};
+
+\node[op] (o3) at (7.9,2.27) {$\times$};
+\draw[thin arr] (7.5,2.27) -- (o3);
+\draw[thin arr,rounded corners=3pt] (0.85,1.15) -- (0.85,0.35) -- (7.9,0.35) -- (o3.south);
+\node[sub,fill=pgaC!5,anchor=center] at (4.6,0.35) {raw features $F$ as $N\times C$ (no value projection)};
+\node[blk=pgaC] (elu) at (8.65,2.27) {ELU};
+\draw[thin arr] (o3) -- (elu);
+\node[op] (o4) at (9.65,2.27) {$+$};
+\draw[thin arr] (elu) -- node[lbl,above] {$\gamma$} (o4);
+\draw[thin arr,rounded corners=3pt] (0.35,1.15) -- (0.35,0.05) -- (9.65,0.05) -- (o4.south);
+\node[sub,fill=pgaC!5,anchor=center] at (8.55,0.05) {identity, $1-\gamma$};
+\node[anchor=south west,inner sep=0] (Fo) at (10.1,1.7) {\includegraphics[width=1.15cm,height=1.15cm]{pga2_c0}};
+\draw[pgaC!85!black,line width=0.55pt] (Fo.south west) rectangle (Fo.north east);
+\draw[arr] (o4) -- (10.1,2.27);
+\node[lbl,anchor=north] at (10.67,1.65) {$F'$\\[-1pt]{\color{muted}learned gate $\gamma$}};
+
+% learned edge weights of one pixel
+\begin{scope}[shift={(9.05,3.3)}]
+  \foreach \dx/\dy/\w in \pgagraph
+    \draw[pgaC,line width=0.3pt+2.2pt*\w,line cap=round,opacity=0.35+0.65*\w] (0,0) -- (\dx*0.36,\dy*0.36);
+  \foreach \dx in {-1,0,1} \foreach \dy in {-1,0,1}
+    \fill[white,draw=pgaC!80!black,line width=0.4pt] (\dx*0.36,\dy*0.36) circle (0.065);
+  \fill[pgaC!85!black] (0,0) circle (0.08);
+  \foreach \dx in {-2,2} \foreach \dy in {-1,0,1} \fill[muted!40] (\dx*0.36,\dy*0.36) circle (0.035);
+\end{scope}
+\node[sub,anchor=west] at (10.0,3.55) {edge width\\[-1pt]$\propto\tilde A_{ij}$};
+
+\end{scope}
+
+% ═════════════════════════════ (c) GRU cell ═════════════════════════════
+\begin{scope}[shift={(12.3,0)},xscale=0.95,shift={(-11.95,0)}]
+\begin{scope}[on background layer]
+  \fill[grp=gruC] (11.58,-0.25) rectangle (18.05,4.15);
+\end{scope}
+\node[ttl,text=gruC!75!black,anchor=north west] at (11.7,4.1) {(c) GRU cell (one direction, one $f_k$)};
+\draw[rounded corners=5pt,fill=white,draw=gruC!70!black,line width=0.5pt] (12.45,0.62) rectangle (17.35,3.55);
+\tikzset{bridge/.style={preaction={draw=white,line width=2.4pt}}}
+% state line: h_{k-1} -> (1-z) x -> + -> h_k
+\node[op] (m1) at (14.6,3.25) {$\times$};
+\node[op] (p1) at (16.6,3.25) {$+$};
+\draw[arr] (11.75,3.25) node[lbl,anchor=south west,yshift=1pt] {$\mathbf h_{k-1}$} -- (m1);
+\draw[arr] (m1) -- (p1);
+\draw[arr] (p1) -- (17.95,3.25) node[lbl,anchor=south east,yshift=1pt] {$\mathbf h_{k}$};
+% gates
+\node[blk=gruC,minimum width=0.5cm,minimum height=0.42cm] (sr) at (13.5,1.6) {$\sigma$};
+\node[blk=gruC,minimum width=0.5cm,minimum height=0.42cm] (sz) at (14.6,1.6) {$\sigma$};
+\node[blk=gruC,minimum width=0.72cm,minimum height=0.42cm] (tn) at (15.95,1.6) {tanh};
+\node[op] (mr) at (13.5,2.3) {$\times$};
+\node[op,font=\fontsize{7.4}{7.5}\selectfont] (om) at (14.6,2.88) {$1{-}$};
+\node[op] (mz) at (16.6,2.55) {$\times$};
+% inputs: h_{k-1} to both sigma gates and to r (.) h; x_k to all three gates
+\draw[line width=0.5pt,ink] (12.75,3.25) -- (12.75,1.12) -- (14.72,1.12);
+\fill[ink] (12.75,3.25) circle (1.3pt);
+\draw[thin arr] (13.62,1.12) -- (13.62,1.39);
+\draw[thin arr] (14.72,1.12) -- (14.72,1.39);
+\draw[thin arr] (12.75,2.3) -- (mr);
+\draw[arr] (13.1,0.12) node[lbl,anchor=north,yshift=1pt] {$\mathbf x_k$} -- (13.1,0.85);
+\draw[line width=0.5pt,ink] (13.1,0.85) -- (15.95,0.85);
+\draw[thin arr,bridge] (13.38,0.85) -- (13.38,1.39);
+\draw[thin arr,bridge] (14.48,0.85) -- (14.48,1.39);
+\draw[thin arr] (15.95,0.85) -- (tn.south);
+% reset gate: r (.) h_{k-1} -> tanh
+\draw[thin arr] (sr.north) -- (mr);
+\draw[thin arr] (mr) -- (15.35,2.3) |- (tn.west);
+% update gate: z -> (1 - z) on the state line, z -> x with h~
+\draw[thin arr,bridge] (sz.north) -- (om);
+\draw[thin arr] (om) -- (m1);
+\draw[thin arr] (14.6,2.55) -- (mz);
+\fill[ink] (14.6,2.55) circle (1.1pt);
+\draw[thin arr] (tn.east) -| (mz);
+\draw[thin arr] (mz) -- (p1);
+% labels
+\node[sub,anchor=east] at (13.36,1.98) {$r_k$};
+\node[sub,anchor=west] at (14.66,2.02) {$z_k$};
+\node[sub,anchor=west] at (16.66,1.95) {$\tilde{\mathbf h}_k$};
+\node[sub,anchor=north] at (15.35,0.5) {$\mathbf h_k=(1-z_k)\odot\mathbf h_{k-1}+z_k\odot\tilde{\mathbf h}_k$};
+\node[sub,anchor=north] at (15.35,0.15) {$\tilde{\mathbf h}_k=\tanh\!\big(W[r_k\odot\mathbf h_{k-1},\mathbf x_k]\big)$};
+\end{scope}
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,17 @@
+[calibrate] RDN_101796_t0.8_invert
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+  m1x_off0_R_mse=0.009612  m1x_off0_T_mse=0.009229  m2x_off0_R_mse=0.008163  m2x_off0_T_mse=0.009229  m1x_off1_R_mse=0.04102  m1x_off1_T_mse=0.07977  m2x_off1_R_mse=0.0423  m2x_off1_T_mse=0.07977
+{
+ "0.8": {
+  "m1x_off0_R_mse": 0.009611539322994016,
+  "m1x_off0_T_mse": 0.009228537137859556,
+  "m2x_off0_R_mse": 0.008162817805219,
+  "m2x_off0_T_mse": 0.009228536932866228,
+  "m1x_off1_R_mse": 0.041024722164820684,
+  "m1x_off1_T_mse": 0.07976863675325982,
+  "m2x_off1_R_mse": 0.042295982430926395,
+  "m2x_off1_T_mse": 0.07976863752940719
+ }
+} 
+best substrate thickness: 0.8 mm

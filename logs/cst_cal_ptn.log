@@ -1,0 +1,17 @@
+[calibrate] PTN_29546_t0.8
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+  m1x_off0_R_mse=0.007611  m1x_off0_T_mse=0.01092  m2x_off0_R_mse=0.009532  m2x_off0_T_mse=0.01092  m1x_off1_R_mse=0.007762  m1x_off1_T_mse=0.01703  m2x_off1_R_mse=0.008185  m2x_off1_T_mse=0.01703
+{
+ "0.8": {
+  "m1x_off0_R_mse": 0.007610589124574781,
+  "m1x_off0_T_mse": 0.010920905820813478,
+  "m2x_off0_R_mse": 0.009531836196223373,
+  "m2x_off0_T_mse": 0.010920916097719465,
+  "m1x_off1_R_mse": 0.007761730649268371,
+  "m1x_off1_T_mse": 0.01702934845405004,
+  "m2x_off1_R_mse": 0.008185377446246889,
+  "m2x_off1_T_mse": 0.017029336644255016
+ }
+} 
+best substrate thickness: 0.8 mm

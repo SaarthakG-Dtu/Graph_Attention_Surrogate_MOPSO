@@ -1,0 +1,29 @@
+{
+ "problem": "amc_x",
+ "space": "binary",
+ "surrogate": "RDN:n108000",
+ "layout_convention": "physical",
+ "seconds": 9.66653561592102,
+ "evaluations": 30200,
+ "unique_designs": 30198,
+ "archive": 50,
+ "n_good": 0,
+ "best_value": [
+  15.841584158415836,
+  -0.03282737731933594,
+  8.0
+ ],
+ "objective_names": [
+  "In-phase bandwidth (%)",
+  "Lowest |r| in band (dB)",
+  "Fragile features"
+ ],
+ "hv": 0.34368,
+ "database": {
+  "n_database": 111000,
+  "n_front": 198,
+  "n_good": 0,
+  "hv_true": 0.29522,
+  "hv_surrogate": 0.282225
+ }
+}

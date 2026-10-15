@@ -1,0 +1,24 @@
+{
+  "classes": [
+    "PLG",
+    "PLR",
+    "PTN",
+    "RDN"
+  ],
+  "latent_dim": 150,
+  "conv_channels": [
+    32,
+    64,
+    128
+  ],
+  "final_activation": "sigmoid",
+  "w_bce": 2.0,
+  "beta": 1.0,
+  "gamma": 0.0,
+  "kl_free": 5,
+  "kl_anneal": 30,
+  "augment": true,
+  "n_train": 208800,
+  "n_val": 26100,
+  "n_params": 1181485
+}

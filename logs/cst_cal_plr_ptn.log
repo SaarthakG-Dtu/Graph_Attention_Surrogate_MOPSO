@@ -1,0 +1,19 @@
+[calibrate] PLR_7606_t0.8
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+  m1x_off0_R_mse=0.002813  m1x_off0_T_mse=0.003908  m2x_off0_R_mse=0.00233  m2x_off0_T_mse=0.003908  m1x_off1_R_mse=0.01439  m1x_off1_T_mse=0.01851  m2x_off1_R_mse=0.0171  m2x_off1_T_mse=0.01851
+[calibrate] PTN_9670_t0.8
+  failed: [WinError 32] The process cannot access the file because it is being used by another process: 'E:\\SUTD_BENCHMARK_NOVEL_GNN\\outputs_new_pipeline\\CST\\workspaces\\f2-12_g16_p0.5_pad1_sub0.8_eps2.65_tand0.003_gnd0.18_pt0.018_copper\\worker\\Result\\db.parmap'
+{
+ "0.8": {
+  "m1x_off0_R_mse": 0.0028127046017216713,
+  "m1x_off0_T_mse": 0.0039081011446977865,
+  "m2x_off0_R_mse": 0.0023295648919103265,
+  "m2x_off0_T_mse": 0.003908100593583705,
+  "m1x_off1_R_mse": 0.014390304443436492,
+  "m1x_off1_T_mse": 0.018509211306294147,
+  "m2x_off1_R_mse": 0.017101238150831366,
+  "m2x_off1_T_mse": 0.01850921125322244
+ }
+} 
+best substrate thickness: 0.8 mm

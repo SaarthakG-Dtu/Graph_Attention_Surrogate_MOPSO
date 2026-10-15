@@ -1,0 +1,47 @@
+{
+  "classes": [
+    "PLG",
+    "PLR",
+    "PTN",
+    "RDN"
+  ],
+  "latent_dim": 150,
+  "n_test": 26100,
+  "pixel_accuracy_mean": 0.9912769396551724,
+  "pixel_accuracy_std": 0.011090841659557827,
+  "exact_reconstruction_frac": 0.45590038314176246,
+  "pixel_accuracy_per_class": {
+    "PLG": 0.985109375,
+    "PLR": 0.9830579427083334,
+    "PTN": 0.986572265625,
+    "RDN": 0.9999296171171171
+  },
+  "exact_reconstruction_per_class": {
+    "PLG": 0.14133333333333334,
+    "PLR": 0.0275,
+    "PTN": 0.0615,
+    "RDN": 0.9856756756756757
+  },
+  "active_latent_dims": 129,
+  "prior_samples_unique_frac": 1.0,
+  "prior_min_hamming_to_train_median": 68.0,
+  "prior_copies_of_train_frac": 0.0,
+  "stats_data": {
+    "fill_mean": 0.4733171761035919,
+    "fill_std": 0.11837603151798248,
+    "neighbour_agreement": 0.6715999361430397,
+    "islands_mean": 12.095
+  },
+  "stats_reconstruction": {
+    "fill_mean": 0.47608596086502075,
+    "fill_std": 0.11972501873970032,
+    "neighbour_agreement": 0.6742957375478927,
+    "islands_mean": 12.0765
+  },
+  "stats_prior_samples": {
+    "fill_mean": 0.45382577180862427,
+    "fill_std": 0.10962193459272385,
+    "neighbour_agreement": 0.6746333333333334,
+    "islands_mean": 11.821
+  }
+}

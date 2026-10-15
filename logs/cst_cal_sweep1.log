@@ -1,0 +1,48 @@
+[calibrate] RDN_101796_t1.6
+--- Building template: cell=10mm (16x0.5mm + 2x1mm padding), t_sub=1.6mm, conductor=copper ---
+CPA: The specified project does not exist. A new project hasbeen created.
+Do not forget to use CST_MicrowaveStudio.saveFile() to save your project.
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+  mode1_is_x_R_mse=0.02566  mode1_is_x_T_mse=0.04347  mode1_is_x_R_dip_shift_ghz=5.94  mode2_is_x_R_mse=0.02458  mode2_is_x_T_mse=0.04347  mode2_is_x_R_dip_shift_ghz=5.94
+[calibrate] RDN_101796_t2.4
+--- Building template: cell=10mm (16x0.5mm + 2x1mm padding), t_sub=2.4mm, conductor=copper ---
+CPA: The specified project does not exist. A new project hasbeen created.
+Do not forget to use CST_MicrowaveStudio.saveFile() to save your project.
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+  mode1_is_x_R_mse=0.02153  mode1_is_x_T_mse=0.03854  mode1_is_x_R_dip_shift_ghz=1.03  mode2_is_x_R_mse=0.02241  mode2_is_x_T_mse=0.03854  mode2_is_x_R_dip_shift_ghz=6.04
+[calibrate] RDN_101796_t3.2
+--- Building template: cell=10mm (16x0.5mm + 2x1mm padding), t_sub=3.2mm, conductor=copper ---
+CPA: The specified project does not exist. A new project hasbeen created.
+Do not forget to use CST_MicrowaveStudio.saveFile() to save your project.
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+  mode1_is_x_R_mse=0.01962  mode1_is_x_T_mse=0.04094  mode1_is_x_R_dip_shift_ghz=0.99  mode2_is_x_R_mse=0.01909  mode2_is_x_T_mse=0.04094  mode2_is_x_R_dip_shift_ghz=1.09
+{
+ "1.6": {
+  "mode1_is_x_R_mse": 0.02566022489874634,
+  "mode1_is_x_T_mse": 0.04347164725784746,
+  "mode1_is_x_R_dip_shift_ghz": 5.94,
+  "mode2_is_x_R_mse": 0.02458480415009525,
+  "mode2_is_x_T_mse": 0.043471616836221236,
+  "mode2_is_x_R_dip_shift_ghz": 5.94
+ },
+ "2.4": {
+  "mode1_is_x_R_mse": 0.021532852392851347,
+  "mode1_is_x_T_mse": 0.03854130248633528,
+  "mode1_is_x_R_dip_shift_ghz": 1.0300000000000002,
+  "mode2_is_x_R_mse": 0.022412501924262015,
+  "mode2_is_x_T_mse": 0.03854129153554863,
+  "mode2_is_x_R_dip_shift_ghz": 6.04
+ },
+ "3.2": {
+  "mode1_is_x_R_mse": 0.01961806010955068,
+  "mode1_is_x_T_mse": 0.04093550627980906,
+  "mode1_is_x_R_dip_shift_ghz": 0.9900000000000002,
+  "mode2_is_x_R_mse": 0.019085982628709277,
+  "mode2_is_x_T_mse": 0.040935637816951434,
+  "mode2_is_x_R_dip_shift_ghz": 1.0899999999999999
+ }
+} 
+best substrate thickness: 2.4 mm

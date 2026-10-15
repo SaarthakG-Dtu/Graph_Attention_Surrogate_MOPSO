@@ -1,0 +1,32 @@
+--- Building template: cell=10mm (16x0.5mm + 2x1mm padding), t_sub=1.2mm, conductor=copper ---
+CPA: The specified project does not exist. A new project hasbeen created.
+Do not forget to use CST_MicrowaveStudio.saveFile() to save your project.
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+t=1.2 mm    RDN#10530  |r| MSE 2.510e-03  phase 6.75 deg
+Traceback (most recent call last):
+  File "E:\SUTD_BENCHMARK_NOVEL_GNN\cst_thickness_grid.py", line 45, in <module>
+    main(ap.parse_args())
+  File "E:\SUTD_BENCHMARK_NOVEL_GNN\cst_thickness_grid.py", line 29, in main
+    r = _score(d, t)
+        ^^^^^^^^^^^^
+  File "E:\SUTD_BENCHMARK_NOVEL_GNN\cst_thickness_search.py", line 41, in _score
+    sim = simulate(d["copper"], t, os.path.join(OUT, "runs", f"{d['cls']}_{d['index']}_t{t:g}"
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\SUTD_BENCHMARK_NOVEL_GNN\cst_verify.py", line 73, in simulate
+    freq, s11, s21, s12, s22 = simulate_design(
+                               ^^^^^^^^^^^^^^^^
+  File "E:\SUTD_BENCHMARK_NOVEL_GNN\cell_common.py", line 212, in simulate_design
+    shutil.rmtree(worker_subdir)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 787, in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 629, in _rmtree_unsafe
+    _rmtree_unsafe(fullname, onerror)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 629, in _rmtree_unsafe
+    _rmtree_unsafe(fullname, onerror)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 638, in _rmtree_unsafe
+    onerror(os.rmdir, path, sys.exc_info())
+  File "C:\Users\User\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 636, in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'E:\\SUTD_BENCHMARK_NOVEL_GNN\\outputs_new_pipeline\\CST\\workspaces\\f2-12_g16_p0.5_pad1_sub1.4_eps2.65_tand0.003_gnd0.18_pt0.018_copper\\worker\\Model\\3D'

@@ -1,0 +1,5 @@
+[calibrate] RDN_101796_t0.8_transpose
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+  mode1_is_x_R_mse=0.02548  mode1_is_x_T_mse=0.07433  mode1_is_x_R_dip_shift_ghz=3.3  mode2_is_x_R_mse=0.03091  mode2_is_x_T_mse=0.07433  mode2_is_x_R_dip_shift_ghz=5.4
+[calibrate] RDN_101796_t1.6_transpose

@@ -1,0 +1,21 @@
+[calibrate] RDN_10530_t0.8_invert
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+  m1x_off0_R_mse=0.002465  m1x_off0_T_mse=0.004328  m2x_off0_R_mse=0.003183  m2x_off0_T_mse=0.004328  m1x_off1_R_mse=0.04598  m1x_off1_T_mse=0.07359  m2x_off1_R_mse=0.04694  m2x_off1_T_mse=0.07359
+[calibrate] RDN_22021_t0.8_invert
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+  m1x_off0_R_mse=0.005856  m1x_off0_T_mse=0.009381  m2x_off0_R_mse=0.00472  m2x_off0_T_mse=0.009381  m1x_off1_R_mse=0.02471  m1x_off1_T_mse=0.06883  m2x_off1_R_mse=0.02232  m2x_off1_T_mse=0.06883
+{
+ "0.8": {
+  "m1x_off0_R_mse": 0.004160667495940526,
+  "m1x_off0_T_mse": 0.006854513941710324,
+  "m2x_off0_R_mse": 0.003951427175920236,
+  "m2x_off0_T_mse": 0.006854519535948973,
+  "m1x_off1_R_mse": 0.035342116409462936,
+  "m1x_off1_T_mse": 0.07120935727470046,
+  "m2x_off1_R_mse": 0.0346274717675076,
+  "m2x_off1_T_mse": 0.07120933364684134
+ }
+} 
+best substrate thickness: 0.8 mm

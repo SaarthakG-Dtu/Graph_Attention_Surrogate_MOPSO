@@ -1,0 +1,8 @@
+{
+  "key": "E:\\SUTD_BENCHMARK_NOVEL_GNN\\outputs_new_pipeline\\COPOL\\RDN_n108000\\phase1_forward_best.pth@1791064396",
+  "n": 3000,
+  "split": "test",
+  "lin_mse": 0.002381807193160057,
+  "r2": 0.8106381148099899,
+  "phase_mae_deg": 3.948143243789673
+}

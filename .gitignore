@@ -1,0 +1,52 @@
+@'
+# Model weights and checkpoints
+*.pth
+*.pt
+*.ckpt
+*.onnx
+*.safetensors
+*.h5
+*.hdf5
+*.pkl
+*.pickle
+*.joblib
+*.bin
+
+# Large datasets and numerical arrays
+*.npy
+*.npz
+*.mat
+*.fsf
+*.parquet
+*.feather
+*.arrow
+
+# Dataset and experiment directories
+SUTD_DATASET/
+**/SUTD_DATASET/
+datasets/
+dataset/
+data/
+cache/
+**/cache/
+
+# Training outputs and experiment logs
+checkpoints/
+weights/
+models/
+runs/
+wandb/
+lightning_logs/
+outputs/
+results/
+
+# Python and editor files
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.ipynb_checkpoints/
+.vscode/
+.idea/
+'@ | Set-Content -Encoding utf8 .gitignore

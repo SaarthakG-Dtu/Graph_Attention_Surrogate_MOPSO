@@ -1,0 +1,607 @@
+{
+ "settings": {
+  "latent": [
+   1.5,
+   0.2,
+   0.49
+  ],
+  "binary": [
+   3.0,
+   0.25,
+   0.417
+  ]
+ },
+ "runs": [
+  {
+   "tag": "sc_latent_N200_G150_s0_B1.5",
+   "space": "latent",
+   "Np": 200,
+   "gens": 150,
+   "seed": 0,
+   "layouts": 30200,
+   "seconds": 6.997307538986206,
+   "hv_archive": 0.51825,
+   "hv_all": 0.523325,
+   "reach": {
+    "0.35": {
+     "layouts": 6200,
+     "seconds": 1.4365333358183603
+    },
+    "0.4": {
+     "layouts": 9200,
+     "seconds": 2.1316301112143408
+    },
+    "0.45": {
+     "layouts": 15200,
+     "seconds": 3.5218236620063026
+    }
+   }
+  },
+  {
+   "tag": "sc_latent_N200_G150_s1_B1.5",
+   "space": "latent",
+   "Np": 200,
+   "gens": 150,
+   "seed": 1,
+   "layouts": 30200,
+   "seconds": 6.9019455909729,
+   "hv_archive": 0.48719,
+   "hv_all": 0.4915,
+   "reach": {
+    "0.35": {
+     "layouts": 2200,
+     "seconds": 0.5027907384152444
+    },
+    "0.4": {
+     "layouts": 5200,
+     "seconds": 1.1884144726178505
+    },
+    "0.45": {
+     "layouts": 9200,
+     "seconds": 2.1025794515546585
+    }
+   }
+  },
+  {
+   "tag": "sc_latent_N200_G150_s2_B1.5",
+   "space": "latent",
+   "Np": 200,
+   "gens": 150,
+   "seed": 2,
+   "layouts": 30200,
+   "seconds": 7.368704080581665,
+   "hv_archive": 0.463825,
+   "hv_all": 0.4713,
+   "reach": {
+    "0.35": {
+     "layouts": 7200,
+     "seconds": 1.7567771317943042
+    },
+    "0.4": {
+     "layouts": 18200,
+     "seconds": 4.440742194257824
+    },
+    "0.45": {
+     "layouts": 29200,
+     "seconds": 7.124707256721345
+    }
+   }
+  },
+  {
+   "tag": "sc_binary_N200_G150_s0",
+   "space": "binary",
+   "Np": 200,
+   "gens": 150,
+   "seed": 0,
+   "layouts": 30200,
+   "seconds": 9.691685199737549,
+   "hv_archive": 0.431275,
+   "hv_all": 0.443175,
+   "reach": {
+    "0.35": {
+     "layouts": 12200,
+     "seconds": 3.915184087311195
+    },
+    "0.4": {
+     "layouts": 24200,
+     "seconds": 7.766184828928765
+    },
+    "0.45": null
+   }
+  },
+  {
+   "tag": "sc_binary_N200_G150_s1",
+   "space": "binary",
+   "Np": 200,
+   "gens": 150,
+   "seed": 1,
+   "layouts": 30200,
+   "seconds": 13.227169513702393,
+   "hv_archive": 0.41633,
+   "hv_all": 0.4369,
+   "reach": {
+    "0.35": {
+     "layouts": 9200,
+     "seconds": 4.029468858478874
+    },
+    "0.4": {
+     "layouts": 18200,
+     "seconds": 7.971340567860382
+    },
+    "0.45": null
+   }
+  },
+  {
+   "tag": "sc_binary_N200_G150_s2",
+   "space": "binary",
+   "Np": 200,
+   "gens": 150,
+   "seed": 2,
+   "layouts": 30200,
+   "seconds": 13.35049557685852,
+   "hv_archive": 0.40216,
+   "hv_all": 0.40705,
+   "reach": {
+    "0.35": {
+     "layouts": 21200,
+     "seconds": 9.371871067198697
+    },
+    "0.4": {
+     "layouts": 27200,
+     "seconds": 12.024287406971913
+    },
+    "0.45": null
+   }
+  },
+  {
+   "tag": "sc_latent_N500_G300_s0_B1.5",
+   "space": "latent",
+   "Np": 500,
+   "gens": 300,
+   "seed": 0,
+   "layouts": 150500,
+   "seconds": 24.723288774490356,
+   "hv_archive": 0.55603,
+   "hv_all": 0.56065,
+   "reach": {
+    "0.35": {
+     "layouts": 5500,
+     "seconds": 0.9035088920910097
+    },
+    "0.4": {
+     "layouts": 30500,
+     "seconds": 5.01036749250469
+    },
+    "0.45": {
+     "layouts": 38000,
+     "seconds": 6.242425072628794
+    }
+   }
+  },
+  {
+   "tag": "sc_latent_N500_G300_s1_B1.5",
+   "space": "latent",
+   "Np": 500,
+   "gens": 300,
+   "seed": 1,
+   "layouts": 150500,
+   "seconds": 24.612444639205933,
+   "hv_archive": 0.516955,
+   "hv_all": 0.523775,
+   "reach": {
+    "0.35": {
+     "layouts": 8000,
+     "seconds": 1.3083027050740694
+    },
+    "0.4": {
+     "layouts": 13000,
+     "seconds": 2.1259918957453627
+    },
+    "0.45": {
+     "layouts": 15500,
+     "seconds": 2.5348364910810095
+    }
+   }
+  },
+  {
+   "tag": "sc_latent_N500_G300_s2_B1.5",
+   "space": "latent",
+   "Np": 500,
+   "gens": 300,
+   "seed": 2,
+   "layouts": 150500,
+   "seconds": 24.98928737640381,
+   "hv_archive": 0.507865,
+   "hv_all": 0.52845,
+   "reach": {
+    "0.35": {
+     "layouts": 5500,
+     "seconds": 0.9132297712307039
+    },
+    "0.4": {
+     "layouts": 20500,
+     "seconds": 3.403856420041715
+    },
+    "0.45": {
+     "layouts": 48000,
+     "seconds": 7.970005276195234
+    }
+   }
+  },
+  {
+   "tag": "sc_binary_N500_G300_s0",
+   "space": "binary",
+   "Np": 500,
+   "gens": 300,
+   "seed": 0,
+   "layouts": 150500,
+   "seconds": 51.281291007995605,
+   "hv_archive": 0.482275,
+   "hv_all": 0.5334,
+   "reach": {
+    "0.35": {
+     "layouts": 15500,
+     "seconds": 5.281461864610843
+    },
+    "0.4": {
+     "layouts": 28000,
+     "seconds": 9.540705303813136
+    },
+    "0.45": {
+     "layouts": 40500,
+     "seconds": 13.79994874301543
+    }
+   }
+  },
+  {
+   "tag": "sc_binary_N500_G300_s1",
+   "space": "binary",
+   "Np": 500,
+   "gens": 300,
+   "seed": 1,
+   "layouts": 150500,
+   "seconds": 48.063430309295654,
+   "hv_archive": 0.4532,
+   "hv_all": 0.4696,
+   "reach": {
+    "0.35": {
+     "layouts": 20500,
+     "seconds": 6.546845988973827
+    },
+    "0.4": {
+     "layouts": 70500,
+     "seconds": 22.514763035251452
+    },
+    "0.45": {
+     "layouts": 110500,
+     "seconds": 35.28909667227355
+    }
+   }
+  },
+  {
+   "tag": "sc_binary_N500_G300_s2",
+   "space": "binary",
+   "Np": 500,
+   "gens": 300,
+   "seed": 2,
+   "layouts": 150500,
+   "seconds": 48.700095415115356,
+   "hv_archive": 0.495655,
+   "hv_all": 0.52255,
+   "reach": {
+    "0.35": {
+     "layouts": 20500,
+     "seconds": 6.6335678140190355
+    },
+    "0.4": {
+     "layouts": 30500,
+     "seconds": 9.869454552564907
+    },
+    "0.45": {
+     "layouts": 60500,
+     "seconds": 19.57711476820252
+    }
+   }
+  },
+  {
+   "tag": "sc_latent_N1000_G300_s0_B1.5",
+   "space": "latent",
+   "Np": 1000,
+   "gens": 300,
+   "seed": 0,
+   "layouts": 301000,
+   "seconds": 52.53301954269409,
+   "hv_archive": 0.47701,
+   "hv_all": 0.553425,
+   "reach": {
+    "0.35": {
+     "layouts": 16000,
+     "seconds": 2.792452866056829
+    },
+    "0.4": {
+     "layouts": 46000,
+     "seconds": 8.028301989913382
+    },
+    "0.45": {
+     "layouts": 86000,
+     "seconds": 15.009434155055455
+    }
+   }
+  },
+  {
+   "tag": "sc_latent_N1000_G300_s1_B1.5",
+   "space": "latent",
+   "Np": 1000,
+   "gens": 300,
+   "seed": 1,
+   "layouts": 301000,
+   "seconds": 51.3561794757843,
+   "hv_archive": 0.49634,
+   "hv_all": 0.5215,
+   "reach": {
+    "0.35": {
+     "layouts": 11000,
+     "seconds": 1.8768039011083963
+    },
+    "0.4": {
+     "layouts": 21000,
+     "seconds": 3.582989265752393
+    },
+    "0.45": {
+     "layouts": 41000,
+     "seconds": 6.995359995040387
+    }
+   }
+  },
+  {
+   "tag": "sc_latent_N1000_G300_s2_B1.5",
+   "space": "latent",
+   "Np": 1000,
+   "gens": 300,
+   "seed": 2,
+   "layouts": 301000,
+   "seconds": 52.39263582229614,
+   "hv_archive": 0.533615,
+   "hv_all": 0.544975,
+   "reach": {
+    "0.35": {
+     "layouts": 11000,
+     "seconds": 1.914681043339726
+    },
+    "0.4": {
+     "layouts": 11000,
+     "seconds": 1.914681043339726
+    },
+    "0.45": {
+     "layouts": 46000,
+     "seconds": 8.006847999420673
+    }
+   }
+  },
+  {
+   "tag": "sc_binary_N1000_G300_s0",
+   "space": "binary",
+   "Np": 1000,
+   "gens": 300,
+   "seed": 0,
+   "layouts": 301000,
+   "seconds": 92.4203622341156,
+   "hv_archive": 0.506065,
+   "hv_all": 0.511475,
+   "reach": {
+    "0.35": {
+     "layouts": 21000,
+     "seconds": 6.447932248891786
+    },
+    "0.4": {
+     "layouts": 46000,
+     "seconds": 14.124042069001055
+    },
+    "0.45": {
+     "layouts": 71000,
+     "seconds": 21.800151889110325
+    }
+   }
+  },
+  {
+   "tag": "sc_binary_N1000_G300_s1",
+   "space": "binary",
+   "Np": 1000,
+   "gens": 300,
+   "seed": 1,
+   "layouts": 301000,
+   "seconds": 92.66025161743164,
+   "hv_archive": 0.482525,
+   "hv_all": 0.528275,
+   "reach": {
+    "0.35": {
+     "layouts": 16000,
+     "seconds": 4.925461879996366
+    },
+    "0.4": {
+     "layouts": 36000,
+     "seconds": 11.082289229991824
+    },
+    "0.45": {
+     "layouts": 66000,
+     "seconds": 20.317530254985012
+    }
+   }
+  },
+  {
+   "tag": "sc_binary_N1000_G300_s2",
+   "space": "binary",
+   "Np": 1000,
+   "gens": 300,
+   "seed": 2,
+   "layouts": 301000,
+   "seconds": 90.31676912307739,
+   "hv_archive": 0.515315,
+   "hv_all": 0.539,
+   "reach": {
+    "0.35": {
+     "layouts": 31000,
+     "seconds": 9.301727052542855
+    },
+    "0.4": {
+     "layouts": 66000,
+     "seconds": 19.80367695057511
+    },
+    "0.45": {
+     "layouts": 101000,
+     "seconds": 30.305626848607364
+    }
+   }
+  },
+  {
+   "tag": "sc_latent_N2000_G300_s0_B1.5",
+   "space": "latent",
+   "Np": 2000,
+   "gens": 300,
+   "seed": 0,
+   "layouts": 602000,
+   "seconds": 112.02830386161804,
+   "hv_archive": 0.52391,
+   "hv_all": 0.5469,
+   "reach": {
+    "0.35": {
+     "layouts": 22000,
+     "seconds": 4.09405761620531
+    },
+    "0.4": {
+     "layouts": 42000,
+     "seconds": 7.815928176391957
+    },
+    "0.45": {
+     "layouts": 102000,
+     "seconds": 18.981539856951894
+    }
+   }
+  },
+  {
+   "tag": "sc_latent_N2000_G300_s1_B1.5",
+   "space": "latent",
+   "Np": 2000,
+   "gens": 300,
+   "seed": 1,
+   "layouts": 602000,
+   "seconds": 112.30235052108765,
+   "hv_archive": 0.535825,
+   "hv_all": 0.552775,
+   "reach": {
+    "0.35": {
+     "layouts": 12000,
+     "seconds": 2.238585060221016
+    },
+    "0.4": {
+     "layouts": 32000,
+     "seconds": 5.969560160589377
+    },
+    "0.45": {
+     "layouts": 132000,
+     "seconds": 24.62443566243118
+    }
+   }
+  },
+  {
+   "tag": "sc_latent_N2000_G300_s2_B1.5",
+   "space": "latent",
+   "Np": 2000,
+   "gens": 300,
+   "seed": 2,
+   "layouts": 602000,
+   "seconds": 111.63298082351685,
+   "hv_archive": 0.523425,
+   "hv_all": 0.554,
+   "reach": {
+    "0.35": {
+     "layouts": 22000,
+     "seconds": 4.0796105948793535
+    },
+    "0.4": {
+     "layouts": 42000,
+     "seconds": 7.788347499315129
+    },
+    "0.45": {
+     "layouts": 92000,
+     "seconds": 17.06018976040457
+    }
+   }
+  },
+  {
+   "tag": "sc_binary_N2000_G300_s0",
+   "space": "binary",
+   "Np": 2000,
+   "gens": 300,
+   "seed": 0,
+   "layouts": 602000,
+   "seconds": 166.12646961212158,
+   "hv_archive": 0.52324,
+   "hv_all": 0.5317,
+   "reach": {
+    "0.35": {
+     "layouts": 32000,
+     "seconds": 8.830642902969918
+    },
+    "0.4": {
+     "layouts": 102000,
+     "seconds": 28.147674253216614
+    },
+    "0.45": {
+     "layouts": 192000,
+     "seconds": 52.98385741781951
+    }
+   }
+  },
+  {
+   "tag": "sc_binary_N2000_G300_s1",
+   "space": "binary",
+   "Np": 2000,
+   "gens": 300,
+   "seed": 1,
+   "layouts": 602000,
+   "seconds": 158.63365173339844,
+   "hv_archive": 0.533625,
+   "hv_all": 0.55925,
+   "reach": {
+    "0.35": {
+     "layouts": 42000,
+     "seconds": 11.067464074423146
+    },
+    "0.4": {
+     "layouts": 52000,
+     "seconds": 13.70257456833342
+    },
+    "0.45": {
+     "layouts": 102000,
+     "seconds": 26.878127037884784
+    }
+   }
+  },
+  {
+   "tag": "sc_binary_N2000_G300_s2",
+   "space": "binary",
+   "Np": 2000,
+   "gens": 300,
+   "seed": 2,
+   "layouts": 602000,
+   "seconds": 191.10109639167786,
+   "hv_archive": 0.527735,
+   "hv_all": 0.553975,
+   "reach": {
+    "0.35": {
+     "layouts": 42000,
+     "seconds": 13.332634631977525
+    },
+    "0.4": {
+     "layouts": 62000,
+     "seconds": 19.681508266252536
+    },
+    "0.45": {
+     "layouts": 112000,
+     "seconds": 35.553692351940064
+    }
+   }
+  }
+ ]
+}

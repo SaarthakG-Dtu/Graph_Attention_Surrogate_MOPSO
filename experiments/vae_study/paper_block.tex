@@ -1,0 +1,174 @@
+\subsection{MOIPSO in the Latent Space}
+The improved multi-objective particle swarm optimizer (MOIPSO) of \cite{moipso} is used with the settings of Table~\ref{tab:moipso}. Each particle $i$ has a position $z_i$ in the latent space, restricted to the central box $[-0.5,0.5]^{200}$ (Section~\ref{sec:vae}), and a velocity $v_i$. In every generation,
+\begin{equation}
+v_i\leftarrow\omega v_i+c_1(p_i-z_i)+c_2(g_i-z_i),\qquad z_i\leftarrow z_i+v_i ,
+\end{equation}
+where $p_i$ is the best position the particle has found itself and $g_i$ a leader taken from the archive described below. The inertia $\omega$ decreases linearly from 0.9 to 0.4, so that the swarm first explores and later converges. The factors $c_1=2.05|\cos2\pi\rho_1|$ and $c_2=2.05|\sin2\pi\rho_2|$, with random $\rho_1,\rho_2$ drawn every generation, balance the pull towards the particle's own best and towards the leader; this is the main change of MOIPSO over the standard swarm.
+
+\emph{Archive and leaders.} An external archive keeps the best trade-off designs found so far, up to 50. The objective space is divided into a grid of boxes, and leaders are chosen preferably from boxes with few archive members, which keeps the front spread out \cite{mopso}. When the archive is full, members in crowded regions are removed first \cite{nsga2}. Since several latent vectors can decode to the same layout, the archive keeps one entry per layout.
+
+\emph{Mutation and bounds.} In every generation, half of the particles receive a random Gaussian step, whose size decreases from 10\,\% to 2\,\% of the search range over the run, to escape local optima. Particles that leave the box are reflected back, and each velocity component is limited to 0.02.
+
+\emph{Personal best.} A particle's best position $p_i$ is replaced when the new position is better in all objectives, and with probability 0.5 when neither is better.
+
+\emph{Trust check.} The optimizer favours the layouts with the best predictions, and with them the layouts whose response the surrogate predicts too optimistically. To keep the search where the surrogate is reliable, every layout is also scored by two independently trained RDN surrogates, RDN108000 without PGA and RDN27000 (Section~\ref{sec:fwdresults}). The mean squared difference $u$ between their predictions of $r_{xx}$ and that of RDN108000 is small where the networks have learned the response and large where they extrapolate: on the RDN test layouts it is correlated with the true prediction error (rank correlation 0.58), and the layouts with $u$ above its median of 0.01 have a 3.5 times larger median error than the others. A layout with $u>0.01$ therefore receives penalties above the reference point, growing with $u$, so that it cannot enter the archive and its particle is drawn back to layouts the surrogate predicts reliably.
+
+\emph{Pixel space.} For comparison, the same optimizer also runs directly on the 256 pixels. Each position component lies in $[0,1]$ and gives a copper pixel if it exceeds 0.5, the initial positions are uniform, and each velocity component is limited to 0.042. All other settings, including the trust check, are the same. The step sizes of both spaces were chosen by a short sweep at the standard budget.
+
+\begin{table}[!t]
+\caption{MOIPSO Settings}
+\label{tab:moipso}
+\centering
+\footnotesize
+\begin{tabular}{@{}ll@{}}
+\toprule
+Setting & Value \\
+\midrule
+Search space & VAE latent vector, $z\in[-0.5,0.5]^{200}$ \\
+Particles / generations & 200 / 150 (standard); 1000 / 300 (long) \\
+Objectives & $B$ (\%), $L$ (dB), $D$ (count) \\
+Archive size & 50, grid-based leader selection \\
+Inertia $\omega$ & 0.9 to 0.4, linear \\
+Acceleration $c_1$, $c_2$ & $2.05|\cos2\pi\rho_1|$, $2.05|\sin2\pi\rho_2|$ \\
+Mutation & half of the swarm, step 10\,\% to 2\,\% of range \\
+Maximum velocity & 0.02 per component \\
+Initial positions & $z\sim\mathcal{N}(0,I)$, clipped to the box \\
+Trust check & disagreement $u\leq0.01$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{The Complete Loop}
+One generation of the design loop (Fig.~\ref{fig:pipeline}(c), steps 2--6) has five steps:
+\begin{enumerate}
+\item the decoder turns the latent vectors of all particles into binary layouts;
+\item the surrogate and the two check networks predict $r_{xx}$ of all layouts in one batch;
+\item the three objectives and the trust check are computed for each layout;
+\item the archive and the personal bests are updated;
+\item leaders are chosen and the velocities and positions are updated.
+\end{enumerate}
+No full-wave simulation is needed inside the loop. After the last generation, the archive is the predicted Pareto front, and the designs closest to the ideal (smallest sum of the three penalties) are simulated in CST (Section~\ref{sec:cst}).
+
+%=====================================================================
+\begin{figure*}[!t]
+\centering
+\fig[width=\textwidth]{fig_pareto}
+\caption{MOIPSO results of the long searches (1000 particles, 300 generations). (a) Pareto fronts of the VAE-space and pixel-space searches (predicted) and of the RDN dataset (CST) in the three objectives; stars and crosses: CST results of the designs of Table~\ref{tab:cst}. Dips below $-20$\,dB are drawn at $-20$\,dB. (b) The same fronts as in-phase bandwidth against the lowest reflection in the band; dashed: $B=10\,\%$ and $L=-1$\,dB. (c) Front of the VAE-space search after 0, 10, 50 and 300 generations, shown as in-phase bandwidth against fragile features; dashed: $B=10\,\%$ and $D=5$.}
+\label{fig:pareto}
+\end{figure*}
+
+\section{Design Results}\label{sec:invresults}
+
+\subsection{Search Cost}
+One search with 200 particles over 150 generations scores \num{30200} layouts in 10--21\,s on one GPU, including decoding and the trust check; a long search with 1000 particles over 300 generations scores \num{301000} layouts in about 2\,min (Table~\ref{tab:search}). At about 10\,min per CST simulation, the long search would take almost six years of simulation. All searches use the surrogate RDN108000, and each search was run with three random seeds.
+
+\subsection{Comparison With the Dataset}
+The 111,000 RDN layouts of the dataset, with their CST spectra, are the baseline: they show what the best existing random layout achieves for the same objectives. No dataset layout meets all three specifications at once, and every dataset layout with $B\geq10\,\%$ and $L\geq-1$\,dB has 17 or more fragile features.
+
+The long VAE search raises the hypervolume \eqref{eq:hv} of the front from 0.295 for the dataset to 0.531 (Table~\ref{tab:search}, seed 0) and the best in-phase bandwidth from 13.6\,\% to 16.3\,\%. Its front lies at far fewer fragile features than the dataset front (Fig.~\ref{fig:pareto}(a) and (c)): eight of its 50 archive designs are predicted to meet the full specification, with 13--15\,\% in-phase bandwidth, a lowest reflection above $-0.6$\,dB in the band and no or one fragile feature. Fig.~\ref{fig:pareto}(c) shows how the front moves. Already the first generation, decoded from the central box, holds designs with $B\geq10\,\%$ and no fragile feature; over the generations the swarm widens the in-phase band of such designs from 14.1\,\% to 15.2\,\% and extends the front to 16.3\,\%. All search values are predicted by the surrogate; the CST check follows in Section~\ref{sec:cst}.
+
+\begin{table}[!t]
+\caption{VAE Space and Pixel Space for Four Search Budgets}
+\label{tab:search}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{2.6pt}
+\begin{tabular}{@{}lrlcccc@{}}
+\toprule
+Budget & Layouts & Space & Time & HV & To 0.45$^{a}$ & In spec$^{b}$ \\
+\midrule
+RDN dataset & \num{111000} & -- & -- & 0.295 & -- & 0 \\
+\midrule
+$200\times150$ & \num{30200} & VAE & 14\,s & \textbf{0.509} & \textbf{1,200} & \textbf{9.0} \\
+ & & pixel & 11\,s & 0.444 & -- & 0 \\
+$500\times300$ & \num{150500} & VAE & 52\,s & \textbf{0.515} & \textbf{2,200} & \textbf{7.7} \\
+ & & pixel & 57\,s & 0.483 & \num{45500} & 0.3 \\
+$1000\times300$ & \num{301000} & VAE & 116\,s & \textbf{0.539} & \textbf{1,000} & \textbf{9.0} \\
+ & & pixel & 108\,s & 0.489 & \num{71000} & 0 \\
+$2000\times300$ & \num{602000} & VAE & 214\,s & \textbf{0.541} & \textbf{2,000} & \textbf{5.7} \\
+ & & pixel & 238\,s & 0.498 & \num{82000} & 0.3 \\
+\bottomrule
+\multicolumn{7}{@{}p{0.97\columnwidth}@{}}{\scriptsize Budget: particles $\times$ generations. HV: hypervolume \eqref{eq:hv} of the final 50-design archive (ideal design: 1), mean of three seeds (standard deviation 0.004--0.028); dataset: its CST front (0.282 when scored by the surrogate). $^{a}$Layouts scored until the front of all scored layouts reaches HV 0.45. $^{b}$Archive designs predicted to meet the full specification ($B\geq10\,\%$, $L\geq-1$\,dB, $D\leq5$). $^{a,b}$Mean of three seeds. Search values are predicted by the surrogate, with the trust check.}
+\end{tabular}
+\end{table}
+
+\begin{figure*}[!t]
+\centering
+\fig[width=\textwidth]{fig_cst_verification}
+\caption{All nine designs of Table~\ref{tab:cst}, designs 1--6 of the long VAE-space search and P1--P3 of the long pixel-space search: layout, $|r_{xx}|$ and surface reflection phase, predicted by the surrogate (dashed) and simulated in CST (solid). Shaded: in-phase band (blue: predicted, orange: CST). Dotted lines: $\pm90^\circ$.}
+\label{fig:cst}
+\end{figure*}
+
+\subsection{VAE Space or Pixel Space}
+Table~\ref{tab:search} and Fig.~\ref{fig:spaces} compare the search in the VAE space with the same search directly on the pixels, for four budgets from \num{30200} to \num{602000} layouts and three seeds each.
+
+\emph{Speed.} The VAE search starts from a far better front. Its first generation, decoded from the central box, already has a hypervolume of 0.43--0.47, well above the dataset, because the layouts there are connected and have few fragile features; random pixel layouts start at 0.11--0.20. The VAE search reaches a hypervolume of 0.45 after \num{1000}--\num{2200} layouts, in less than 1\,s, whereas the pixel search needs \num{45500}--\num{82000} layouts (17--32\,s), i.e., 20--70 times more, and does not reach it at all with \num{30200} layouts.
+
+\emph{Final fronts.} At every budget, the final archive of the VAE search has the larger hypervolume, 0.509--0.541 against 0.444--0.498. The standard VAE search, with \num{30200} layouts in 14\,s, ends above the pixel search with \num{602000} layouts in 238\,s. Its archive holds 6--13 designs predicted to meet the full specification at every budget, the pixel archive at most one.
+
+\emph{Spread.} The pixel search covers a wider part of the front. With large budgets it finds wider in-phase bands (up to 19\,\%), but with deep dips in the band or more fragile features (Fig.~\ref{fig:pareto}(b)), and the front of all layouts it scored catches up with that of the VAE search at the largest budget (HV 0.546 for both). The VAE search concentrates on the region of low loss and few fragile features in which the specification lies. For random layouts the VAE therefore does not compress the layout much ($d=200$ for 256 pixels), but it orders the design space: its central region holds the printable layouts that the pixel swarm must first find.
+
+\begin{figure*}[!t]
+\centering
+\fig[width=\textwidth]{fig_spaces}
+\caption{VAE space (blue) and pixel space (green) for four search budgets, three seeds each. Top: hypervolume of the best front among all layouts scored so far against the number of layouts scored (line: mean, band: range of the seeds); dotted: RDN dataset (CST). Bottom: final front of seed 0 as in-phase bandwidth against fragile features; dashed: $B=10\,\%$ and $D=5$.}
+\label{fig:spaces}
+\end{figure*}
+
+%=====================================================================
+\section{CST Verification}\label{sec:cst}
+
+\subsection{CST Model of the Unit Cell}
+To simulate the designs, the unit cell was rebuilt in CST Studio Suite with the published geometry and materials: $16\times16$ copper pixels of $0.5\times0.5\times0.018$\,mm with a 1\,mm margin, $\varepsilon_r=2.65$, $\tan\delta=0.003$, a 0.18\,mm copper ground, unit-cell boundaries in $x$ and $y$, Floquet ports for the two polarizations, and the frequency-domain solver from 2 to 12\,GHz. The substrate is 1.0\,mm thick. The phase reference of the model, 10.705\,mm above the cell, was determined from the empty cell (Section~\ref{sec:inverse}). A difference between surrogate and CST for a new design therefore shows the error of the surrogate on that design.
+
+\begin{table}[!t]
+\caption{Prediction vs.\ CST for the Selected Designs}
+\label{tab:cst}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lccccccc@{}}
+\toprule
+ & \multicolumn{2}{c}{Error} & \multicolumn{2}{c}{$B$ (\%)} & \multicolumn{2}{c}{$L$ (dB)} & \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+Design & MSE & Phase & Pred. & CST & Pred. & CST & $D$ \\
+\midrule
+\multicolumn{8}{@{}l}{\emph{VAE space, long search}} \\
+1 & 0.30 & 6.2$^\circ$ & 15.2 & \textbf{13.5} & $-0.54$ & $\mathbf{-0.34}$ & \textbf{0} \\
+2 & 0.14 & 4.5$^\circ$ & 15.1 & \textbf{13.2} & $-0.49$ & $\mathbf{-0.33}$ & \textbf{0} \\
+3 & 0.94 & 2.2$^\circ$ & 15.1 & \textbf{13.2} & $-0.45$ & $\mathbf{-0.34}$ & \textbf{1} \\
+4 & 1.80 & 5.5$^\circ$ & 16.2 & \textbf{13.5} & $-1.53$ & $\mathbf{-0.32}$ & \textbf{0} \\
+5 & 0.10 & 2.8$^\circ$ & 14.3 & \textbf{13.3} & $-0.45$ & $\mathbf{-0.32}$ & \textbf{0} \\
+6 & 0.74 & 3.8$^\circ$ & 14.0 & \textbf{14.1} & $-0.43$ & $\mathbf{-0.32}$ & \textbf{1} \\
+\multicolumn{8}{@{}l}{\emph{Pixel space, long search}} \\
+P1 & 0.43 & 2.3$^\circ$ & 12.3 & 13.3 & $-1.06$ & $-1.15$ & 4 \\
+P2 & 0.38 & 2.3$^\circ$ & 14.5 & 15.5 & $-4.57$ & $-4.97$ & 0 \\
+P3 & 0.09 & 2.3$^\circ$ & 11.3 & 12.4 & $-0.65$ & $-0.45$ & 8 \\
+\midrule
+RDN test set & 2.4 & 3.9$^\circ$ & -- & -- & -- & -- & -- \\
+\bottomrule
+\multicolumn{8}{@{}p{0.95\columnwidth}@{}}{\scriptsize MSE of $|r_{xx}|$ ($\times10^{-3}$) and mean phase difference over 2--12\,GHz between prediction and CST. $D$: fragile features, a property of the layout. Bold: designs that meet the full specification ($B\geq10\,\%$, $L\geq-1$\,dB, $D\leq5$) in CST.}
+\end{tabular}
+\end{table}
+
+\subsection{Verification of the Designs}
+The optimizer looks for layouts with the best predicted response. Among hundreds of thousands of layouts it may also find some whose response the surrogate predicts too optimistically, so the test error alone does not tell how accurate the predictions for the selected designs are. The six designs of the long VAE search and the three designs of the long pixel search closest to the ideal (smallest sum of the three penalties) were simulated in CST, one simulation each of about 10\,min. Table~\ref{tab:cst} reports, for each design, the MSE of $|r_{xx}|$ and the mean phase difference between prediction and CST over 2--12\,GHz, and the three objectives as predicted and as simulated. Fig.~\ref{fig:cst} compares the spectra of all nine designs.
+
+\emph{Magnitude.} The MSE of $|r_{xx}|$ between prediction and CST lies between $\e{0.09}{-3}$ and $\e{1.8}{-3}$, with a mean of $\e{0.55}{-3}$, for all nine designs below the surrogate's test error on RDN ($\e{2.4}{-3}$). The in-band loss of the VAE designs is even lower in CST than predicted, $-0.32$ to $-0.34$\,dB, and the dip of design~P2 is at the right frequency and 0.4\,dB deeper in CST.
+
+\emph{Phase.} The mean phase difference is 2.3$^\circ$ for the pixel designs and 2.2--6.2$^\circ$ for the VAE designs, against a test error of $3.9^\circ$. For the VAE designs, whose stripe-like layouts differ most from the random training layouts, the phase falls slightly earlier in CST than predicted: the lower edge of the in-phase band agrees within 0.1\,GHz, and the upper edge lies 0.1--0.4\,GHz lower (Fig.~\ref{fig:cst}). Their simulated bandwidths are therefore 1--3 percentage points narrower than predicted; for the pixel designs they are about 1 point wider.
+
+\emph{Objectives.} All six VAE designs meet the full specification in CST, with 13.2--14.1\,\% in-phase bandwidth, a lowest reflection of $-0.32$ to $-0.34$\,dB in the band, and no or one fragile feature. No layout of the dataset meets it, and no dataset layout has both a wider in-phase band and a lower in-band loss than any of them; design~6 has a wider in-phase band than every dataset layout (at most 13.6\,\%). None of the three pixel designs meets the full specification: P1 and P2 have 13.3 and 15.5\,\% in-phase bandwidth but in-band dips to $-1.15$ and $-4.97$\,dB, and P3 has 8 fragile features.
+
+%=====================================================================
+\section{Discussion}
+\emph{Accuracy where the optimizer searches.} The optimizer selects the best predictions among many thousands, so the selected designs are where an over-optimistic surrogate would show first. With the trust check, the magnitude errors of the selected designs are below the test error and their in-phase band edges agree with CST within 0.4\,GHz. Without it, the swarm in the central latent box found layouts whose predicted bandwidth was up to 8 points too wide; the disagreement of independently trained networks marks such layouts at no extra simulation cost. The remaining systematic difference is a slightly too wide predicted band for the stripe-like VAE layouts. Adding CST simulations of such layouts to the training data, or a margin on the bandwidth objective, would remove it.
+
+\emph{Design space.} A swarm on the pixels must first find the connected, printable layouts among random ones; the VAE's central region consists of them. This, not a reduction of the number of variables, makes the VAE search 20--70 times faster to a good front and better at every budget, at the price of a narrower spread in bandwidth.
+
+\emph{Scope.} The surrogate is trained for normal incidence and one substrate. Other substrates, cell sizes or incidence angles need new training data, but no change to the architecture or the training settings.
+
+%=====================================================================
+\section{Conclusion}
+This paper presented a surrogate model for pixelated metasurfaces that combines a convolutional backbone with pixel-wise graph attention, frequency cross-attention, a bidirectional GRU and a passive output layer. Trained separately on each of the four SUTD-PRCM layout classes with one architecture, one set of settings and the same number of layouts as MSDCNN, it has a lower error than the class-specific MSDCNN models with half or less of their parameters (48\,\% lower on shape combinations, 61\,\% lower on random layouts with 27,000 and 45\,\% with 108,000 training layouts), and the network trained on random layouts also predicts the structured classes. A reproduced edge-aware surrogate with a shallow convolutional encoder, trained in the same way, matches it only on polygons and fails on shape combinations and random layouts, which shows that the backbone, not the frequency head, decides whether one architecture suits all classes. It was shown that a VAE of random layouts needs an effective KL weight below one; a VAE sized by this rule reconstructs random layouts exactly, and the centre of its latent space holds connected, printable layouts. Used in place of the solver, with a check by independently trained networks, the surrogate lets a multi-objective particle swarm search this latent space: it reaches a good front 20--70 times faster than the same swarm on the pixels, and ends with a better front at every budget from \num{30200} to \num{602000} layouts. CST simulation confirms the selected designs: all six designs of the VAE search meet the full specification, with 13.2--14.1\,\% in-phase bandwidth, less than 0.35\,dB in-band loss and no or one fragile feature, which no dataset layout achieves, and the magnitude errors of all nine simulated designs are below the surrogate's test error.
+

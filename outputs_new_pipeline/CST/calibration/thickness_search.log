@@ -1,0 +1,19 @@
+[stage 1] coarse sweep on RDN_10530_invert
+--- Building template: cell=10mm (16x0.5mm + 2x1mm padding), t_sub=0.6mm, conductor=copper ---
+CPA: The specified project does not exist. A new project hasbeen created.
+Do not forget to use CST_MicrowaveStudio.saveFile() to save your project.
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+  t=0.600 mm    RDN#10530  |r| MSE 1.076e-02  phase 11.6 deg
+  t=0.800 mm    RDN#10530  |r| MSE 2.465e-03  phase 5.9 deg
+--- Building template: cell=10mm (16x0.5mm + 2x1mm padding), t_sub=1mm, conductor=copper ---
+CPA: The specified project does not exist. A new project hasbeen created.
+Do not forget to use CST_MicrowaveStudio.saveFile() to save your project.
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+  t=1.000 mm    RDN#10530  |r| MSE 3.366e-05  phase 0.2 deg
+--- Building template: cell=10mm (16x0.5mm + 2x1mm padding), t_sub=1.4mm, conductor=copper ---
+CPA: The specified project does not exist. A new project hasbeen created.
+Do not forget to use CST_MicrowaveStudio.saveFile() to save your project.
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.

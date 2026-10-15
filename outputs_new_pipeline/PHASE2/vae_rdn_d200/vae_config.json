@@ -1,0 +1,21 @@
+{
+  "classes": [
+    "RDN"
+  ],
+  "latent_dim": 200,
+  "conv_channels": [
+    32,
+    64,
+    128
+  ],
+  "final_activation": "sigmoid",
+  "w_bce": 2.0,
+  "beta": 1.0,
+  "gamma": 0.0,
+  "kl_free": 5,
+  "kl_anneal": 30,
+  "augment": true,
+  "n_train": 88800,
+  "n_val": 11100,
+  "n_params": 1488785
+}

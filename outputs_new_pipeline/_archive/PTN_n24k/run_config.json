@@ -1,0 +1,23 @@
+{
+  "class_name": "PTN",
+  "target": "co",
+  "layout_convention": "physical",
+  "model_type": "resnet3conv_pga",
+  "model_overrides": {},
+  "n_params": 5831531,
+  "epochs": 300,
+  "lr": 0.0002,
+  "weight_decay": 1e-05,
+  "batch_size": 256,
+  "patience": 1000,
+  "loss_options": {
+    "db_floor": null,
+    "phase_mag_ref": null
+  },
+  "augment": true,
+  "n_train": 24000,
+  "n_val": 6000,
+  "best_val": 0.3604166592756907,
+  "epochs_run": 300,
+  "minutes": 49.702903004487354
+}

@@ -1,0 +1,282 @@
+{
+ "phase1": {
+  "COPOL/PLG_aug": {
+   "params": 5831531,
+   "epochs_run": 150,
+   "minutes": 33.6,
+   "test_lin_mse": 0.00011975480447290465,
+   "test_r2": 0.9846751926018255,
+   "test_db_mse": 0.07768439501523972,
+   "phase_mae_deg": 1.522900104522705,
+   "band_edge_db": 0.08998513966798782,
+   "msdcnn_full": 0.00011975480447290465,
+   "msdcnn_plg_band": 0.00044971186434850097,
+   "per_class": null
+  },
+  "COPOL/PLG_aug_w32": {
+   "params": 1468091,
+   "epochs_run": 150,
+   "minutes": 25.8,
+   "test_lin_mse": 0.00014715365250594914,
+   "test_r2": 0.981169010234845,
+   "test_db_mse": 0.08876753598451614,
+   "phase_mae_deg": 1.8761824369430542,
+   "band_edge_db": 0.10158801078796387,
+   "msdcnn_full": 0.00014715365250594914,
+   "msdcnn_plg_band": 0.0005468062590807676,
+   "per_class": null
+  },
+  "COPOL/PLR_aug": {
+   "params": 5831531,
+   "epochs_run": 150,
+   "minutes": 69.2,
+   "test_lin_mse": 5.626893835142255e-05,
+   "test_r2": 0.9945460198760576,
+   "test_db_mse": 0.031193314120173454,
+   "phase_mae_deg": 0.9767500758171082,
+   "band_edge_db": 0.059472110122442245,
+   "msdcnn_full": 5.626894562738016e-05,
+   "msdcnn_plg_band": 0.00019113450252916664,
+   "per_class": null
+  },
+  "COPOL/PTN_aug": {
+   "params": 5831531,
+   "epochs_run": 150,
+   "minutes": 92.3,
+   "test_lin_mse": 0.0011427543358877301,
+   "test_r2": 0.7242815495577144,
+   "test_db_mse": 0.3919532597064972,
+   "phase_mae_deg": 1.8429691791534424,
+   "band_edge_db": 0.12431616336107254,
+   "msdcnn_full": 0.0011427541030570865,
+   "msdcnn_plg_band": 0.0023367449175566435,
+   "per_class": null
+  },
+  "COPOL/RDN_aug": {
+   "params": 5831531,
+   "epochs_run": 150,
+   "minutes": 167.5,
+   "test_lin_mse": 0.002844223054125905,
+   "test_r2": 0.7713592063405312,
+   "test_db_mse": 0.8533560633659363,
+   "phase_mae_deg": 3.993460178375244,
+   "band_edge_db": 0.2682632505893707,
+   "msdcnn_full": 0.0028442232869565487,
+   "msdcnn_plg_band": 0.0058648958802223206,
+   "per_class": null
+  },
+  "COPOL/RDN_aug_nopga": {
+   "params": 5766338,
+   "epochs_run": 150,
+   "minutes": 91.0,
+   "test_lin_mse": 0.002889914670959115,
+   "test_r2": 0.7676861597108597,
+   "test_db_mse": 0.8897832036018372,
+   "phase_mae_deg": 3.929670572280884,
+   "band_edge_db": 0.27077430486679077,
+   "msdcnn_full": 0.002889913972467184,
+   "msdcnn_plg_band": 0.005809983238577843,
+   "per_class": null
+  },
+  "COPOL/RDN_aug_w16": {
+   "params": 372131,
+   "epochs_run": 150,
+   "minutes": 77.4,
+   "test_lin_mse": 0.005445114336907864,
+   "test_r2": 0.5622793199542677,
+   "test_db_mse": 1.6036856174468994,
+   "phase_mae_deg": 6.2765679359436035,
+   "band_edge_db": 0.3938123881816864,
+   "msdcnn_full": 0.0054451157338917255,
+   "msdcnn_plg_band": 0.011012786068022251,
+   "per_class": null
+  },
+  "COPOL/RDN_aug_w32": {
+   "params": 1468091,
+   "epochs_run": 150,
+   "minutes": 82.2,
+   "test_lin_mse": 0.0038257308769971132,
+   "test_r2": 0.6924579661073182,
+   "test_db_mse": 1.1395294666290283,
+   "phase_mae_deg": 4.860737323760986,
+   "band_edge_db": 0.3235428035259247,
+   "msdcnn_full": 0.0038257320411503315,
+   "msdcnn_plg_band": 0.007970629259943962,
+   "per_class": null
+  }
+ },
+ "vae": {
+  "vae_rdn": {
+   "classes": [
+    "RDN"
+   ],
+   "latent": 64,
+   "beta": 1.0,
+   "pix": 0.4999922578828829,
+   "exact": 0.0,
+   "active": 0,
+   "nbr": [
+    0.4992486861861862,
+    0.49161625000000003
+   ],
+   "novelty": 93.0
+  },
+  "vae_rdn_d150": {
+   "classes": [
+    "RDN"
+   ],
+   "latent": 150,
+   "beta": 1.0,
+   "pix": 0.9738400900900901,
+   "exact": 0.0002702702702702703,
+   "active": 149,
+   "nbr": [
+    0.4992486861861862,
+    0.49934333333333336
+   ],
+   "novelty": 94.0
+  }
+ },
+ "mopso": {
+  "amc_x_binary": {
+   "seconds": 15.6,
+   "evals": 30200,
+   "archive": 50,
+   "meeting_spec": 0,
+   "best": {
+    "In-phase bandwidth (%)": 14.925373134328357,
+    "Lowest |r| in band (dB)": -0.03645966202020645,
+    "Fragile features": 6.0
+   },
+   "hv": 0.378215,
+   "hv_database": 0.29522,
+   "hv_database_surrogate": 0.2624
+  },
+  "amc_x_large": {
+   "seconds": 133.9,
+   "evals": 301000,
+   "archive": 50,
+   "meeting_spec": 0,
+   "best": {
+    "In-phase bandwidth (%)": 14.814814814814811,
+    "Lowest |r| in band (dB)": -0.03731805458664894,
+    "Fragile features": 2.0
+   },
+   "hv": 0.430735,
+   "hv_database": 0.298475,
+   "hv_database_surrogate": 0.273245
+  },
+  "amc_x_long": {
+   "seconds": 94.6,
+   "evals": 301000,
+   "archive": 50,
+   "meeting_spec": 1,
+   "best": {
+    "In-phase bandwidth (%)": 15.68627450980392,
+    "Lowest |r| in band (dB)": -0.035975132137537,
+    "Fragile features": 3.0
+   },
+   "hv": 0.46839,
+   "hv_database": 0.29522,
+   "hv_database_surrogate": 0.2624
+  },
+  "amc_x_s0": {
+   "seconds": 18.6,
+   "evals": 30200,
+   "archive": 50,
+   "meeting_spec": 0,
+   "best": {
+    "In-phase bandwidth (%)": 12.80788177339902,
+    "Lowest |r| in band (dB)": -0.03394320234656334,
+    "Fragile features": 5.0
+   },
+   "hv": 0.323595,
+   "hv_database": 0.29522,
+   "hv_database_surrogate": 0.2624
+  },
+  "amc_x_s1": {
+   "seconds": 12.5,
+   "evals": 30200,
+   "archive": 50,
+   "meeting_spec": 0,
+   "best": {
+    "In-phase bandwidth (%)": 12.499999999999993,
+    "Lowest |r| in band (dB)": -0.040558457374572754,
+    "Fragile features": 7.0
+   },
+   "hv": 0.274795,
+   "hv_database": 0.29522,
+   "hv_database_surrogate": 0.2624
+  },
+  "amc_x_s2": {
+   "seconds": 14.6,
+   "evals": 30200,
+   "archive": 50,
+   "meeting_spec": 0,
+   "best": {
+    "In-phase bandwidth (%)": 11.88118811881189,
+    "Lowest |r| in band (dB)": -0.0391770675778389,
+    "Fragile features": 7.0
+   },
+   "hv": 0.303645,
+   "hv_database": 0.29522,
+   "hv_database_surrogate": 0.2624
+  }
+ },
+ "cst_calibration": {
+  "rows": [
+   {
+    "cls": "RDN",
+    "index": 10530,
+    "t_sub": 0.8,
+    "orient": "as_is",
+    "m1x_off0_R_mse": 0.03373422333138174,
+    "m1x_off0_T_mse": 0.10354134836019992,
+    "m2x_off0_R_mse": 0.036971744045825275,
+    "m2x_off0_T_mse": 0.10354134142430203,
+    "m1x_off1_R_mse": 0.04230024348062743,
+    "m1x_off1_T_mse": 0.14026429135041207,
+    "m2x_off1_R_mse": 0.04356999137943791,
+    "m2x_off1_T_mse": 0.140264265151589
+   },
+   {
+    "cls": "RDN",
+    "index": 22021,
+    "t_sub": 0.8,
+    "orient": "as_is",
+    "m1x_off0_R_mse": 0.030680637497908555,
+    "m1x_off0_T_mse": 0.06783301650572594,
+    "m2x_off0_R_mse": 0.02745929513400021,
+    "m2x_off0_T_mse": 0.06783312969463319,
+    "m1x_off1_R_mse": 0.03394434612174558,
+    "m1x_off1_T_mse": 0.07777042796711205,
+    "m2x_off1_R_mse": 0.030265396378877794,
+    "m2x_off1_T_mse": 0.07777058296186613
+   }
+  ],
+  "summary": {
+   "0.8": {
+    "m1x_off0_R_mse": 0.03220743041464515,
+    "m1x_off0_T_mse": 0.08568718243296293,
+    "m2x_off0_R_mse": 0.03221551958991274,
+    "m2x_off0_T_mse": 0.08568723555946761,
+    "m1x_off1_R_mse": 0.03812229480118651,
+    "m1x_off1_T_mse": 0.10901735965876205,
+    "m2x_off1_R_mse": 0.03691769387915785,
+    "m2x_off1_T_mse": 0.10901742405672757
+   }
+  },
+  "best_t_sub": "0.8",
+  "designs": [
+   {
+    "cls": "RDN",
+    "index": 10530
+   },
+   {
+    "cls": "RDN",
+    "index": 22021
+   }
+  ]
+ },
+ "cst_verification": {}
+}

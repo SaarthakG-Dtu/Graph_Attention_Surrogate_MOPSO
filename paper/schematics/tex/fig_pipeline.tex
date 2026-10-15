@@ -1,0 +1,236 @@
+% VAE-latent MOIPSO inverse design with CST verification. Data in ../data/ from
+% python paper/schematics.py data:pipeline (VAE decodes, SUTD dataset objectives).
+% Layout: (a) VAE and (b) surrogate, both trained once (top); (c) the MOIPSO loop,
+% steps 1-4 left to right and 5-6 right to left (middle); (d) CST check (bottom).
+\documentclass[border=2pt]{standalone}
+\usepackage{newtxtext,newtxmath}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta,calc,backgrounds,shapes.geometric,shadows}
+\graphicspath{{../data/}}
+
+\definecolor{ink}{HTML}{2B2B2B}
+\definecolor{muted}{HTML}{1A1A1A}
+\definecolor{bbC}{HTML}{3D74B8}
+\definecolor{pgaC}{HTML}{E0704A}
+\definecolor{attC}{HTML}{1E9E77}
+\definecolor{gruC}{HTML}{D99A0B}
+\definecolor{headC}{HTML}{7A5BA8}
+\definecolor{subst}{HTML}{EDE8D6}
+
+\tikzset{
+  >={Stealth[length=4pt,width=3.6pt]},
+  arr/.style={->,line width=0.8pt,draw=ink},
+  flow/.style={->,line width=1.6pt,draw=ink!80,>={Stealth[length=6.5pt,width=6.5pt]}},
+  thin arr/.style={->,line width=0.5pt,draw=ink!80},
+  lbl/.style={font=\fontsize{8.6}{10}\selectfont,text=ink,align=center,inner sep=1pt},
+  sub/.style={font=\fontsize{7.6}{9}\selectfont,text=muted,align=center,inner sep=1pt},
+  ttl/.style={font=\fontsize{9.6}{11}\selectfont\bfseries,text=ink,inner sep=1pt},
+  num/.style={circle,fill=ink,text=white,inner sep=0pt,minimum size=11pt,font=\fontsize{8}{8}\selectfont\bfseries},
+  step/.style={rounded corners=3pt,draw=#1!65,fill=white,line width=0.7pt,drop shadow={opacity=0.2,shadow xshift=0.9pt,shadow yshift=-0.9pt,fill=black!45}},
+  blk/.style={rounded corners=1.6pt,draw=#1!75!black,fill=#1!16,line width=0.5pt,
+              font=\fontsize{8.4}{9.6}\selectfont,text=ink,align=center,inner sep=2.5pt},
+  grp/.style={rounded corners=4pt,fill=#1!6,draw=#1!50,line width=0.5pt,dash pattern=on 2.5pt off 1.5pt},
+}
+% layout card: #1 x, #2 y (lower-left), #3 size, #4 texture
+\newcommand{\layoutcard}[4]{%
+  \fill[black!13] (#1+0.03,#2-0.03) rectangle ++(#3,#3);
+  \node[anchor=south west,inner sep=0] at (#1,#2) {\includegraphics[width=#3cm,height=#3cm]{#4}};
+  \draw[ink!70,line width=0.4pt] (#1,#2) rectangle ++(#3,#3);}
+% trapezoid: #1 x left, #2 y centre, #3 width, #4 left half-height, #5 right half-height, #6 colour, #7 text
+\newcommand{\trap}[7]{%
+  \shade[left color=#6!35,right color=#6!12,draw=#6!80!black,line width=0.5pt]
+    (#1,#2-#4) -- (#1+#3,#2-#5) -- (#1+#3,#2+#5) -- (#1,#2+#4) -- cycle;
+  \node[lbl] at (#1+#3/2,#2) {#7};}
+% step header: #1 x, #2 y (top left inside the box), #3 number, #4 title
+\newcommand{\stephead}[4]{%
+  \node[num] at (#1+0.25,#2-0.27) {#3};
+  \node[lbl,anchor=west,font=\fontsize{8.8}{10}\selectfont\bfseries] at (#1+0.48,#2-0.27) {#4};}
+% network layer bar: #1 x, #2 y centre, #3 half-height, #4 colour, #5 text
+\newcommand{\layerbar}[5]{%
+  \fill[#4!55!black] (#1+0.04,#2-#3-0.04) rectangle ++(0.42,2*#3);
+  \shade[left color=#4!45,right color=#4!15,draw=#4!80!black,line width=0.45pt] (#1,#2-#3) rectangle ++(0.42,2*#3);
+  \node[rotate=90,font=\fontsize{7.2}{8}\selectfont\bfseries,text=ink] at (#1+0.21,#2) {#5};}
+
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm]
+
+% ═══════════════════════ panels ═══════════════════════
+\begin{scope}[on background layer]
+  \fill[grp=bbC]   (0,9.45) rectangle (8.95,12.55);
+  \fill[grp=headC] (9.15,9.45) rectangle (18.1,12.55);
+  \fill[grp=attC]  (0,2.15) rectangle (18.1,9.25);
+  \fill[grp=pgaC]  (0,-1.2) rectangle (18.1,1.95);
+\end{scope}
+
+% ═══════════════════════ (a) VAE, trained once ═══════════════════════
+\node[ttl,text=bbC!80!black,anchor=north west] at (0.15,12.45) {(a) VAE design space (trained once)};
+\layoutcard{0.35}{10.1}{1.05}{vae_0}
+\trap{1.75}{10.62}{0.85}{0.68}{0.28}{bbC}{$E_\phi$}
+\node[blk=bbC,minimum height=1.05cm,inner sep=1pt] (mu) at (2.95,10.62) {\rotatebox{90}{$\boldsymbol\mu,\boldsymbol\sigma$}};
+\node[blk=headC,minimum height=0.7cm,minimum width=0.36cm,inner sep=1pt] (z) at (3.6,10.62) {$\mathbf z$};
+\trap{3.98}{10.62}{0.85}{0.28}{0.68}{bbC}{$D_\theta$};
+\layoutcard{5.15}{10.1}{1.05}{vae_0}
+\draw[thin arr] (1.43,10.62) -- (1.75,10.62);
+\draw[thin arr] (2.6,10.62) -- (mu.west);
+\draw[thin arr] (mu.east) -- (z.west);
+\draw[thin arr] (z.east) -- (3.98,10.62);
+\draw[thin arr] (4.83,10.62) -- (5.15,10.62);
+\node[sub,anchor=west,align=left] at (6.35,10.75) {$16\times16$ layout\\$\leftrightarrow$ latent $\mathbf z\in\mathbb R^{150}$\\[2pt]
+  $\mathcal L=2\,\mathrm{BCE}+\mathrm{KL}$\\RDN layouts};
+\node[sub] at (3.3,9.75) {$\mathbf z=\boldsymbol\mu+\boldsymbol\sigma\odot\boldsymbol\epsilon$};
+
+% ═══════════════════════ (b) surrogate, trained once ═══════════════════════
+\node[ttl,text=headC!85!black,anchor=north west] at (9.3,12.45) {(b) surrogate RDN108000 (trained once, Sec.\ III)};
+\layoutcard{9.5}{10.1}{1.05}{vae_3}
+\draw[thin arr] (10.58,10.62) -- (10.9,10.62);
+\layerbar{10.95}{10.62}{0.9}{bbC}{PGA-ResNet}
+\layerbar{11.75}{10.62}{0.9}{attC}{cross-attn.}
+\layerbar{12.55}{10.62}{0.72}{gruC}{BiGRU}
+\layerbar{13.35}{10.62}{0.72}{headC}{polar head}
+\foreach \x in {11.42,12.22,13.02} \draw[thin arr] (\x,10.62) -- (\x+0.28,10.62);
+\draw[thin arr] (13.82,10.62) -- (14.25,10.62);
+\node[sub,anchor=west,align=left] at (14.3,10.75) {co-pol reflection\\$\hat r_{xx}(f)$ at 101 frequencies\\[2pt]
+  0.15\,ms per layout\\(CST: about 10\,min)};
+
+% arrows: the trained VAE and surrogate are used inside the loop
+\draw[arr,densely dashed,bbC!80!black] (6.65,9.45) -- (6.65,8.72) node[pos=0.45,right,sub,text=bbC!80!black] {decoder};
+\draw[arr,densely dashed,headC!80!black] (12.0,9.45) -- (12.0,8.72) node[pos=0.45,right,sub,text=headC!80!black] {frozen};
+
+% ═══════════════════════ (c) MOIPSO loop ═══════════════════════
+\node[ttl,text=attC!75!black,anchor=north west] at (0.15,9.17) {(c) MOIPSO loop (no full-wave solver)};
+
+% step boxes, top row (left to right)
+\draw[step=attC] (0.25,6.25) rectangle (4.1,8.7);
+\draw[step=attC] (4.6,6.25) rectangle (8.65,8.7);
+\draw[step=attC] (9.15,6.25) rectangle (13.6,8.7);
+\draw[step=attC] (14.1,6.25) rectangle (17.85,8.7);
+% step boxes, bottom row (right to left)
+\draw[step=attC] (11.4,2.4) rectangle (17.85,5.75);
+\draw[step=attC] (3.0,2.4) rectangle (10.9,5.75);
+
+% 1 swarm
+\stephead{0.25}{8.7}{1}{swarm $\mathbf z_i\in[-3,3]^{150}$}
+\begin{scope}[shift={(0.55,6.5)}]
+  \def\s{1.25}\def\dx{0.55}\def\dy{0.4}
+  \fill[attC!7] (0,0) -- (\s,0) -- (\s+\dx,\dy) -- (\s+\dx,\s+\dy) -- (\dx,\s+\dy) -- (0,\s) -- cycle;
+  \draw[attC!60!black,line width=0.4pt] (0,0) rectangle (\s,\s);
+  \draw[attC!60!black,line width=0.4pt] (\s,0) -- (\s+\dx,\dy) -- (\s+\dx,\s+\dy) -- (\dx,\s+\dy) -- (0,\s);
+  \draw[attC!60!black,line width=0.4pt] (\s,\s) -- (\s+\dx,\s+\dy);
+  \pgfmathsetseed{7}
+  \foreach \i in {1,...,18}{
+    \pgfmathsetmacro{\u}{0.15+0.7*rnd}\pgfmathsetmacro{\v}{0.15+0.7*rnd}\pgfmathsetmacro{\w}{rnd}
+    \pgfmathsetmacro{\a}{360*rnd}
+    \coordinate (p) at (\u*\s+\w*\dx,\v*\s+\w*\dy);
+    \draw[attC!70!black,line width=0.35pt,->,>={Stealth[length=2pt,width=2pt]}] (p) -- ++(\a:0.2);
+    \fill[attC] (p) circle (0.045);
+  }
+  \foreach \u/\v/\w in {0.3/0.7/0.4, 0.75/0.35/0.6}
+    \node[star,star points=5,star point ratio=2.3,fill=pgaC,inner sep=0pt,minimum size=6pt] at (\u*\s+\w*\dx,\v*\s+\w*\dy) {};
+\end{scope}
+\node[sub,anchor=west,align=left] at (2.55,7.25) {$N_p=200$\\(long: 1000)\\[2pt]\textcolor{pgaC}{$\bigstar$} leaders};
+
+% 2 decode
+\stephead{4.6}{8.7}{2}{decode with $D_\theta$}
+\trap{4.85}{7.25}{0.75}{0.25}{0.62}{bbC}{$D_\theta$}
+\draw[thin arr] (5.62,7.25) -- (5.85,7.25);
+\foreach \j/\x/\y in {0/5.95/7.32, 1/6.85/7.32, 2/7.75/7.32, 3/5.95/6.45, 4/6.85/6.45, 5/7.75/6.45}{
+  \layoutcard{\x}{\y}{0.78}{vae_\j}}
+
+% 3 surrogate prediction
+\stephead{9.15}{8.7}{3}{surrogate predicts $\hat r_{xx}(f)$}
+\begin{axis}[at={(9.95cm,7.2cm)},anchor=south west,width=3.4cm,height=0.85cm,scale only axis,
+  xmin=2,xmax=12,ymin=-180,ymax=180,xtick={2,4,6,8,10,12},xticklabels={},ytick={-90,90},
+  tick label style={font=\fontsize{7}{8}\selectfont},tick align=inside,major tick length=1.5pt,
+  axis line style={muted,line width=0.4pt}]
+  \fill[attC!18] (axis cs:9.7,-180) rectangle (axis cs:10.8,180);
+  \draw[muted,dashed,line width=0.4pt] (axis cs:2,90) -- (axis cs:12,90);
+  \draw[muted,dashed,line width=0.4pt] (axis cs:2,-90) -- (axis cs:12,-90);
+  \addplot[bbC,line width=0.9pt] table[x=f,y=ph] {../data/design.dat};
+  \node[font=\fontsize{7.4}{8}\selectfont,text=bbC,anchor=west] at (axis cs:2.3,-20) {phase};
+  \node[font=\fontsize{7.4}{8}\selectfont\bfseries,text=attC!60!black] at (axis cs:10.25,-120) {$B$};
+\end{axis}
+\begin{axis}[at={(9.95cm,6.55cm)},anchor=south west,width=3.4cm,height=0.55cm,scale only axis,
+  xmin=2,xmax=12,ymin=-12,ymax=1,xtick={2,7,12},xticklabels={},ytick={-10,0},
+  tick label style={font=\fontsize{7}{8}\selectfont},tick align=inside,major tick length=1.5pt,
+  axis line style={muted,line width=0.4pt}]
+  \fill[attC!18] (axis cs:9.7,-12) rectangle (axis cs:10.8,1);
+  \addplot[pgaC,line width=0.9pt] table[x=f,y=db] {../data/design.dat};
+  \node[font=\fontsize{7.4}{8}\selectfont,text=pgaC,anchor=south west] at (axis cs:2.2,-11.5) {$|r_{xx}|$ dB};
+\end{axis}
+
+% 4 objectives
+\stephead{14.1}{8.7}{4}{three objectives}
+\node[lbl,anchor=north,align=center,font=\fontsize{8.2}{11.4}\selectfont] at (15.975,8.05) {%
+  $B$: in-phase bandwidth (\%) $\uparrow$\\
+  $L$: lowest $|r_{xx}|$ in band (dB) $\uparrow$\\
+  $D$: fragile features $\downarrow$\\[2pt]
+  {\color{muted}\fontsize{7.6}{9}\selectfont band around 10\,GHz}};
+
+% 5 Pareto archive
+\stephead{11.4}{5.75}{5}{non-dominated archive (50 designs)}
+\begin{axis}[at={(13.45cm,4.15cm)},anchor=center,width=4.6cm,height=3.55cm,view={-40}{22},
+  xmin=0,xmax=20,ymin=-20,ymax=0,zmin=0,zmax=60,xtick={0,10,20},ytick={-20,-10,0},ztick={0,30,60},
+  tick label style={font=\fontsize{6.6}{6.6}\selectfont,text=muted},major tick length=1.2pt,
+  grid=major,grid style={black!10,line width=0.3pt},axis line style={muted,line width=0.4pt},
+  xlabel={$B$ (\%)},ylabel={$L$ (dB)},zlabel={$D$},
+  label style={font=\fontsize{7.6}{7.6}\selectfont,text=ink},
+  xlabel style={sloped like x axis,yshift=5pt},ylabel style={sloped like y axis,yshift=5pt},zlabel style={yshift=-4pt}]
+  \addplot3[only marks,mark=*,mark size=0.45pt,black!22] table[x=B,y=L,z=D] {../data/cloud.dat};
+  \addplot3[only marks,mark=square*,mark size=1.0pt,draw=pgaC!70!black,fill=pgaC!80] table[x=B,y=L,z=D] {../data/front.dat};
+  \addplot3[only marks,mark=*,mark size=1.3pt,draw=attC!60!black,fill=attC] table[x=B,y=L,z=D] {../data/archive.dat};
+\end{axis}
+\node[sub,anchor=west,align=left] at (15.85,4.0) {\textcolor{attC!80!black}{$\bullet$} archive\\
+  \textcolor{pgaC}{$\blacksquare$} dataset front\\\textcolor{black!35}{$\bullet$} dataset};
+
+% 6 PSO update
+\stephead{3.0}{5.75}{6}{improved PSO update}
+\node[lbl,anchor=center,align=center,font=\fontsize{8.4}{11.2}\selectfont] at (6.95,3.85) {%
+  leader $\mathbf g$: least-crowded cell of the archive\\
+  $\mathbf v_i\leftarrow w\mathbf v_i+c_1(\mathbf p_i-\mathbf z_i)+c_2(\mathbf g-\mathbf z_i)$, \ $\mathbf z_i\leftarrow\mathbf z_i+\mathbf v_i$\\
+  $w$: $0.9\to0.4$; \ $c_1=2.05|\cos2\pi r|$, \ $c_2=2.05|\sin2\pi r|$\\
+  mutation: half the swarm, step $10\,\%\to2\,\%$ of the range};
+
+% flow arrows of the loop
+\draw[flow] (4.1,7.45) -- (4.6,7.45);
+\draw[flow] (8.65,7.45) -- (9.15,7.45);
+\draw[flow] (13.6,7.45) -- (14.1,7.45);
+\draw[flow] (15.95,6.25) -- (15.95,5.75);
+\draw[flow] (11.4,4.07) -- (10.9,4.07);
+\draw[flow,rounded corners=6pt] (3.0,4.07) -- (1.6,4.07) -- (1.6,6.25);
+\node[sub,align=center,fill=attC!6] at (1.3,5.15) {next\\generation\\($T$ = 150--300)};
+
+% ═══════════════════════ (d) CST verification ═══════════════════════
+\begin{scope}[yshift=-1.2cm]
+\node[ttl,text=pgaC!80!black,anchor=north west] at (0.15,3.07) {(d) full-wave check of the selected designs};
+\draw[step=pgaC] (12.4,0.25) rectangle (17.85,2.5);
+\draw[step=pgaC] (6.3,0.25) rectangle (11.9,2.5);
+\draw[step=pgaC] (0.25,0.25) rectangle (5.8,2.5);
+\node[lbl,anchor=north,font=\fontsize{8.8}{10}\selectfont\bfseries] at (15.125,2.4) {shortlist};
+\node[sub,anchor=north,align=center] at (15.125,1.95) {after the final generation:\\6 designs of the long VAE search\\
+  and 3 of the pixel search closest\\to the ideal point};
+\node[lbl,anchor=north,font=\fontsize{8.8}{10}\selectfont\bfseries] at (9.1,2.4) {CST simulation};
+\begin{scope}[shift={(6.6,0.6)}]
+  \fill[black!45] (0,-0.08) -- (1.3,-0.08) -- (1.78,0.45) -- (0.48,0.45) -- cycle;
+  \fill[subst!70!black] (0,0) -- (1.3,0) -- (1.3,-0.12) -- (0,-0.12) -- cycle;
+  \fill[subst!55!black] (1.3,0) -- (1.78,0.53) -- (1.78,0.41) -- (1.3,-0.12) -- cycle;
+  \begin{scope}[cm={1.3,0,0.48,0.53,(0,0)}]
+    \node[transform shape,anchor=south west,inner sep=0] at (0,0) {\includegraphics[width=1cm,height=1cm]{best_layout}};
+    \draw[ink,line width=0.4pt] (0,0) rectangle (1,1);
+  \end{scope}
+  \draw[->,line width=1.0pt,bbC] (0.6,1.35) -- (0.78,0.62);
+  \draw[->,line width=1.0pt,bbC!70] (1.1,0.62) -- (1.32,1.35);
+\end{scope}
+\node[sub,anchor=center,align=center] at (10.35,1.1) {Floquet ports\\2--12\,GHz\\$t=1.0$\,mm, $\varepsilon_r=2.65$};
+\node[lbl,anchor=north,font=\fontsize{8.8}{10}\selectfont\bfseries] at (3.025,2.4) {prediction vs.\ CST};
+\node[sub,anchor=north,align=center] at (3.025,1.95) {errors of $|r_{xx}|$ and phase;\\
+  $B$, $L$, $D$ predicted and simulated\\(Table~VII, Fig.~8)};
+\draw[flow] (15.95,3.6) -- (15.95,2.5);
+\node[sub,anchor=east] at (15.85,2.83) {final archive};
+\draw[flow] (12.4,1.37) -- (11.9,1.37);
+\draw[flow] (6.3,1.37) -- (5.8,1.37);
+\end{scope}
+\end{tikzpicture}
+\end{document}
