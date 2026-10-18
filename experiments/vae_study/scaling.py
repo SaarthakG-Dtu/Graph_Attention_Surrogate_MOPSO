@@ -50,7 +50,7 @@ def best(name):
 
 
 def run(space, bound, maxvel, Np, gens, seed):
-    tag = f"sc_{space}_N{Np}_G{gens}_s{seed}" + ("_tr" if C.MOPSO_TRUST > 0 else "") + (
+    tag = f"sc_{space}_N{Np}_G{gens}_s{seed}" + "" + (
         f"_B{bound:g}" if space == "latent" and bound != 0.5 else "")
     d = C.mopso_dir(C.MOPSO_PROBLEM, tag)
     if not os.path.exists(os.path.join(d, "comparison.json")):
@@ -94,4 +94,4 @@ if __name__ == "__main__":
                 rows.append(r)
                 print(f"RESULT {space:6s} {Np}x{gens} seed {s}: {r['layouts']:7d} layouts {r['seconds']:6.1f} s  "
                       f"HV archive {r['hv_archive']:.3f}  all {r['hv_all']:.3f}  reach {r['reach']}", flush=True)
-                json.dump(dict(settings=cfg, runs=rows), open(os.path.join(HERE, "scaling%s.json" % ("_trust" if C.MOPSO_TRUST > 0 else "")), "w"), indent=1)
+                json.dump(dict(settings=cfg, runs=rows), open(os.path.join(HERE, "scaling%s.json" % ""), "w"), indent=1)

@@ -1,0 +1,29 @@
+{
+ "problem": "coding_free",
+ "space": "latent",
+ "surrogate": "RDN:n108000",
+ "layout_convention": "true",
+ "seconds": 283.0068666934967,
+ "evaluations": 150600,
+ "unique_designs": 150599,
+ "archive": 31,
+ "n_good": 0,
+ "best_value": [
+  14.02061139812782,
+  24.532041549682617,
+  8.0
+ ],
+ "objective_names": [
+  "-10 dB reduction bandwidth (%)",
+  "Mean reduction (dB)",
+  "Corner contacts + isolated pixels"
+ ],
+ "hv": 0.132955,
+ "database": {
+  "n_database": 0,
+  "n_front": 0,
+  "n_good": 0,
+  "hv_true": NaN,
+  "hv_surrogate": NaN
+ }
+}

@@ -25,7 +25,7 @@ import torch.optim as optim
 import config as C
 from dataset import get_dataloaders, get_split_arrays, class_split_indices, load_class, freq_grid, to_convention
 from phase1_forward_model import ForwardSurrogate, load_surrogate
-from phase1_loss import PhysicsGuidedLoss, magnitude_metrics, complex_metrics
+from phase1_loss import PhysicsGuidedLoss, TwoOutputLoss, magnitude_metrics, complex_metrics
 import utils
 
 
@@ -44,9 +44,11 @@ def mirror_batch(imgs, spec, target):
     fy = torch.rand(B, device=imgs.device) < 0.5
     imgs = torch.where(fx[:, None, None, None], imgs.flip(-1), imgs)
     imgs = torch.where(fy[:, None, None, None], imgs.flip(-2), imgs)
+    sign = 1.0 - 2.0 * (fx ^ fy).float()
     if target == "cross":
-        sign = 1.0 - 2.0 * (fx ^ fy).float()
         spec = spec * sign[:, None, None]
+    elif target == "both":                                     # spec (B, 2, K, 2): r_yx is channel 1
+        spec = torch.stack([spec[:, 0], spec[:, 1] * sign[:, None, None]], dim=1)
     return imgs, spec
 
 
@@ -106,6 +108,8 @@ def train(args):
     overrides = parse_overrides(args.model_override)
     if len(freq) != C.P1_FREQ_QUERIES:
         overrides["n_queries"] = len(freq)
+    if args.target == "both":
+        overrides["n_out"] = 2
     epochs = args.epochs or C.P1_EPOCHS
     lr = args.lr or C.P1_LR
     wd = C.P1_WEIGHT_DECAY if args.weight_decay is None else args.weight_decay
@@ -124,13 +128,17 @@ def train(args):
                    model_type=args.model_type,
                    model_overrides=overrides, n_params=n_params, epochs=epochs, lr=lr,
                    weight_decay=wd, batch_size=C.P1_BATCH_SIZE, patience=patience_max,
-                   loss_options=C.P1_LOSS_OPTIONS[args.target], augment=args.augment,
+                   loss_options=C.P1_LOSS_OPTIONS[args.target], cross_loss=args.cross_loss, augment=args.augment,
                    n_train=len(train_loader.dataset), n_val=len(val_loader.dataset),
                    msdcnn_train=args.msdcnn_train)
     with open(os.path.join(out_dir, "run_config.json"), "w") as fh:
         json.dump(run_cfg, fh, indent=2)
 
-    criterion = PhysicsGuidedLoss(freq, **C.P1_LOSS_OPTIONS[args.target])
+    opts_both = dict(C.P1_LOSS_OPTIONS["both"])
+    if args.cross_loss == "plain":                  # r_yx with the r_xx settings (no dB floor, unweighted phase)
+        opts_both["cross"] = C.P1_LOSS_OPTIONS["co"]
+    criterion = (TwoOutputLoss(freq, **opts_both) if args.target == "both"
+                 else PhysicsGuidedLoss(freq, **C.P1_LOSS_OPTIONS[args.target]))
     optimizer = optim.AdamW(model.parameters(), lr=lr, weight_decay=wd)
     scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=epochs, eta_min=lr * 0.01)
 
@@ -161,6 +169,9 @@ def train(args):
         if patience >= patience_max:
             print(f"  early stop at epoch {ep}")
             break
+        if os.path.exists(os.path.join(out_dir, "STOP")):             # graceful stop: touch <run>/STOP
+            print(f"  STOP file found after epoch {ep}")
+            break
 
     torch.save(model.state_dict(), os.path.join(out_dir, "phase1_forward_last.pth"))
     keys = sorted(hist_tr[0])
@@ -180,22 +191,31 @@ def train(args):
 
 @torch.no_grad()
 def predict(model, images, batch=1024, tta=False, target="co"):
-    """Batched prediction; tta averages over the four mirror images (the
-    cross-pol prediction of a single mirror is sign-corrected)."""
+    """Batched prediction; tta averages over the four mirror images (r_yx of a
+    single mirror is sign-corrected). Magnitudes and unit phasors are averaged
+    separately: averaging the complex values shrinks the magnitude wherever the
+    four predicted phases differ."""
     out = []
     for i in range(0, len(images), batch):
         x = torch.from_numpy(np.asarray(images[i:i + batch])).float().unsqueeze(1).to(C.DEVICE)
         if not tta:
             out.append(model(x).cpu().numpy())
             continue
-        acc = 0
+        mag, pha = 0, 0
         for fx in (False, True):
             for fy in (False, True):
                 xx = x.flip(-1) if fx else x
                 xx = xx.flip(-2) if fy else xx
-                s = -1.0 if (target == "cross" and fx != fy) else 1.0
-                acc = acc + s * model(xx)
-        out.append((acc / 4).cpu().numpy())
+                y = model(xx)
+                if fx != fy:                                        # a single mirror reverses r_yx
+                    if target == "cross":
+                        y = -y
+                    elif target == "both":
+                        y = torch.stack([y[:, 0], -y[:, 1]], dim=1)
+                m = torch.sqrt((y ** 2).sum(-1, keepdim=True) + 1e-12)
+                mag, pha = mag + m, pha + y / m
+        pha = pha / torch.sqrt((pha ** 2).sum(-1, keepdim=True) + 1e-12)
+        out.append((mag / 4 * pha).cpu().numpy())
     return np.concatenate(out)
 
 
@@ -224,10 +244,17 @@ def evaluate(args, model=None):
         if len(x) == 0:                                    # no validation set (MSDCNN protocol)
             x, y, labels, idx = get_split_arrays(args.class_name, "test", args.target, conv, msdcnn_train)
         p = predict(model, x, tta=args.tta, target=args.target)
+        if args.target == "both":                   # metrics per output; the rest below uses r_xx
+            res[split] = {nm: dict(magnitude_metrics(np.linalg.norm(p[:, c], axis=-1), np.linalg.norm(y[:, c], axis=-1),
+                                                     C.P1_LOSS_OPTIONS[nm]["db_floor"]),
+                                   **complex_metrics(p[:, c], y[:, c]), n=len(x))
+                          for c, nm in enumerate(("co", "cross"))}
+            y, p = y[:, 0], p[:, 0]
+        else:
+            res[split] = dict(magnitude_metrics(np.linalg.norm(p, axis=-1), np.linalg.norm(y, axis=-1),
+                                                C.P1_LOSS_OPTIONS[args.target]["db_floor"]),
+                              **complex_metrics(p, y), n=len(x))
         data[split] = (x, y, p, labels, idx)
-        res[split] = dict(magnitude_metrics(np.linalg.norm(p, axis=-1), np.linalg.norm(y, axis=-1),
-                                            C.P1_LOSS_OPTIONS[args.target]["db_floor"]),
-                          **complex_metrics(p, y), n=len(x))
     yv = np.concatenate([data["val"][1], data["test"][1]])
     pv = np.concatenate([data["val"][2], data["test"][2]])
     res["val+test"] = magnitude_metrics(np.linalg.norm(pv, axis=-1), np.linalg.norm(yv, axis=-1))
@@ -244,11 +271,15 @@ def evaluate(args, model=None):
 
     with open(os.path.join(out_dir, "phase1_metrics.json"), "w") as fh:
         json.dump(res, fh, indent=2)
-    t = res["test"]
+    t = res["test"]["co"] if args.target == "both" else res["test"]
     mb = res["msdcnn_protocol"]["plg_band"]["mag"]
     print(f"[eval {args.class_name}/{args.target}] params={n_params:,}  test lin={t['lin_mse']:.3e} "
           f"dB={t['db_mse']:.3f} R2={t['r2']:.4f} phase={t['phase_mae_deg']:.1f}deg | "
           f"MSDCNN protocol 9.5-12GHz lin={mb['lin_mse']:.3e} R2={mb['r2']:.4f}")
+    if args.target == "both":
+        t = res["test"]["cross"]
+        print(f"[eval {args.class_name}/r_yx] test lin={t['lin_mse']:.3e} dB={t['db_mse']:.3f} "
+              f"phase={t['phase_mae_deg']:.1f}deg")
 
     # per-sample table (worst first) and figures
     mp, mt = np.linalg.norm(p, axis=-1), np.linalg.norm(y, axis=-1)
@@ -280,7 +311,9 @@ if __name__ == "__main__":
     ap.add_argument("--eval_only", action="store_true")
     ap.add_argument("--augment", action="store_true", help="random mirror symmetry augmentation")
     ap.add_argument("--tta", action="store_true", help="average predictions over the 4 mirror images")
-    ap.add_argument("--convention", default=C.LAYOUT_CONVENTION, choices=["physical", "file"])
+    ap.add_argument("--cross_loss", default="floored", choices=["floored", "plain"],
+                    help='target "both": r_yx loss with its dB floor and weighted phase, or with the r_xx settings')
+    ap.add_argument("--convention", default=C.LAYOUT_CONVENTION, choices=["physical", "file", "true"])
     ap.add_argument("--ckpt", default=None, help="evaluate this checkpoint instead")
     ap.add_argument("--n_train", type=int, default=None, help="use only the first N training layouts")
     ap.add_argument("--msdcnn_train", type=int, default=None,

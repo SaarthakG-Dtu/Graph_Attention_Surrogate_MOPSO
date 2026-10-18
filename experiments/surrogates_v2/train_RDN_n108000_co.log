@@ -1,0 +1,47 @@
+
+Phase 1 [RDN / co / n108000_v2]  resnet3conv_pga {}  params=5,831,531  train=108000 val=0  device=cuda
+    ep   tr_tot    tr_lin   va_tot    va_lin    va_dB        lr     s
+     1  1.38192  0.012097      nan       nan      nan  2.00e-04    75 *
+     2  1.18786  0.010012      nan       nan      nan  2.00e-04    78 *
+     3  1.05298  0.008610      nan       nan      nan  2.00e-04    78 *
+     4  0.92409  0.007293      nan       nan      nan  2.00e-04    79 *
+     5  0.84515  0.006511      nan       nan      nan  2.00e-04    80 *
+     6  0.79770  0.006069      nan       nan      nan  2.00e-04    80 *
+     7  0.76073  0.005723      nan       nan      nan  2.00e-04    82 *
+     8  0.74212  0.005547      nan       nan      nan  2.00e-04    75 *
+     9  0.72020  0.005361      nan       nan      nan  2.00e-04    78 *
+    10  0.70080  0.005183      nan       nan      nan  1.99e-04    78 *
+    11  0.68389  0.005041      nan       nan      nan  1.99e-04    75 *
+    12  0.66906  0.004907      nan       nan      nan  1.99e-04    78 *
+    13  0.65419  0.004778      nan       nan      nan  1.99e-04    83 *
+    14  0.64398  0.004682      nan       nan      nan  1.99e-04    81 *
+    15  0.63627  0.004610      nan       nan      nan  1.99e-04    79 *
+    16  0.62355  0.004506      nan       nan      nan  1.99e-04    80 *
+    17  0.61280  0.004406      nan       nan      nan  1.98e-04    75 *
+    18  0.60238  0.004323      nan       nan      nan  1.98e-04    79 *
+    19  0.60207  0.004315      nan       nan      nan  1.98e-04    78 *
+    20  0.59173  0.004229      nan       nan      nan  1.98e-04    75 *
+    21  0.58148  0.004136      nan       nan      nan  1.98e-04    78 *
+    22  0.57846  0.004109      nan       nan      nan  1.97e-04    79 *
+    23  0.57450  0.004068      nan       nan      nan  1.97e-04    79 *
+    24  0.56683  0.004010      nan       nan      nan  1.97e-04    77 *
+    25  0.55839  0.003941      nan       nan      nan  1.97e-04    76 *
+    26  0.55184  0.003882      nan       nan      nan  1.96e-04    79 *
+    27  0.54843  0.003846      nan       nan      nan  1.96e-04    79 *
+    28  0.54601  0.003825      nan       nan      nan  1.96e-04    80 *
+    29  0.54424  0.003811      nan       nan      nan  1.95e-04    80 *
+    30  0.52870  0.003683      nan       nan      nan  1.95e-04    79 *
+    31  0.52871  0.003688      nan       nan      nan  1.95e-04    73 *
+    32  0.52461  0.003648      nan       nan      nan  1.94e-04    78 *
+    33  0.52333  0.003633      nan       nan      nan  1.94e-04    78 *
+    34  0.51727  0.003584      nan       nan      nan  1.94e-04    79 *
+    35  0.51365  0.003552      nan       nan      nan  1.93e-04    79 *
+    36  0.51048  0.003527      nan       nan      nan  1.93e-04    80 *
+    37  0.50918  0.003512      nan       nan      nan  1.93e-04    80 *
+    38  0.49893  0.003431      nan       nan      nan  1.92e-04    83 *
+    39  0.50030  0.003439      nan       nan      nan  1.92e-04    76 *
+    40  0.49043  0.003357      nan       nan      nan  1.91e-04    79 *
+    41  0.49005  0.003358      nan       nan      nan  1.91e-04    85 *
+  STOP file found after epoch 41
+  done in 53.8 min, best val db_mse=-41.00000
+[eval RDN/co] params=5,831,531  test lin=2.736e-03 dB=0.797 R2=0.7825 phase=5.3deg | MSDCNN protocol 9.5-12GHz lin=5.428e-03 R2=0.7216

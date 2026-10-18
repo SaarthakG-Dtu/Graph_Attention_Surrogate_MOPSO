@@ -32,9 +32,13 @@ def _convention(ckpt):
 
 
 class Surrogate:
-    def __init__(self, spec=C.MOPSO_SURROGATE, batch=2048):
+    """target "co": r_xx (N, K); "both": (r_xx, r_yx) (N, 2, K). tta: average the
+    four mirror images (magnitude and phase separately, r_yx sign-corrected)."""
+
+    def __init__(self, spec=C.MOPSO_SURROGATE, batch=2048, target="co", tta=False):
         self.spec, self.cls, self.batch = spec, spec.partition(":")[0], batch
-        self.ckpt = surrogate_ckpt(spec)
+        self.target, self.tta = target, tta
+        self.ckpt = surrogate_ckpt(spec, target)
         if not os.path.exists(self.ckpt):
             raise FileNotFoundError(f"surrogate not found: {self.ckpt}")
         self.model = load_surrogate(self.ckpt)
@@ -46,6 +50,10 @@ class Surrogate:
 
     @torch.no_grad()
     def predict(self, patterns):
+        if self.tta:
+            from train_phase1 import predict as predict_tta
+            c = predict_tta(self.model, np.asarray(patterns, dtype=np.float32), self.batch, True, self.target)
+            return c[..., 0] + 1j * c[..., 1]
         x = torch.as_tensor(np.asarray(patterns), dtype=torch.float32)
         if x.dim() == 3:
             x = x.unsqueeze(1)
@@ -64,7 +72,7 @@ def sanity_check(sur: Surrogate) -> dict:
         res = json.load(open(cache))
         if res.get("key") == key:
             return res
-    x, y, _, _ = get_split_arrays(sur.cls, "test", "co", convention=sur.convention,
+    x, y, _, _ = get_split_arrays(sur.cls, "test", sur.target, convention=sur.convention,
                                   msdcnn_train=sur.msdcnn_train)     # the surrogate's own test set
     R = y[..., 0] + 1j * y[..., 1]
     pR = sur.predict(x)
@@ -77,11 +85,13 @@ def sanity_check(sur: Surrogate) -> dict:
     return res
 
 
-def database(classes=C.CLASSES, convention=None):
-    """Every SUTD-PRCM layout (in the given convention) with its CST r_xx (101 points)."""
+def database(classes=C.CLASSES, convention=None, target="co"):
+    """Every SUTD-PRCM layout (in the given convention) with its CST r_xx (101
+    points), or (r_xx, r_yx) for target "both"."""
     xs, Rs, labels, idx = [], [], [], []
     for c in classes:
         im, cu = load_class(c)
-        xs.append(to_convention(im, c, convention)); Rs.append(cu[:, 0])
+        xs.append(to_convention(im, c, convention, np.arange(len(im))))
+        Rs.append(cu[:, :2] if target == "both" else cu[:, 0])
         labels += [c] * len(im); idx.append(np.arange(len(im)))
     return np.concatenate(xs), np.concatenate(Rs), np.array(labels), np.concatenate(idx)

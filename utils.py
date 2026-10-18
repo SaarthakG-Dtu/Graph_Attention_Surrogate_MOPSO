@@ -103,6 +103,7 @@ def plot_training_curves(tr_h, va_h, path):
     ep = np.arange(1, len(tr_h) + 1)
     fig, axes = plt.subplots(2, 3, figsize=(COL2, 3.6))
     for ax, (k, t) in zip(axes.flat, keys):
+        k = k if k in tr_h[0] else f"{k}_xx"                          # two-output runs: r_xx terms
         ax.plot(ep, [h[k] for h in tr_h], color=SERIES[0], label="train")
         ax.plot(ep, [h[k] for h in va_h], color=SERIES[1], label="validation")
         ax.set_yscale("log"); ax.set_title(t); ax.set_xlabel("Epoch")

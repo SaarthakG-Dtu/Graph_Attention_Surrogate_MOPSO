@@ -25,14 +25,31 @@ from torch.utils.data import DataLoader, TensorDataset
 from config import (
     DATA_ROOT, CACHE_DIR, IMG_SIZE, FREQ_POINTS_FULL, CLASSES, POOLED_CLASS,
     FREQ_RANGE, N_POINTS, SPLIT, MSDCNN_N_TEST, RANDOM_SEED, TARGET_CHANNELS, DEVICE, LAYOUT_CONVENTION, FILE_INVERTED_CLASSES,
+    RDN_STORED_AS_IS,
 )
 
 
-def to_convention(images, class_name, convention=None):
-    """Layouts as stored -> requested convention ("physical": 1 = copper)."""
-    if (convention or LAYOUT_CONVENTION) == "physical" and class_name in FILE_INVERTED_CLASSES:
+_AS_IS = None
+
+
+def to_convention(images, class_name, convention=None, idx=None):
+    """Layouts as stored -> requested convention ("physical": 1 = copper; "true":
+    the layout as built, RDN also un-mirrored). idx: folder-order indices of the
+    images (needed for "true", whose RDN reading depends on the row)."""
+    global _AS_IS
+    conv = convention or LAYOUT_CONVENTION
+    if class_name not in FILE_INVERTED_CLASSES or conv == "file":
+        return images
+    if conv == "physical":
         return 1 - images
-    return images
+    if idx is None:
+        raise ValueError("convention 'true' needs the folder-order indices of the RDN images")
+    if _AS_IS is None:
+        _AS_IS = np.load(RDN_STORED_AS_IS)
+    out = (1 - images)[:, ::-1, :].copy()                      # flipud(1 - stored)
+    keep = _AS_IS[np.asarray(idx)]
+    out[keep] = images[keep]
+    return out
 
 _F_FULL = np.linspace(2.0, 12.0, FREQ_POINTS_FULL)    # raw CST grid
 
@@ -121,16 +138,17 @@ def msdcnn_split_indices(class_name: str, n_train: int) -> dict:
 def get_split_arrays(class_name: str, split: str, target: str = "co", convention: str = None,
                      msdcnn_train: int = None):
     """images (N,16,16) uint8 in the requested layout convention, spec (N,K,2)
-    float32, class labels, folder indices. msdcnn_train: use the MSDCNN-style
-    split with that many training layouts (see msdcnn_split_indices)."""
+    float32 ((N,2,K,2) for target "both": r_xx, r_yx), class labels, folder
+    indices. msdcnn_train: use the MSDCNN-style split with that many training
+    layouts (see msdcnn_split_indices)."""
     names = CLASSES if class_name == POOLED_CLASS else [class_name]
     ch = TARGET_CHANNELS[target]
     xs, ys, labels, idxs = [], [], [], []
     for name in names:
         images, curves = load_class(name)
         idx = (msdcnn_split_indices(name, msdcnn_train) if msdcnn_train else class_split_indices(name))[split]
-        c = curves[idx, ch]
-        xs.append(to_convention(images[idx], name, convention))
+        c = curves[idx][:, list(ch)] if isinstance(ch, tuple) else curves[idx, ch]
+        xs.append(to_convention(images[idx], name, convention, idx))
         ys.append(np.stack([c.real, c.imag], axis=-1).astype(np.float32))
         labels += [name] * len(idx)
         idxs.append(idx)

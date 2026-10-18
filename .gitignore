@@ -1,4 +1,3 @@
-@'
 # Model weights and checkpoints
 *.pth
 *.pt
@@ -49,4 +48,18 @@ venv/
 .ipynb_checkpoints/
 .vscode/
 .idea/
-'@ | Set-Content -Encoding utf8 .gitignore
+
+# Clone of the sutd-prcm-solverfree repository (separate git repository)
+external/
+
+# Corrected copy of the dataset (written by external/sutd-prcm-solverfree/fix_dataset.py)
+SUTD_DATASET_corrected/
+
+# CST scratch workspaces (rewritten by every simulation)
+fr4_dataset/cst_workspaces/
+outputs_new_pipeline/CST/workspaces/
+
+# LaTeX build files
+paper/*.aux
+paper/*.log
+paper/*.out

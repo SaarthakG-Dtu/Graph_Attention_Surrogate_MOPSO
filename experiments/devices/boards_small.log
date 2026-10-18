@@ -1,0 +1,2 @@
+BOARD design 0 N=4 pol=both copper loss: max specular reflectance 1.000; -10 dB (worse pol) at 5 of 101 frequencies (10.5-10.9 GHz); steps 41960
+BOARD design 0 N=3 pol=both copper loss: max specular reflectance 1.000; -10 dB (worse pol) at 7 of 101 frequencies (9.5-11.0 GHz); steps 41960

@@ -1,0 +1,13 @@
+design  1 rotator_vae_long#0           B pred  17.0 FDTD  15.8 %  quality 0.85/0.92  D 3  band FDTD 9.38-10.98 GHz  meets True  MSE 6.9e-04
+design  2 rotator_vae_long#1           B pred  16.5 FDTD  15.5 %  quality 0.86/0.91  D 0  band FDTD 9.34-10.91 GHz  meets True  MSE 5.8e-04
+design  3 rotator_vae_long#2           B pred  17.1 FDTD  15.7 %  quality 0.86/0.92  D 5  band FDTD 9.39-10.99 GHz  meets True  MSE 7.5e-04
+design  4 rotator_vae_long#3           B pred  15.8 FDTD  14.6 %  quality 0.85/0.92  D 2  band FDTD 9.44-10.93 GHz  meets True  MSE 6.4e-04
+design  5 rotator_vae_long#4           B pred  17.2 FDTD  16.1 %  quality 0.85/0.91  D 5  band FDTD 9.37-11.01 GHz  meets True  MSE 5.3e-04
+design  6 rotator_vae_long#5           B pred  16.0 FDTD  14.8 %  quality 0.87/0.91  D 3  band FDTD 9.44-10.94 GHz  meets True  MSE 5.4e-04
+design  7 rotator_pix_long#0           B pred  16.2 FDTD  16.0 %  quality 0.85/0.90  D 2  band FDTD 9.39-11.02 GHz  meets True  MSE 2.4e-04
+design  8 rotator_vae_long#6           B pred  16.2 FDTD  14.2 %  quality 0.86/0.91  D 4  band FDTD 9.45-10.90 GHz  meets True  MSE 1.0e-03
+design  9 rotator_pix_long#1           B pred  16.6 FDTD  15.8 %  quality 0.86/0.91  D 5  band FDTD 9.37-10.98 GHz  meets True  MSE 4.5e-04
+design 10 rotator_vae_s1#0             B pred  16.6 FDTD  15.9 %  quality 0.85/0.92  D 4  band FDTD 9.43-11.05 GHz  meets True  MSE 3.7e-04
+design 11 rotator_vae_long#8           B pred  15.5 FDTD  13.9 %  quality 0.87/0.90  D 2  band FDTD 9.52-10.94 GHz  meets True  MSE 6.3e-04
+design 12 rotator_vae_s1#1             B pred  15.1 FDTD  14.4 %  quality 0.86/0.90  D 3  band FDTD 9.48-10.95 GHz  meets True  MSE 3.3e-04
+rotator: 12/12 meet the target in FDTD (h -> 0); best run rotator_vae_long

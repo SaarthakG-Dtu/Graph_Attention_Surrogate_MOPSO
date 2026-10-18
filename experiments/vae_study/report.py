@@ -20,7 +20,7 @@ import utils                                         # noqa: E402
 from make_figures import _front_history, _penalty_to_values   # noqa: E402
 
 plt = utils.plt
-SUF = "_trust" if C.MOPSO_TRUST > 0 else ""
+SUF = ""
 S = json.load(open(os.path.join(HERE, f"scaling{SUF}.json")))
 runs = S["runs"]
 budgets = sorted({(r["Np"], r["gens"]) for r in runs}, key=lambda b: b[0] * b[1])

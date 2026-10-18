@@ -30,7 +30,9 @@ _KK_CACHE: dict = {}
 
 
 def _kk_kernel(freq, device) -> torch.Tensor:
-    """M[k, j] = dw / (pi (w_j - w_k)), j != k, so r_hat = M x and x_hat = -M r."""
+    """M[k, j] = dw / (pi (w_j - w_k)), j != k. For the dataset's e^{+jwt} time
+    convention r_hat = -M x and x_hat = M r (residual on the RDN spectra: 0.08 for
+    r_xx, 0.003 for r_yx, against 3.3 and 0.19 with the opposite sign)."""
     f = np.asarray(freq, dtype=np.float64)
     key = (f.tobytes(), str(device))
     if key not in _KK_CACHE:
@@ -68,7 +70,7 @@ def physics_loss_terms(pred: torch.Tensor, tgt: torch.Tensor, freq,
         pass_=(F.relu(torch.sqrt(r ** 2 + x ** 2) - 1.0) ** 2).mean(),
         tv=(pred[:, 1:] - pred[:, :-1]).abs().mean(),
         curv=((pred[:, 2:] - 2 * pred[:, 1:-1] + pred[:, :-2]) ** 2).mean(),
-        kk=((r - x @ M.T) ** 2 + (x + r @ M.T) ** 2).mean(),
+        kk=((r + x @ M.T) ** 2 + (x - r @ M.T) ** 2).mean(),
     )
 
 
@@ -88,6 +90,29 @@ class PhysicsGuidedLoss(nn.Module):
         terms = physics_loss_terms(pred, tgt, self.freq, self.db_floor, self.phase_mag_ref)
         total = sum(_WEIGHTS[k] * v for k, v in terms.items())
         return total, {k: v.item() for k, v in terms.items()}
+
+
+class TwoOutputLoss(nn.Module):
+    """Physics-guided loss on r_xx and r_yx (pred, tgt: (B, 2, K, 2)), each with
+    its own options, summed; the passivity term acts once, on the total power."""
+
+    def __init__(self, freq, co, cross):
+        super().__init__()
+        self.freq = np.asarray(freq)
+        self.opts = (co, cross)
+        self.db_floor = None                          # used by the training-loop metrics (r_xx)
+
+    def forward(self, pred, tgt):
+        total, out = 0.0, {}
+        for c, (name, o) in enumerate(zip(("xx", "yx"), self.opts)):
+            terms = physics_loss_terms(pred[:, c], tgt[:, c], self.freq, o["db_floor"], o["phase_mag_ref"])
+            terms.pop("pass_")
+            total = total + sum(_WEIGHTS[k] * v for k, v in terms.items())
+            out.update({f"{k}_{name}": v.item() for k, v in terms.items()})
+        power = (pred ** 2).sum(dim=(1, 3))                             # |S_xx|^2 + |S_yx|^2
+        p = (F.relu(torch.sqrt(power) - 1.0) ** 2).mean()
+        out["pass_"] = p.item()
+        return total + _WEIGHTS["pass_"] * p, out
 
 
 # ─────────────────────────────────────────────────────────────────────────────

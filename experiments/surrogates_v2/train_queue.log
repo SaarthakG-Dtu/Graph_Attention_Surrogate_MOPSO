@@ -1,0 +1,13 @@
+=== 14:49:41 RDN n108000
+=== 16:39:49 RDN n108000 single-output co
+--- exit 0 [eval RDN/both] params=5,832,557  test lin=1.263e-03 dB=0.442 R2=0.8996 phase=3.9deg | MSDCNN protocol 9.5-12GHz lin=2.685e-03 R2=0.8623 [eval RDN/r_yx] test lin=1.047e-03 dB=3.182 phase=16.7deg 
+=== 21:21:12 RDN n27000
+--- exit 0 [eval RDN/both] params=5,832,557  test lin=2.643e-03 dB=0.780 R2=0.7899 phase=6.8deg | MSDCNN protocol 9.5-12GHz lin=6.044e-03 R2=0.6900 [eval RDN/r_yx] test lin=2.865e-03 dB=8.190 phase=22.8deg 
+=== 22:22:01 PTN n27000
+--- exit 0 [eval PTN/both] params=5,832,557  test lin=8.710e-04 dB=0.247 R2=0.7829 phase=3.1deg | MSDCNN protocol 9.5-12GHz lin=1.883e-03 R2=0.7784 [eval PTN/r_yx] test lin=8.334e-04 dB=2.168 phase=14.2deg 
+=== 23:08:48 PLR n27000
+--- exit 0 [eval PLR/both] params=5,832,557  test lin=6.183e-05 dB=0.032 R2=0.9938 phase=1.3deg | MSDCNN protocol 9.5-12GHz lin=1.969e-04 R2=0.9936 [eval PLR/r_yx] test lin=7.912e-05 dB=0.378 phase=10.3deg 
+=== 23:54:31 PLG n27000
+--- exit 0 [eval PLG/both] params=5,832,557  test lin=8.431e-05 dB=0.042 R2=0.9892 phase=1.4deg | MSDCNN protocol 9.5-12GHz lin=2.904e-04 R2=0.9888 [eval PLG/r_yx] test lin=1.015e-04 dB=0.239 phase=7.2deg 
+=== QUEUE DONE 01:00:53
+PLAINYX_DONE

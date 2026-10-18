@@ -1,0 +1,29 @@
+{
+ "problem": "rotator",
+ "space": "binary",
+ "surrogate": "RDN:n108000",
+ "layout_convention": "true",
+ "seconds": 29.2039315700531,
+ "evaluations": 30200,
+ "unique_designs": 30199,
+ "archive": 50,
+ "n_good": 3,
+ "best_value": [
+  14.586062875448496,
+  0.9299919009208679,
+  3.0
+ ],
+ "objective_names": [
+  "PCR > 0.9 bandwidth (%)",
+  "Mean |r_yx|^2",
+  "Corner contacts + isolated pixels"
+ ],
+ "hv": 0.392735,
+ "database": {
+  "n_database": 110843,
+  "n_front": 26,
+  "n_good": 0,
+  "hv_true": 0.14948,
+  "hv_surrogate": 0.1328
+ }
+}

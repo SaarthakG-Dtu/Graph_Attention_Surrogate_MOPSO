@@ -141,7 +141,7 @@ def _augment(x):
 def layouts(classes, split):
     xs, labels = [], []
     for c in classes:
-        x, _, lab, _ = get_split_arrays(c, split)
+        x, _, lab, _ = get_split_arrays(c, split, convention=C.VAE_CONVENTION)
         xs.append(x); labels.append(lab)
     return np.concatenate(xs).astype(np.float32), np.concatenate(labels)
 

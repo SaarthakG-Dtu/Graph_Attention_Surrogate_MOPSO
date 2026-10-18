@@ -1,0 +1,49 @@
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+design 1 simulated
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+design 2 simulated
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+design 3 simulated
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+design 4 simulated
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+design 5 simulated
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+design 6 simulated
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+design 7 simulated
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+design 8 simulated
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+design 9 simulated
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+design 10 simulated
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+design 11 simulated
+CPA: Trying to open specified project.
+CPA: The Microwave Studio project has been successfully opened.
+design 12 simulated
+design  1  B pred  14.5  FDTD  13.9  CST  14.8 %  quality 1.01  meets True  MSE vs pred 2.0e-04  vs FDTD 3.9e-04
+design  2  B pred  16.0  FDTD  15.6  CST  15.9 %  quality 1.07  meets True  MSE vs pred 4.2e-04  vs FDTD 9.2e-05
+design  3  B pred  16.0  FDTD  15.4  CST  16.8 %  quality 1.07  meets True  MSE vs pred 5.0e-04  vs FDTD 7.7e-04
+design  4  B pred  15.9  FDTD  15.1  CST  16.5 %  quality 1.26  meets True  MSE vs pred 2.2e-04  vs FDTD 5.9e-04
+design  5  B pred  18.2  FDTD  17.6  CST  18.4 %  quality 1.48  meets True  MSE vs pred 4.3e-04  vs FDTD 3.2e-04
+design  6  B pred  17.4  FDTD  16.4  CST  17.8 %  quality 1.21  meets True  MSE vs pred 3.2e-04  vs FDTD 7.8e-04
+design  7  B pred  15.2  FDTD  14.2  CST  15.1 %  quality 1.41  meets True  MSE vs pred 1.3e-04  vs FDTD 4.6e-04
+design  8  B pred  14.1  FDTD  13.2  CST  13.9 %  quality 1.19  meets True  MSE vs pred 2.7e-04  vs FDTD 4.1e-04
+design  9  B pred  16.5  FDTD  15.1  CST  16.2 %  quality 1.30  meets True  MSE vs pred 2.2e-04  vs FDTD 4.2e-04
+design 10  B pred  16.2  FDTD  15.6  CST  16.1 %  quality 1.24  meets True  MSE vs pred 2.0e-04  vs FDTD 1.5e-04
+design 11  B pred  16.4  FDTD  15.4  CST  16.4 %  quality 1.51  meets True  MSE vs pred 1.4e-04  vs FDTD 4.8e-04
+design 12  B pred  14.1  FDTD  13.3  CST  14.1 %  quality 1.05  meets True  MSE vs pred 1.6e-04  vs FDTD 4.8e-04
+cp: 12/12 meet the target in CST

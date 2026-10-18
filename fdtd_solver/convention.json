@@ -1,0 +1,23 @@
+{
+ "x_along_rows": true,
+ "conjugate": false,
+ "delta_mm": 10.705,
+ "delta_fit_mm": 10.690000000000001,
+ "ryx_sign": -1,
+ "copper_is_one_by_class": {
+  "PLG": true,
+  "PLR": true,
+  "PTN": true,
+  "RDN": false
+ },
+ "copper_is_one": false,
+ "status": "confirmed on 24 cells per class (validation.json): RDN stored inverted (copper = 0) AND mirrored (r_yx sign -1); PLG/PLR/PTN copper = 1, sign +1; x along image rows; Delta 10.705 mm; e^{+jwt}",
+ "note": "copper_is_one is the convention of the RDN-trained surrogate's input bits",
+ "ryx_sign_by_class": {
+  "PLG": 1,
+  "PLR": 1,
+  "PTN": 1,
+  "RDN": -1
+ },
+ "design_convention": "corrected (data_corrected/): 1 = copper, x along image rows, r_yx sign +1, Delta 10.705 mm, e^{+jwt}"
+}

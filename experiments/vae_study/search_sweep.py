@@ -20,7 +20,7 @@ OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sweep")
 
 
 def run(vae_tag, bound, maxvel, seed, space="latent"):
-    tag = f"vs_{vae_tag}_{space}_B{bound:g}_v{maxvel:g}_s{seed}" + ("_tr" if C.MOPSO_TRUST > 0 else "")
+    tag = f"vs_{vae_tag}_{space}_B{bound:g}_v{maxvel:g}_s{seed}" + ""
     keep = C.mopso_dir(C.MOPSO_PROBLEM, tag)            # results stay in the MOIPSO output folder
     if os.path.exists(os.path.join(keep, "comparison.json")):
         return json.load(open(os.path.join(keep, "comparison.json")))

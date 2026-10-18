@@ -1,0 +1,343 @@
+{
+ "device": "cp",
+ "best_run": "cp_pix_long",
+ "designs": [
+  {
+   "design": 1,
+   "source": "cp_pix_long#0",
+   "pred": {
+    "Axial-ratio bandwidth (%)": 14.460715011662664,
+    "Mean axial ratio (dB)": 0.9420619328816732,
+    "Corner contacts + isolated pixels": 1.0,
+    "Lowest reflected power (dB)": -0.23582661151885986
+   },
+   "fdtd": {
+    "Axial-ratio bandwidth (%)": 13.899764525574794,
+    "Mean axial ratio (dB)": 1.0247591671393526,
+    "Corner contacts + isolated pixels": 1.0,
+    "Lowest reflected power (dB)": -0.19519752449391453
+   },
+   "band_pred": [
+    9.276488327980042,
+    10.72248564362526
+   ],
+   "band_fdtd": [
+    9.289175937745352,
+    10.676786843686841
+   ],
+   "meets_pred": true,
+   "meets_fdtd": true,
+   "mse_abs": 0.00035764575223731077,
+   "mesh_shift_pct": 0.4333333333331746
+  },
+  {
+   "design": 2,
+   "source": "cp_pix_long#1",
+   "pred": {
+    "Axial-ratio bandwidth (%)": 15.982550071712277,
+    "Mean axial ratio (dB)": 0.9949594497680664,
+    "Corner contacts + isolated pixels": 0.0,
+    "Lowest reflected power (dB)": -0.22051632404327393
+   },
+   "fdtd": {
+    "Axial-ratio bandwidth (%)": 15.58916786027726,
+    "Mean axial ratio (dB)": 1.0902936402434789,
+    "Corner contacts + isolated pixels": 0.0,
+    "Lowest reflected power (dB)": -0.19649171395314233
+   },
+   "band_pred": [
+    9.201141122356056,
+    10.799442791705951
+   ],
+   "band_fdtd": [
+    9.232126362540779,
+    10.793001782959621
+   ],
+   "meets_pred": true,
+   "meets_fdtd": true,
+   "mse_abs": 0.00035403206962788083,
+   "mesh_shift_pct": 0.3999999999998449
+  },
+  {
+   "design": 3,
+   "source": "cp_pix_long#2",
+   "pred": {
+    "Axial-ratio bandwidth (%)": 16.029944513790948,
+    "Mean axial ratio (dB)": 1.0028235912322998,
+    "Corner contacts + isolated pixels": 3.0,
+    "Lowest reflected power (dB)": -0.24287210404872894
+   },
+   "fdtd": {
+    "Axial-ratio bandwidth (%)": 15.419186992299203,
+    "Mean axial ratio (dB)": 0.8619816440986149,
+    "Corner contacts + isolated pixels": 3.0,
+    "Lowest reflected power (dB)": -0.1771593819312067
+   },
+   "band_pred": [
+    9.175974476337432,
+    10.775042991340161
+   ],
+   "band_fdtd": [
+    9.213404927822129,
+    10.752711328124239
+   ],
+   "meets_pred": true,
+   "meets_fdtd": true,
+   "mse_abs": 0.00034696913986979834,
+   "mesh_shift_pct": 0.46666666666650425
+  },
+  {
+   "design": 4,
+   "source": "cp_pix_long#3",
+   "pred": {
+    "Axial-ratio bandwidth (%)": 15.949330850715858,
+    "Mean axial ratio (dB)": 1.039027452468872,
+    "Corner contacts + isolated pixels": 4.0,
+    "Lowest reflected power (dB)": -0.22384725511074066
+   },
+   "fdtd": {
+    "Axial-ratio bandwidth (%)": 15.120746091488838,
+    "Mean axial ratio (dB)": 1.1145171747848248,
+    "Corner contacts + isolated pixels": 4.0,
+    "Lowest reflected power (dB)": -0.19781940952515706
+   },
+   "band_pred": [
+    9.204835483059286,
+    10.800167542696
+   ],
+   "band_fdtd": [
+    9.234103168853638,
+    10.744565012971027
+   ],
+   "meets_pred": true,
+   "meets_fdtd": true,
+   "mse_abs": 0.00037987059592755007,
+   "mesh_shift_pct": 0.4499999999998394
+  },
+  {
+   "design": 5,
+   "source": "cp_pix_long#4",
+   "pred": {
+    "Axial-ratio bandwidth (%)": 18.1774850301851,
+    "Mean axial ratio (dB)": 1.225365850660536,
+    "Corner contacts + isolated pixels": 2.0,
+    "Lowest reflected power (dB)": -0.2301608771085739
+   },
+   "fdtd": {
+    "Axial-ratio bandwidth (%)": 17.572122797260523,
+    "Mean axial ratio (dB)": 1.380584483240386,
+    "Corner contacts + isolated pixels": 2.0,
+    "Lowest reflected power (dB)": -0.21808679568242972
+   },
+   "band_pred": [
+    9.136185389757157,
+    10.96294345855713
+   ],
+   "band_fdtd": [
+    9.165972440266323,
+    10.931772664950918
+   ],
+   "meets_pred": true,
+   "meets_fdtd": true,
+   "mse_abs": 0.00019332226527360693,
+   "mesh_shift_pct": 0.41666666666650976
+  },
+  {
+   "design": 6,
+   "source": "cp_pix_long#5",
+   "pred": {
+    "Axial-ratio bandwidth (%)": 17.364570837905433,
+    "Mean axial ratio (dB)": 1.2425096299913194,
+    "Corner contacts + isolated pixels": 3.0,
+    "Lowest reflected power (dB)": -0.24333833158016205
+   },
+   "fdtd": {
+    "Axial-ratio bandwidth (%)": 16.393816871045605,
+    "Mean axial ratio (dB)": 0.9701347014744758,
+    "Corner contacts + isolated pixels": 3.0,
+    "Lowest reflected power (dB)": -0.18265378702719645
+   },
+   "band_pred": [
+    9.161822897195815,
+    10.903994429111481
+   ],
+   "band_fdtd": [
+    9.201115874451931,
+    10.844213139309218
+   ],
+   "meets_pred": true,
+   "meets_fdtd": true,
+   "mse_abs": 0.000499917979573551,
+   "mesh_shift_pct": 0.4499999999998394
+  },
+  {
+   "design": 7,
+   "source": "cp_vae_long#0",
+   "pred": {
+    "Axial-ratio bandwidth (%)": 15.222134475355665,
+    "Mean axial ratio (dB)": 1.015566349029541,
+    "Corner contacts + isolated pixels": 2.0,
+    "Lowest reflected power (dB)": -0.2546817660331726
+   },
+   "fdtd": {
+    "Axial-ratio bandwidth (%)": 14.169888173261773,
+    "Mean axial ratio (dB)": 1.4089538836059734,
+    "Corner contacts + isolated pixels": 2.0,
+    "Lowest reflected power (dB)": -0.20345973782155208
+   },
+   "band_pred": [
+    9.283006364107132,
+    10.812487947940827
+   ],
+   "band_fdtd": [
+    9.291394335827688,
+    10.708366186279026
+   ],
+   "meets_pred": true,
+   "meets_fdtd": true,
+   "mse_abs": 0.000354132786900625,
+   "mesh_shift_pct": 0.4999999999998339
+  },
+  {
+   "design": 8,
+   "source": "cp_vae_long#1",
+   "pred": {
+    "Axial-ratio bandwidth (%)": 14.070065939745175,
+    "Mean axial ratio (dB)": 0.8305644989013672,
+    "Corner contacts + isolated pixels": 2.0,
+    "Lowest reflected power (dB)": -0.22471950948238373
+   },
+   "fdtd": {
+    "Axial-ratio bandwidth (%)": 13.173207268562809,
+    "Mean axial ratio (dB)": 1.1864997242607893,
+    "Corner contacts + isolated pixels": 2.0,
+    "Lowest reflected power (dB)": -0.17623128392145399
+   },
+   "band_pred": [
+    9.320763583481313,
+    10.731442922353745
+   ],
+   "band_fdtd": [
+    9.34705676259618,
+    10.665183721631452
+   ],
+   "meets_pred": true,
+   "meets_fdtd": true,
+   "mse_abs": 0.0001820977726396467,
+   "mesh_shift_pct": 0.5499999999998284
+  },
+  {
+   "design": 9,
+   "source": "cp_vae_s1#0",
+   "pred": {
+    "Axial-ratio bandwidth (%)": 16.470818928903473,
+    "Mean axial ratio (dB)": 1.112317029167624,
+    "Corner contacts + isolated pixels": 4.0,
+    "Lowest reflected power (dB)": -0.2616688907146454
+   },
+   "fdtd": {
+    "Axial-ratio bandwidth (%)": 15.102794660822559,
+    "Mean axial ratio (dB)": 1.168544290345514,
+    "Corner contacts + isolated pixels": 4.0,
+    "Lowest reflected power (dB)": -0.17897006079682964
+   },
+   "band_pred": [
+    9.183273297548293,
+    10.831578278541565
+   ],
+   "band_fdtd": [
+    9.214361782215619,
+    10.71965888686414
+   ],
+   "meets_pred": true,
+   "meets_fdtd": true,
+   "mse_abs": 0.0003923731941259184,
+   "mesh_shift_pct": 0.4833333333331691
+  },
+  {
+   "design": 10,
+   "source": "cp_vae_s2#0",
+   "pred": {
+    "Axial-ratio bandwidth (%)": 16.218163860191538,
+    "Mean axial ratio (dB)": 1.0405614516314339,
+    "Corner contacts + isolated pixels": 3.0,
+    "Lowest reflected power (dB)": -0.24242454767227173
+   },
+   "fdtd": {
+    "Axial-ratio bandwidth (%)": 15.554318669639509,
+    "Mean axial ratio (dB)": 1.1379738017780814,
+    "Corner contacts + isolated pixels": 3.0,
+    "Lowest reflected power (dB)": -0.20864430526114175
+   },
+   "band_pred": [
+    9.2757554769516,
+    10.912867450714112
+   ],
+   "band_fdtd": [
+    9.297716833560242,
+    10.86587120276165
+   ],
+   "meets_pred": true,
+   "meets_fdtd": true,
+   "mse_abs": 0.00019137517954744652,
+   "mesh_shift_pct": 0.46666666666650425
+  },
+  {
+   "design": 11,
+   "source": "cp_vae_long#2",
+   "pred": {
+    "Axial-ratio bandwidth (%)": 16.444195533997792,
+    "Mean axial ratio (dB)": 1.1637714610380285,
+    "Corner contacts + isolated pixels": 4.0,
+    "Lowest reflected power (dB)": -0.25918856263160706
+   },
+   "fdtd": {
+    "Axial-ratio bandwidth (%)": 15.388405707676087,
+    "Mean axial ratio (dB)": 1.4426643785504856,
+    "Corner contacts + isolated pixels": 4.0,
+    "Lowest reflected power (dB)": -0.22772025551057365
+   },
+   "band_pred": [
+    9.174469459056855,
+    10.818294018507004
+   ],
+   "band_fdtd": [
+    9.190716134872888,
+    10.722911002369239
+   ],
+   "meets_pred": true,
+   "meets_fdtd": true,
+   "mse_abs": 0.0005614442383231632,
+   "mesh_shift_pct": 0.4833333333331691
+  },
+  {
+   "design": 12,
+   "source": "cp_vae_long#3",
+   "pred": {
+    "Axial-ratio bandwidth (%)": 14.067118720667128,
+    "Mean axial ratio (dB)": 0.8212009157453265,
+    "Corner contacts + isolated pixels": 1.0,
+    "Lowest reflected power (dB)": -0.2312500774860382
+   },
+   "fdtd": {
+    "Axial-ratio bandwidth (%)": 13.327631801072659,
+    "Mean axial ratio (dB)": 1.0660174102237414,
+    "Corner contacts + isolated pixels": 1.0,
+    "Lowest reflected power (dB)": -0.1773286087527351
+   },
+   "band_pred": [
+    9.343580237030984,
+    10.757394206523896
+   ],
+   "band_fdtd": [
+    9.338430186035039,
+    10.671880447799197
+   ],
+   "meets_pred": true,
+   "meets_fdtd": true,
+   "mse_abs": 0.0005075259987756263,
+   "mesh_shift_pct": 0.5333333333331636
+  }
+ ],
+ "n_meet_fdtd": 12
+}

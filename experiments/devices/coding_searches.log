@@ -1,0 +1,196 @@
+=== 00:12:27 --problem coding_diag --space binary --surrogate RDN:n108000 --seed 0 --tag pix --gens 300 --swarm 1000
+
+VAE-MOIPSO [coding_diag / binary] -> E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\PHASE2\mopso\coding_diag_pix
+  [surrogate] E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\BOTHPOL\RDN_n108000\phase1_forward_best.pth (layout convention: true)
+  [sanity] RDN test split n=3000: lin MSE=1.16e-03 R2=0.994 phase MAE=10.3 deg
+  objectives: -10 dB reduction bandwidth (%), Mean reduction (dB), Corner contacts + isolated pixels  (diag pair; spec: widest -10 dB band >= 40 %, D <= 10 (pair))
+  [database] 0 layouts: front=0  meeting the spec=0  HV=nan
+  gen    1/300  archive= 17  good=  0  best=13.5  20.1  18
+  gen   10/300  archive= 50  good=  0  best=17.1  20.9  8
+  gen   20/300  archive= 50  good=  0  best=17.4  21.2  2
+  gen   30/300  archive= 50  good=  0  best=17.7  21.2  0
+  gen   40/300  archive= 50  good=  0  best=17.7  21.2  0
+  gen   50/300  archive= 50  good=  0  best=17.7  21.2  0
+  gen   60/300  archive= 50  good=  0  best=18.1  21.4  0
+  gen   70/300  archive= 50  good=  0  best=18.2  21.4  0
+  gen   80/300  archive= 50  good=  0  best=18.2  21.4  0
+  gen   90/300  archive= 50  good=  0  best=18.2  21.4  0
+  gen  100/300  archive= 50  good=  0  best=18.2  21.4  0
+  gen  110/300  archive= 50  good=  0  best=18.3  21.4  0
+  gen  120/300  archive= 50  good=  0  best=18.4  21.4  0
+  gen  130/300  archive= 50  good=  0  best=18.4  21.4  0
+  gen  140/300  archive= 50  good=  0  best=18.4  21.4  0
+  gen  150/300  archive= 50  good=  0  best=18.4  21.5  0
+  gen  160/300  archive= 50  good=  0  best=18.4  21.5  0
+  gen  170/300  archive= 50  good=  0  best=18.4  21.5  0
+  gen  180/300  archive= 50  good=  0  best=18.4  21.5  0
+  gen  190/300  archive= 50  good=  0  best=18.4  21.5  0
+  gen  200/300  archive= 50  good=  0  best=18.4  21.5  0
+  gen  210/300  archive= 50  good=  0  best=18.4  21.5  0
+  gen  220/300  archive= 50  good=  0  best=18.4  21.7  0
+  gen  230/300  archive= 50  good=  0  best=18.4  21.7  0
+  gen  240/300  archive= 50  good=  0  best=18.4  21.7  0
+  gen  250/300  archive= 50  good=  0  best=18.5  21.7  0
+  gen  260/300  archive= 50  good=  0  best=18.5  21.7  0
+  gen  270/300  archive= 50  good=  0  best=18.5  21.7  0
+  gen  280/300  archive= 50  good=  0  best=18.5  21.7  0
+  gen  290/300  archive= 50  good=  0  best=18.5  21.7  0
+  gen  300/300  archive= 50  good=  0  best=18.5  21.7  0
+  done: 301,000 surrogate evaluations in 189.3s, archive = 50
+  unique designs evaluated: 300,808/301,000  meeting the spec: 0  best values: -10 dB reduction bandwidth (%) = 18.5, Mean reduction (dB) = 21.7, Corner contacts + isolated pixels = 0  HV=0.1896 (database nan)
+--- exit 0
+=== 00:16:47 --problem coding_mirror --space binary --surrogate RDN:n108000 --seed 0 --tag pix --gens 300 --swarm 1000
+
+VAE-MOIPSO [coding_mirror / binary] -> E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\PHASE2\mopso\coding_mirror_pix
+  [surrogate] E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\BOTHPOL\RDN_n108000\phase1_forward_best.pth (layout convention: true)
+  [sanity] RDN test split n=3000: lin MSE=1.16e-03 R2=0.994 phase MAE=10.3 deg
+  objectives: -10 dB reduction bandwidth (%), Mean reduction (dB), Corner contacts + isolated pixels  (mirror pair; spec: widest -10 dB band >= 40 %, D <= 10 (pair))
+  [database] 0 layouts: front=0  meeting the spec=0  HV=nan
+  gen    1/300  archive= 15  good=  0  best=10.8  16.6  24
+  gen   10/300  archive= 11  good=  0  best=13.5  19.6  24
+  gen   20/300  archive= 25  good=  0  best=16.4  19.6  20
+  gen   30/300  archive= 47  good=  0  best=16.4  20.8  18
+  gen   40/300  archive= 42  good=  0  best=16.4  20.8  18
+  gen   50/300  archive= 38  good=  0  best=16.4  20.8  16
+  gen   60/300  archive= 50  good=  0  best=16.4  20.8  14
+  gen   70/300  archive= 48  good=  0  best=16.4  20.8  14
+  gen   80/300  archive= 50  good=  0  best=16.9  20.8  12
+  gen   90/300  archive= 50  good=  0  best=16.9  20.8  8
+  gen  100/300  archive= 50  good=  0  best=16.9  21  8
+  gen  110/300  archive= 50  good=  0  best=17.2  21.2  6
+  gen  120/300  archive= 50  good=  0  best=17.6  21.2  6
+  gen  130/300  archive= 50  good=  0  best=17.6  21.2  2
+  gen  140/300  archive= 50  good=  0  best=17.7  21.2  0
+  gen  150/300  archive= 50  good=  0  best=17.7  21.2  0
+  gen  160/300  archive= 50  good=  0  best=17.8  21.2  0
+  gen  170/300  archive= 50  good=  0  best=17.8  21.2  0
+  gen  180/300  archive= 50  good=  0  best=17.8  21.2  0
+  gen  190/300  archive= 50  good=  0  best=17.8  21.3  0
+  gen  200/300  archive= 50  good=  0  best=17.9  21.3  0
+  gen  210/300  archive= 50  good=  0  best=18  21.3  0
+  gen  220/300  archive= 50  good=  0  best=18  21.3  0
+  gen  230/300  archive= 50  good=  0  best=18  21.3  0
+  gen  240/300  archive= 50  good=  0  best=18  21.3  0
+  gen  250/300  archive= 50  good=  0  best=18  21.3  0
+  gen  260/300  archive= 50  good=  0  best=18  21.3  0
+  gen  270/300  archive= 50  good=  0  best=18  21.3  0
+  gen  280/300  archive= 50  good=  0  best=18  21.3  0
+  gen  290/300  archive= 50  good=  0  best=18.1  21.3  0
+  gen  300/300  archive= 50  good=  0  best=18.1  21.3  0
+  done: 301,000 surrogate evaluations in 305.1s, archive = 50
+  unique designs evaluated: 300,942/301,000  meeting the spec: 0  best values: -10 dB reduction bandwidth (%) = 18.1, Mean reduction (dB) = 21.3, Corner contacts + isolated pixels = 0  HV=0.1825 (database nan)
+--- exit 0
+=== 00:23:07 --problem coding_mirror --space latent --vae_tag rdn_d200 --surrogate RDN:n108000 --seed 0 --tag vae --gens 300 --swarm 1000
+
+VAE-MOIPSO [coding_mirror / latent] -> E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\PHASE2\mopso\coding_mirror_vae
+  [surrogate] E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\BOTHPOL\RDN_n108000\phase1_forward_best.pth (layout convention: true)
+  [sanity] RDN test split n=3000: lin MSE=1.16e-03 R2=0.994 phase MAE=10.3 deg
+  objectives: -10 dB reduction bandwidth (%), Mean reduction (dB), Corner contacts + isolated pixels  (mirror pair; spec: widest -10 dB band >= 40 %, D <= 10 (pair))
+  [database] 0 layouts: front=0  meeting the spec=0  HV=nan
+  gen    1/300  archive= 10  good=  0  best=10.7  18.3  22
+  gen   10/300  archive= 13  good=  0  best=16  19.7  22
+  gen   20/300  archive= 20  good=  0  best=16  19.9  16
+  gen   30/300  archive= 19  good=  0  best=16  20.2  12
+  gen   40/300  archive= 37  good=  0  best=16.9  20.8  10
+  gen   50/300  archive= 34  good=  0  best=17.2  20.8  10
+  gen   60/300  archive= 36  good=  0  best=17.2  20.8  10
+  gen   70/300  archive= 44  good=  0  best=17.2  20.8  10
+  gen   80/300  archive= 48  good=  0  best=17.2  20.8  10
+  gen   90/300  archive= 50  good=  0  best=17.2  20.8  8
+  gen  100/300  archive= 50  good=  0  best=17.3  20.8  4
+  gen  110/300  archive= 50  good=  0  best=17.4  21  4
+  gen  120/300  archive= 50  good=  0  best=17.5  21  4
+  gen  130/300  archive= 50  good=  0  best=17.6  21  4
+  gen  140/300  archive= 50  good=  0  best=17.6  21  4
+  gen  150/300  archive= 50  good=  0  best=17.6  21  4
+  gen  160/300  archive= 50  good=  0  best=17.6  21  4
+  gen  170/300  archive= 50  good=  0  best=17.6  21  2
+  gen  180/300  archive= 50  good=  0  best=17.6  21  2
+  gen  190/300  archive= 50  good=  0  best=17.6  21  0
+  gen  200/300  archive= 50  good=  0  best=17.7  21  0
+  gen  210/300  archive= 50  good=  0  best=17.7  21  0
+  gen  220/300  archive= 50  good=  0  best=17.7  21  0
+  gen  230/300  archive= 50  good=  0  best=17.7  21  0
+  gen  240/300  archive= 50  good=  0  best=17.7  21  0
+  gen  250/300  archive= 50  good=  0  best=17.8  21  0
+  gen  260/300  archive= 50  good=  0  best=17.8  21  0
+  gen  270/300  archive= 50  good=  0  best=17.9  21  0
+  gen  280/300  archive= 50  good=  0  best=17.9  21  0
+  gen  290/300  archive= 50  good=  0  best=17.9  21  0
+  gen  300/300  archive= 50  good=  0  best=18  21  0
+  done: 301,000 surrogate evaluations in 317.9s, archive = 50
+  unique designs evaluated: 301,000/301,000  meeting the spec: 0  best values: -10 dB reduction bandwidth (%) = 18, Mean reduction (dB) = 21, Corner contacts + isolated pixels = 0  HV=0.1792 (database nan)
+--- exit 0
+=== 00:29:38 --problem coding_free --space binary --surrogate RDN:n108000 --seed 0 --tag pix --gens 250 --swarm 600
+
+VAE-MOIPSO [coding_free / binary] -> E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\PHASE2\mopso\coding_free_pix
+  [surrogate] E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\BOTHPOL\RDN_n108000\phase1_forward_best.pth (layout convention: true)
+  [sanity] RDN test split n=3000: lin MSE=1.16e-03 R2=0.994 phase MAE=10.3 deg
+  objectives: -10 dB reduction bandwidth (%), Mean reduction (dB), Corner contacts + isolated pixels  (free pair; spec: widest -10 dB band >= 40 %, D <= 10 (pair))
+  [database] 0 layouts: front=0  meeting the spec=0  HV=nan
+  gen    1/250  archive=  6  good=  0  best=2.56  16.7  53
+  gen   10/250  archive= 20  good=  0  best=5.19  18.7  40
+  gen   20/250  archive= 13  good=  0  best=5.19  19.9  40
+  gen   30/250  archive= 14  good=  0  best=5.72  19.9  40
+  gen   40/250  archive= 21  good=  0  best=6.63  21.7  33
+  gen   50/250  archive= 25  good=  0  best=6.63  21.7  33
+  gen   60/250  archive= 29  good=  0  best=6.63  21.7  33
+  gen   70/250  archive= 25  good=  0  best=8.4  22.2  33
+  gen   80/250  archive= 29  good=  0  best=8.4  22.2  33
+  gen   90/250  archive= 23  good=  0  best=8.4  27  33
+  gen  100/250  archive= 27  good=  0  best=8.4  27  31
+  gen  110/250  archive= 28  good=  0  best=8.4  27  31
+  gen  120/250  archive= 29  good=  0  best=8.4  27  31
+  gen  130/250  archive= 34  good=  0  best=9.06  27  31
+  gen  140/250  archive= 34  good=  0  best=9.06  27  27
+  gen  150/250  archive= 38  good=  0  best=9.06  27  27
+  gen  160/250  archive= 39  good=  0  best=9.06  27  27
+  gen  170/250  archive= 38  good=  0  best=9.06  27  27
+  gen  180/250  archive= 38  good=  0  best=9.06  27  25
+  gen  190/250  archive= 40  good=  0  best=9.06  27  25
+  gen  200/250  archive= 41  good=  0  best=9.06  27  24
+  gen  210/250  archive= 35  good=  0  best=9.06  27  24
+  gen  220/250  archive= 37  good=  0  best=9.06  27  24
+  gen  230/250  archive= 37  good=  0  best=9.44  27  24
+  gen  240/250  archive= 37  good=  0  best=9.44  27  18
+  gen  250/250  archive= 39  good=  0  best=9.82  27  18
+  done: 150,600 surrogate evaluations in 274.0s, archive = 39
+  unique designs evaluated: 150,600/150,600  meeting the spec: 0  best values: -10 dB reduction bandwidth (%) = 9.82, Mean reduction (dB) = 27, Corner contacts + isolated pixels = 18  HV=0.0710 (database nan)
+--- exit 0
+=== 00:34:57 --problem coding_free --space latent --vae_tag rdn_d200 --surrogate RDN:n108000 --seed 0 --tag vae --gens 250 --swarm 600
+
+VAE-MOIPSO [coding_free / latent] -> E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\PHASE2\mopso\coding_free_vae
+  [surrogate] E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\BOTHPOL\RDN_n108000\phase1_forward_best.pth (layout convention: true)
+  [sanity] RDN test split n=3000: lin MSE=1.16e-03 R2=0.994 phase MAE=10.3 deg
+  objectives: -10 dB reduction bandwidth (%), Mean reduction (dB), Corner contacts + isolated pixels  (free pair; spec: widest -10 dB band >= 40 %, D <= 10 (pair))
+  [database] 0 layouts: front=0  meeting the spec=0  HV=nan
+  gen    1/250  archive=  4  good=  0  best=5.35  17.3  37
+  gen   10/250  archive= 11  good=  0  best=6.58  20.8  31
+  gen   20/250  archive= 10  good=  0  best=9.91  24.5  26
+  gen   30/250  archive= 16  good=  0  best=9.97  24.5  26
+  gen   40/250  archive= 22  good=  0  best=9.97  24.5  17
+  gen   50/250  archive= 27  good=  0  best=9.97  24.5  17
+  gen   60/250  archive= 33  good=  0  best=9.97  24.5  17
+  gen   70/250  archive= 24  good=  0  best=10.3  24.5  21
+  gen   80/250  archive= 23  good=  0  best=10.3  24.5  21
+  gen   90/250  archive= 24  good=  0  best=10.3  24.5  21
+  gen  100/250  archive= 29  good=  0  best=10.5  24.5  21
+  gen  110/250  archive= 32  good=  0  best=10.5  24.5  20
+  gen  120/250  archive= 19  good=  0  best=10.5  24.5  20
+  gen  130/250  archive= 17  good=  0  best=11.2  24.5  17
+  gen  140/250  archive= 17  good=  0  best=11.4  24.5  17
+  gen  150/250  archive= 17  good=  0  best=11.4  24.5  17
+  gen  160/250  archive= 17  good=  0  best=11.4  24.5  17
+  gen  170/250  archive= 22  good=  0  best=12.1  24.5  10
+  gen  180/250  archive= 27  good=  0  best=12.1  24.5  10
+  gen  190/250  archive= 23  good=  0  best=12.1  24.5  9
+  gen  200/250  archive= 23  good=  0  best=12.1  24.5  8
+  gen  210/250  archive= 24  good=  0  best=12.1  24.5  8
+  gen  220/250  archive= 25  good=  0  best=12.1  24.5  8
+  gen  230/250  archive= 25  good=  0  best=14  24.5  8
+  gen  240/250  archive= 27  good=  0  best=14  24.5  8
+  gen  250/250  archive= 31  good=  0  best=14  24.5  8
+  done: 150,600 surrogate evaluations in 283.0s, archive = 31
+  unique designs evaluated: 150,599/150,600  meeting the spec: 0  best values: -10 dB reduction bandwidth (%) = 14, Mean reduction (dB) = 24.5, Corner contacts + isolated pixels = 8  HV=0.1330 (database nan)
+--- exit 0
+=== CODING DONE 00:40:29

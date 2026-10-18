@@ -1,0 +1,119 @@
+index,worker,time,error
+822,desktop-42qia8u,2026-10-17T14:20:17,'NoneType' object has no attribute 'GetArray'
+823,desktop-42qia8u,2026-10-17T14:20:58,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+825,desktop-42qia8u,2026-10-17T14:24:25,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+828,desktop-42qia8u,2026-10-17T14:46:48,'NoneType' object has no attribute 'GetArray'
+829,desktop-42qia8u,2026-10-17T14:47:37,'NoneType' object has no attribute 'GetArray'
+830,desktop-42qia8u,2026-10-17T14:48:22,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+905,desktop-42qia8u,2026-10-18T02:11:18,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+906,desktop-42qia8u,2026-10-18T02:12:01,'NoneType' object has no attribute 'GetArray'
+907,desktop-42qia8u,2026-10-18T02:13:07,'NoneType' object has no attribute 'GetArray'
+908,desktop-42qia8u,2026-10-18T02:13:51,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+909,desktop-42qia8u,2026-10-18T02:15:09,'NoneType' object has no attribute 'GetArray'
+910,desktop-42qia8u,2026-10-18T02:16:14,'NoneType' object has no attribute 'GetArray'
+913,desktop-42qia8u,2026-10-18T02:32:31,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+915,desktop-42qia8u,2026-10-18T02:42:09,'NoneType' object has no attribute 'GetArray'
+916,desktop-42qia8u,2026-10-18T02:42:19,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+918,desktop-42qia8u,2026-10-18T02:53:53,'NoneType' object has no attribute 'GetArray'
+919,desktop-42qia8u,2026-10-18T02:54:57,'NoneType' object has no attribute 'GetArray'
+920,desktop-42qia8u,2026-10-18T02:55:52,'NoneType' object has no attribute 'GetArray'
+921,desktop-42qia8u,2026-10-18T02:57:10,'NoneType' object has no attribute 'GetArray'
+926,desktop-42qia8u,2026-10-18T03:15:35,'NoneType' object has no attribute 'GetArray'
+927,desktop-42qia8u,2026-10-18T03:16:18,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+928,desktop-42qia8u,2026-10-18T03:17:01,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+930,desktop-42qia8u,2026-10-18T03:22:14,'NoneType' object has no attribute 'GetArray'
+931,desktop-42qia8u,2026-10-18T03:22:24,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+932,desktop-42qia8u,2026-10-18T03:23:42,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+934,desktop-42qia8u,2026-10-18T03:32:17,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+935,desktop-42qia8u,2026-10-18T03:33:56,'NoneType' object has no attribute 'GetArray'
+937,desktop-42qia8u,2026-10-18T03:37:11,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+940,desktop-42qia8u,2026-10-18T03:53:56,'NoneType' object has no attribute 'GetArray'
+941,desktop-42qia8u,2026-10-18T03:54:06,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+943,desktop-42qia8u,2026-10-18T04:12:38,'NoneType' object has no attribute 'GetArray'
+946,desktop-42qia8u,2026-10-18T04:28:12,'NoneType' object has no attribute 'GetArray'
+947,desktop-42qia8u,2026-10-18T04:30:03,'NoneType' object has no attribute 'GetArray'
+949,desktop-42qia8u,2026-10-18T04:33:53,'NoneType' object has no attribute 'GetArray'
+950,desktop-42qia8u,2026-10-18T04:34:49,'NoneType' object has no attribute 'GetArray'
+951,desktop-42qia8u,2026-10-18T04:36:53,'NoneType' object has no attribute 'GetArray'
+953,desktop-42qia8u,2026-10-18T04:38:55,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+955,desktop-42qia8u,2026-10-18T04:47:35,'NoneType' object has no attribute 'GetArray'
+956,desktop-42qia8u,2026-10-18T04:48:55,'NoneType' object has no attribute 'GetArray'
+957,desktop-42qia8u,2026-10-18T04:50:23,'NoneType' object has no attribute 'GetArray'
+958,desktop-42qia8u,2026-10-18T04:51:05,'NoneType' object has no attribute 'GetArray'
+959,desktop-42qia8u,2026-10-18T04:52:02,'NoneType' object has no attribute 'GetArray'
+960,desktop-42qia8u,2026-10-18T04:52:12,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+964,desktop-42qia8u,2026-10-18T05:09:09,'NoneType' object has no attribute 'GetArray'
+965,desktop-42qia8u,2026-10-18T05:11:58,CST result does not contain the full 1001-point frequency grid
+966,desktop-42qia8u,2026-10-18T05:12:42,'NoneType' object has no attribute 'GetArray'
+967,desktop-42qia8u,2026-10-18T05:12:52,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+968,desktop-42qia8u,2026-10-18T05:17:57,CST result does not contain the full 1001-point frequency grid
+969,desktop-42qia8u,2026-10-18T05:21:02,CST result does not contain the full 1001-point frequency grid
+970,desktop-42qia8u,2026-10-18T05:21:56,'NoneType' object has no attribute 'GetArray'
+971,desktop-42qia8u,2026-10-18T05:22:07,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+972,desktop-42qia8u,2026-10-18T05:23:02,'NoneType' object has no attribute 'GetArray'
+973,desktop-42qia8u,2026-10-18T05:23:44,'NoneType' object has no attribute 'GetArray'
+974,desktop-42qia8u,2026-10-18T05:24:41,'NoneType' object has no attribute 'GetArray'
+975,desktop-42qia8u,2026-10-18T05:25:47,'NoneType' object has no attribute 'GetArray'
+976,desktop-42qia8u,2026-10-18T05:26:42,'NoneType' object has no attribute 'GetArray'
+977,desktop-42qia8u,2026-10-18T05:29:21,CST result does not contain the full 1001-point frequency grid
+978,desktop-42qia8u,2026-10-18T05:30:29,'NoneType' object has no attribute 'GetArray'
+979,desktop-42qia8u,2026-10-18T05:31:48,'NoneType' object has no attribute 'GetArray'
+980,desktop-42qia8u,2026-10-18T05:33:16,CST result does not contain the full 1001-point frequency grid
+981,desktop-42qia8u,2026-10-18T05:34:24,'NoneType' object has no attribute 'GetArray'
+983,desktop-42qia8u,2026-10-18T05:37:54,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+984,desktop-42qia8u,2026-10-18T05:39:00,'NoneType' object has no attribute 'GetArray'
+986,desktop-42qia8u,2026-10-18T05:43:25,'NoneType' object has no attribute 'GetArray'
+988,desktop-42qia8u,2026-10-18T05:46:49,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+992,desktop-42qia8u,2026-10-18T06:21:39,'NoneType' object has no attribute 'GetArray'
+993,desktop-42qia8u,2026-10-18T06:21:49,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+995,desktop-42qia8u,2026-10-18T06:32:07,'NoneType' object has no attribute 'GetArray'
+997,desktop-42qia8u,2026-10-18T06:34:24,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+998,desktop-42qia8u,2026-10-18T06:36:06,CST result does not contain the full 1001-point frequency grid
+999,desktop-42qia8u,2026-10-18T06:37:11,'NoneType' object has no attribute 'GetArray'
+1000,desktop-42qia8u,2026-10-18T06:38:30,'NoneType' object has no attribute 'GetArray'
+1001,desktop-42qia8u,2026-10-18T06:39:13,'NoneType' object has no attribute 'GetArray'
+1002,desktop-42qia8u,2026-10-18T06:40:19,'NoneType' object has no attribute 'GetArray'
+1005,desktop-42qia8u,2026-10-18T06:52:54,'NoneType' object has no attribute 'GetArray'
+1006,desktop-42qia8u,2026-10-18T06:53:36,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+1010,desktop-42qia8u,2026-10-18T07:03:58,'NoneType' object has no attribute 'GetArray'
+1011,desktop-42qia8u,2026-10-18T07:04:08,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+1013,desktop-42qia8u,2026-10-18T07:07:09,'NoneType' object has no attribute 'GetArray'
+1014,desktop-42qia8u,2026-10-18T07:08:04,'NoneType' object has no attribute 'GetArray'
+1015,desktop-42qia8u,2026-10-18T07:08:14,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+958,desktop-42qia8u,2026-10-18T16:25:14,'NoneType' object has no attribute 'GetArray'
+959,desktop-42qia8u,2026-10-18T16:27:07,'NoneType' object has no attribute 'GetArray'
+971,desktop-42qia8u,2026-10-18T17:24:26,'NoneType' object has no attribute 'GetArray'
+972,desktop-42qia8u,2026-10-18T17:25:34,'NoneType' object has no attribute 'GetArray'
+975,desktop-42qia8u,2026-10-18T17:36:51,'NoneType' object has no attribute 'GetArray'
+976,desktop-42qia8u,2026-10-18T17:38:24,'NoneType' object has no attribute 'GetArray'
+978,desktop-42qia8u,2026-10-18T17:48:43,'NoneType' object has no attribute 'GetArray'
+979,desktop-42qia8u,2026-10-18T17:48:53,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+981,desktop-42qia8u,2026-10-18T17:52:17,'NoneType' object has no attribute 'GetArray'
+983,desktop-42qia8u,2026-10-18T17:53:02,'NoneType' object has no attribute 'GetArray'
+984,desktop-42qia8u,2026-10-18T17:53:17,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+988,desktop-42qia8u,2026-10-18T17:57:25,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+992,desktop-42qia8u,2026-10-18T17:58:20,'NoneType' object has no attribute 'GetArray'
+993,desktop-42qia8u,2026-10-18T18:00:40,CST result does not contain the full 1001-point frequency grid
+995,desktop-42qia8u,2026-10-18T18:01:38,'NoneType' object has no attribute 'GetArray'
+998,desktop-42qia8u,2026-10-18T18:05:27,'NoneType' object has no attribute 'GetArray'
+999,desktop-42qia8u,2026-10-18T18:06:58,CST result does not contain the full 1001-point frequency grid
+1000,desktop-42qia8u,2026-10-18T18:09:05,CST result does not contain the full 1001-point frequency grid
+1001,desktop-42qia8u,2026-10-18T18:09:48,'NoneType' object has no attribute 'GetArray'
+1002,desktop-42qia8u,2026-10-18T18:11:08,'NoneType' object has no attribute 'GetArray'
+1005,desktop-42qia8u,2026-10-18T18:11:50,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+1006,desktop-42qia8u,2026-10-18T18:12:46,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+1010,desktop-42qia8u,2026-10-18T18:13:55,'NoneType' object has no attribute 'GetArray'
+1011,desktop-42qia8u,2026-10-18T18:14:37,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+1013,desktop-42qia8u,2026-10-18T18:15:55,'NoneType' object has no attribute 'GetArray'
+1015,desktop-42qia8u,2026-10-18T18:19:12,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+1019,desktop-42qia8u,2026-10-18T18:19:28,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+1020,desktop-42qia8u,2026-10-18T18:20:18,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+1022,desktop-42qia8u,2026-10-18T18:37:10,"(-2147352567, 'Exception occurred.', (0, 'CST MICROWAVE STUDIO 2024', 'Saving of E:\\SUTD_BENCHMARK_NOVEL_GNN\\fr4_dataset\\cst_workspaces\\fr4_t1mm_desktop-42qia8u\\worker.cst failed.', None, 0, -2147418113), None)"
+1023,desktop-42qia8u,2026-10-18T18:38:57,'NoneType' object has no attribute 'GetArray'
+1024,desktop-42qia8u,2026-10-18T18:39:07,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+1026,desktop-42qia8u,2026-10-18T18:47:25,'NoneType' object has no attribute 'GetArray'
+1028,desktop-42qia8u,2026-10-18T18:56:21,'NoneType' object has no attribute 'GetArray'
+1029,desktop-42qia8u,2026-10-18T18:56:36,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+1075,desktop-42qia8u,2026-10-19T00:57:33,'NoneType' object has no attribute 'GetArray'
+1076,desktop-42qia8u,2026-10-19T00:58:18,"ERROR while retrieving the list of runIDs. CST returned: The specified result item does not exist: ""1D Results\S-Parameters\SZmax(1),Zmax(1)""."
+1077,desktop-42qia8u,2026-10-19T00:59:24,'NoneType' object has no attribute 'GetArray'

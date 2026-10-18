@@ -1,0 +1,32 @@
+{
+  "class_name": "RDN",
+  "target": "both",
+  "layout_convention": "true",
+  "model_type": "resnet3conv",
+  "model_overrides": {
+    "n_out": 2
+  },
+  "n_params": 5767364,
+  "epochs": 300,
+  "lr": 0.0002,
+  "weight_decay": 1e-05,
+  "batch_size": 256,
+  "patience": 1000,
+  "loss_options": {
+    "co": {
+      "db_floor": null,
+      "phase_mag_ref": null
+    },
+    "cross": {
+      "db_floor": -40.0,
+      "phase_mag_ref": 0.1
+    }
+  },
+  "augment": true,
+  "n_train": 27000,
+  "n_val": 0,
+  "msdcnn_train": 27000,
+  "best_val": -300,
+  "epochs_run": 300,
+  "minutes": 60.55652027924855
+}

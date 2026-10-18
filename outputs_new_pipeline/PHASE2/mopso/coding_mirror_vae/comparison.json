@@ -1,0 +1,29 @@
+{
+ "problem": "coding_mirror",
+ "space": "latent",
+ "surrogate": "RDN:n108000",
+ "layout_convention": "true",
+ "seconds": 317.88843870162964,
+ "evaluations": 301000,
+ "unique_designs": 301000,
+ "archive": 50,
+ "n_good": 0,
+ "best_value": [
+  17.960255846318407,
+  20.99125810102983,
+  0.0
+ ],
+ "objective_names": [
+  "-10 dB reduction bandwidth (%)",
+  "Mean reduction (dB)",
+  "Corner contacts + isolated pixels"
+ ],
+ "hv": 0.179215,
+ "database": {
+  "n_database": 0,
+  "n_front": 0,
+  "n_good": 0,
+  "hv_true": NaN,
+  "hv_surrogate": NaN
+ }
+}

@@ -1,0 +1,8 @@
+{
+  "key": "E:\\SUTD_BENCHMARK_NOVEL_GNN\\outputs_new_pipeline\\BOTHPOL\\RDN_n108000\\phase1_forward_best.pth@1792252240",
+  "n": 3000,
+  "split": "test",
+  "lin_mse": 0.0011550802737474442,
+  "r2": 0.9939919710159302,
+  "phase_mae_deg": 10.316961288452148
+}

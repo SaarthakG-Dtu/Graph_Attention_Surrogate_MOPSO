@@ -1,0 +1,13 @@
+design  1 cp_pix_long#0                B pred  14.5 FDTD  13.9 %  quality 0.94/1.02  D 1  band FDTD 9.29-10.68 GHz  meets True  MSE 3.6e-04
+design  2 cp_pix_long#1                B pred  16.0 FDTD  15.6 %  quality 0.99/1.09  D 0  band FDTD 9.23-10.79 GHz  meets True  MSE 3.5e-04
+design  3 cp_pix_long#2                B pred  16.0 FDTD  15.4 %  quality 1.00/0.86  D 3  band FDTD 9.21-10.75 GHz  meets True  MSE 3.5e-04
+design  4 cp_pix_long#3                B pred  15.9 FDTD  15.1 %  quality 1.04/1.11  D 4  band FDTD 9.23-10.74 GHz  meets True  MSE 3.8e-04
+design  5 cp_pix_long#4                B pred  18.2 FDTD  17.6 %  quality 1.23/1.38  D 2  band FDTD 9.17-10.93 GHz  meets True  MSE 1.9e-04
+design  6 cp_pix_long#5                B pred  17.4 FDTD  16.4 %  quality 1.24/0.97  D 3  band FDTD 9.20-10.84 GHz  meets True  MSE 5.0e-04
+design  7 cp_vae_long#0                B pred  15.2 FDTD  14.2 %  quality 1.02/1.41  D 2  band FDTD 9.29-10.71 GHz  meets True  MSE 3.5e-04
+design  8 cp_vae_long#1                B pred  14.1 FDTD  13.2 %  quality 0.83/1.19  D 2  band FDTD 9.35-10.67 GHz  meets True  MSE 1.8e-04
+design  9 cp_vae_s1#0                  B pred  16.5 FDTD  15.1 %  quality 1.11/1.17  D 4  band FDTD 9.21-10.72 GHz  meets True  MSE 3.9e-04
+design 10 cp_vae_s2#0                  B pred  16.2 FDTD  15.6 %  quality 1.04/1.14  D 3  band FDTD 9.30-10.87 GHz  meets True  MSE 1.9e-04
+design 11 cp_vae_long#2                B pred  16.4 FDTD  15.4 %  quality 1.16/1.44  D 4  band FDTD 9.19-10.72 GHz  meets True  MSE 5.6e-04
+design 12 cp_vae_long#3                B pred  14.1 FDTD  13.3 %  quality 0.82/1.07  D 1  band FDTD 9.34-10.67 GHz  meets True  MSE 5.1e-04
+cp: 12/12 meet the target in FDTD (h -> 0); best run cp_pix_long

@@ -36,17 +36,8 @@ import torch
 import config as C
 import utils
 from phase2_surrogate import Surrogate, sanity_check, database
+from phase2_devices import DEVICES, CODING, DeviceObjectives, CodingObjectives, diag_layout, mirror
 
-_CHECKERS = []
-
-
-def disagreement(mats, R):
-    """Mean squared difference of the complex r_xx between the main surrogate and
-    two independently trained RDN surrogates (RDN108000 without PGA, RDN27000).
-    Large values mark layouts on which the surrogate prediction is unreliable."""
-    if not _CHECKERS:
-        _CHECKERS.extend(Surrogate(s) for s in C.MOPSO_TRUST_CHECKERS)
-    return np.mean([np.mean(np.abs(R - s.predict(mats)) ** 2, 1) for s in _CHECKERS], 0)
 from phase2_vae import load_vae
 
 plt = utils.plt
@@ -209,7 +200,7 @@ class MOIPSO:
     def __init__(self, decode, D, lb, ub, sur, objectives, maxvel):
         self.decode, self.D, self.lb, self.ub = decode, D, lb, ub
         self.sur, self.obj, self.maxvel = sur, objectives, maxvel
-        self.M = len(objectives.specs)
+        self.M = getattr(objectives, "n_pen", len(objectives.specs))         # number of penalties
         self.Np, self.Nr, self.maxgen = C.MOPSO_NP, C.MOPSO_NR, C.MOPSO_MAXGEN
         self.ngrid = int(np.clip(round(self.Nr ** (1 / self.M) * 2), 5, 30))
         K = len(sur.freq)
@@ -221,12 +212,11 @@ class MOIPSO:
 
     def evaluate(self, Z):
         mats = self.decode(Z)
+        if hasattr(self.obj, "evaluate"):                  # coding pairs: the objective predicts what it needs
+            R, F, V = self.obj.evaluate(self.sur, mats)
+            return mats, R, F, V
         R = self.sur.predict(mats)
         F, V = self.obj(R, mats)
-        if C.MOPSO_TRUST > 0:                     # trust check: surrogates must agree
-            u = disagreement(mats, R) / C.MOPSO_TRUST
-            bad = u > 1
-            F[bad] = np.maximum(F[bad], 1.0) + (u[bad, None] - 1)
         return mats, R, F, V
 
     def _update_grid(self):
@@ -268,8 +258,8 @@ class MOIPSO:
 
     def _update_repository(self, Z, mats, R, F, V):
         nd = non_dominated(F)
-        c = {k: np.concatenate([self.rep[k], v[nd]]) for k, v in
-             dict(z=Z, F=F, V=V, mat=mats, R=R).items()}
+        c = {k: np.concatenate([self.rep[k] if len(self.rep[k]) else v[:0], v[nd]]) for k, v in
+             dict(z=Z, F=F, V=V, mat=mats, R=R).items()}          # empty archive: take the shapes of the batch
         keep = non_dominated(c["F"])
         seen, uniq = set(), []
         for i in np.where(keep)[0]:
@@ -367,7 +357,59 @@ def plot_front(V, names, path, prev=None, db=None):
     utils.save(fig, path)
 
 
+def plot_device_solution(mat, R, freq, values, objectives, path, title=""):
+    """Layout, |r_xx| and |r_yx|, and axial ratio (converter) or PCR (rotator)."""
+    inb, f_lo, f_hi, _, _, q = objectives.band(R[None])
+    fig = plt.figure(figsize=(utils.COL2, 2.0))
+    gs = fig.add_gridspec(1, 3, width_ratios=[0.8, 1.5, 1.5])
+    ax0 = fig.add_subplot(gs[0])
+    ax0.imshow(mat, cmap=utils.PATTERN_CMAP, vmin=0, vmax=1, interpolation="nearest")
+    ax0.set_xticks([]); ax0.set_yticks([])
+    ax1, ax2 = fig.add_subplot(gs[1]), fig.add_subplot(gs[2])
+    ax1.plot(freq, np.abs(R[0]), color=utils.SERIES[1], label=r"$|r_{xx}|$")
+    ax1.plot(freq, np.abs(R[1]), color=utils.SERIES[0], ls="--", label=r"$|r_{yx}|$")
+    ax1.set_ylim(0, 1.02); ax1.legend(fontsize=6)
+    ax2.plot(freq, q[0], color=utils.SERIES[0])
+    ax2.axhline(objectives.thr, color=utils.INK2, lw=0.6, ls=":")
+    ax2.set_ylabel("axial ratio (dB)" if objectives.device == "cp" else "PCR")
+    if objectives.device == "cp":
+        ax2.set_ylim(0, 15)
+    for ax in (ax1, ax2):
+        if inb[0]:
+            ax.axvspan(f_lo[0], f_hi[0], color=utils.SERIES[2], alpha=0.15, lw=0)
+        ax.set_xlabel("Frequency (GHz)"); ax.set_xlim(freq[0], freq[-1])
+    fig.suptitle(title + "  [" + ", ".join(f"{n} = {v:.3g}" for n, v in zip(objectives.names, values)) + "]",
+                 fontsize=7)
+    fig.tight_layout()
+    utils.save(fig, path)
+
+
+def plot_coding_solution(pair, S, freq, values, objectives, path, title=""):
+    """Cells A and B, and the reduction of the specular reflection against a metal plate."""
+    has, f_lo, f_hi, _, _, red = objectives.band(S[None])
+    fig = plt.figure(figsize=(utils.COL2, 2.0))
+    gs = fig.add_gridspec(1, 3, width_ratios=[0.8, 0.8, 2.2])
+    for k, lab in enumerate("AB"):
+        ax = fig.add_subplot(gs[k])
+        ax.imshow(pair[k], cmap=utils.PATTERN_CMAP, vmin=0, vmax=1, interpolation="nearest")
+        ax.set_xticks([]); ax.set_yticks([]); ax.set_title(f"cell {lab}", fontsize=7)
+    ax = fig.add_subplot(gs[2])
+    ax.plot(freq, red[0], color=utils.SERIES[0])
+    ax.axhline(10, color=utils.INK2, lw=0.6, ls=":")
+    if has[0]:
+        ax.axvspan(f_lo[0], f_hi[0], color=utils.SERIES[2], alpha=0.15, lw=0)
+    ax.set_xlabel("Frequency (GHz)"); ax.set_ylabel("reduction (dB)"); ax.set_xlim(freq[0], freq[-1]); ax.set_ylim(0, 31)
+    fig.suptitle(title + "  [" + ", ".join(f"{n} = {v:.3g}" for n, v in zip(objectives.names, values)) + "]",
+                 fontsize=7)
+    fig.tight_layout()
+    utils.save(fig, path)
+
+
 def plot_solution(mat, R, freq, values, objectives, path, title=""):
+    if isinstance(objectives, CodingObjectives):
+        return plot_coding_solution(mat, R, freq, values, objectives, path, title)
+    if isinstance(objectives, DeviceObjectives):
+        return plot_device_solution(mat, R, freq, values, objectives, path, title)
     lo, hi, _, _ = inphase_band(R[None], freq, objectives.specs[0].get("f0", 10.0))
     ph = surface_phase_deg(R[None], freq)[0]
     fig = plt.figure(figsize=(utils.COL2, 2.0))
@@ -420,7 +462,11 @@ def plot_convergence(conv, names, path):
 # ─────────────────────────────────────────────────────────────────────────────
 
 def database_front(objectives, out_dir, sur):
-    x, R, labels, idx = database([sur.cls] if sur.cls != C.POOLED_CLASS else C.CLASSES, convention=sur.convention)
+    x, R, labels, idx = database([sur.cls] if sur.cls != C.POOLED_CLASS else C.CLASSES, convention=sur.convention,
+                                 target=sur.target)
+    if R.ndim == 3:                                        # two outputs: leave out non-passive simulations
+        keep = (np.abs(R) ** 2).sum(1).max(1) <= 1.01
+        x, R, labels, idx = x[keep], R[keep], labels[keep], idx[keep]
     F, V = objectives(R, x)
     nd = np.where(non_dominated(F))[0]
     with open(os.path.join(out_dir, "database_front.csv"), "w", newline="") as fh:
@@ -441,41 +487,63 @@ def database_front(objectives, out_dir, sur):
 # ─────────────────────────────────────────────────────────────────────────────
 
 def main(args):
-    specs = C.OBJECTIVE_PRESETS[args.problem]
+    coding = args.problem in CODING
+    device = args.problem in DEVICES or coding
+    specs = (DEVICES.get(args.problem, {"structure": CODING.get(args.problem)}) if device
+             else C.OBJECTIVE_PRESETS[args.problem])
     run_dir = C.mopso_dir(args.problem, args.tag)
     final_dir, good_dir = os.path.join(run_dir, "Final"), os.path.join(run_dir, "Good_Solutions")
     for d in (final_dir, good_dir):
         os.makedirs(d, exist_ok=True)
     print(f"\nVAE-MOIPSO [{args.problem} / {args.space}] -> {run_dir}")
-    sur = Surrogate(args.surrogate)
+    sur = Surrogate(args.surrogate, target="both", tta=True) if device else Surrogate(args.surrogate)
     san = sanity_check(sur)
     print(f"  [sanity] {sur.cls} test split n={san['n']}: lin MSE={san['lin_mse']:.2e} "
           f"R2={san['r2']:.3f} phase MAE={san['phase_mae_deg']:.1f} deg")
-    obj = Objectives(specs, sur.freq)
-    for s in specs:
-        print(f"  objective: {s['name']:<26s} ideal={s['ideal']:g} worst={s['worst']:g} spec={s['good']:g}")
+    if coding:
+        obj = CodingObjectives(CODING[args.problem], sur.freq)
+        print(f"  objectives: {', '.join(obj.names)}  ({obj.structure} pair; spec: {obj.spec})")
+    elif device:
+        obj = DeviceObjectives(args.problem, sur.freq)
+        print(f"  objectives: {', '.join(obj.names)}  (f0 = {obj.f0} GHz; spec: {obj.spec})")
+    else:
+        obj = Objectives(specs, sur.freq)
+        for s in specs:
+            print(f"  objective: {s['name']:<26s} ideal={s['ideal']:g} worst={s['worst']:g} spec={s['good']:g}")
 
-    db = database_front(obj, run_dir, sur)
+    db = (dict(n_database=0, n_front=0, n_good=0, hv_true=float("nan"), hv_surrogate=float("nan")) if coding
+          else database_front(obj, run_dir, sur))                # coding: library-pair baseline computed separately
     print(f"  [database] {db['n_database']} layouts: front={db['n_front']}  meeting the spec={db['n_good']}  "
           f"HV={db['hv_true']:.4f}")
     if args.database_only:
         json.dump(db, open(os.path.join(run_dir, "database_baseline.json"), "w"), indent=1)
         return
 
+    structure = CODING.get(args.problem)
+    pair = (lambda A, B: np.stack([A, B], 1))
+    mirror_pair = (lambda A: pair(A, mirror(A)))
     if args.space == "latent":
         vae = load_vae(os.path.join(C.vae_dir(args.vae_tag), "vae_best.pth"))
-        D, lb, ub, maxvel = vae.latent_dim, -C.LATENT_BOUND, C.LATENT_BOUND, C.LATENT_MAXVEL
+        d, lb, ub, maxvel = vae.latent_dim, -C.LATENT_BOUND, C.LATENT_BOUND, C.LATENT_MAXVEL
 
         @torch.no_grad()
-        def decode(Z):
+        def dec(Z):
             z = torch.as_tensor(Z, dtype=torch.float32, device=C.DEVICE)
             return vae.decode(z).cpu().numpy()[:, 0].astype(np.uint8)
-    else:
-        D, lb, ub = 256, 0.0, 1.0
-        maxvel = C.PIXEL_MAXVEL
 
-        def decode(Z):
-            return (Z > 0.5).reshape(-1, 16, 16).astype(np.uint8)
+        if structure == "diag":
+            raise ValueError("the diagonal pair is searched in pixel space only")
+        D = 2 * d if structure == "free" else d
+        decode = {None: dec, "mirror": lambda Z: mirror_pair(dec(Z)),
+                  "free": lambda Z: pair(dec(Z[:, :d]), dec(Z[:, d:]))}[structure]
+    else:
+        lb, ub = 0.0, 1.0
+        maxvel = C.PIXEL_MAXVEL
+        D = {None: 256, "mirror": 256, "free": 512, "diag": 136}[structure]
+        pix = lambda Z: (Z > 0.5).reshape(-1, 16, 16).astype(np.uint8)
+        decode = {None: pix, "mirror": lambda Z: mirror_pair(pix(Z)),
+                  "free": lambda Z: pair(pix(Z[:, :256]), pix(Z[:, 256:])),
+                  "diag": lambda Z: mirror_pair(diag_layout(Z))}[structure]
 
     t0 = time.time()
     opt = MOIPSO(decode, D, lb, ub, sur, obj, maxvel)
@@ -487,18 +555,24 @@ def main(args):
 
     order = np.argsort(rep["F"].sum(1))                        # best compromise first
     rep = {k: v[order] for k, v in rep.items()}
-    dbz = np.load(os.path.join(run_dir, "database_front.npz"))
-    plot_front(rep["V"], obj.names, os.path.join(final_dir, "Pareto_Front.png"), db=dbz["V"])
+    dbf = os.path.join(run_dir, "database_front.npz")
+    plot_front(rep["V"], obj.names, os.path.join(final_dir, "Pareto_Front.png"),
+               db=np.load(dbf)["V"] if os.path.exists(dbf) else None)
     plot_convergence(opt.conv, obj.names, os.path.join(run_dir, "convergence.png"))
     write_summary(opt, os.path.join(final_dir, "Pareto_Front_Summary.txt"), C.MOPSO_MAXGEN)
     good = obj.good(rep["V"])
-    lo, hi, _, _ = inphase_band(rep["R"], sur.freq, specs[0].get("f0", 10.0))
+    if device:
+        _, f_lo, f_hi = obj.band(rep["R"])[:3]                 # converter, rotator and coding bands
+    else:
+        lo, hi, _, _ = inphase_band(rep["R"], sur.freq, specs[0].get("f0", 10.0))
+        f_lo = np.where(lo >= 0, sur.freq[np.maximum(lo, 0)], np.nan)
+        f_hi = np.where(hi >= 0, sur.freq[np.maximum(hi, 0)], np.nan)
     with open(os.path.join(final_dir, "pareto_summary.csv"), "w", newline="") as f:
         w = csv.writer(f)
         w.writerow(["solution"] + obj.names + ["band_lo_GHz", "band_hi_GHz", "meets_spec", "fill"])
         for i in range(len(rep["F"])):
             w.writerow([i + 1] + [f"{v:.4g}" for v in rep["V"][i]]
-                       + [f"{sur.freq[lo[i]]:.2f}" if lo[i] >= 0 else "", f"{sur.freq[hi[i]]:.2f}" if hi[i] >= 0 else "",
+                       + [f"{f_lo[i]:.2f}" if np.isfinite(f_lo[i]) else "", f"{f_hi[i]:.2f}" if np.isfinite(f_hi[i]) else "",
                           bool(good[i]), f"{rep['mat'][i].mean():.3f}"])
     for i in range(len(rep["F"])):
         plot_solution(rep["mat"][i], rep["R"][i], sur.freq, rep["V"][i], obj,
@@ -529,7 +603,7 @@ def main(args):
 if __name__ == "__main__":
     C.be_nice()
     ap = argparse.ArgumentParser()
-    ap.add_argument("--problem", default=C.MOPSO_PROBLEM, choices=list(C.OBJECTIVE_PRESETS))
+    ap.add_argument("--problem", default=C.MOPSO_PROBLEM, choices=list(C.OBJECTIVE_PRESETS) + list(DEVICES) + list(CODING))
     ap.add_argument("--space", default=C.MOPSO_SEARCH_SPACE, choices=["latent", "binary"])
     ap.add_argument("--surrogate", default=C.MOPSO_SURROGATE, help='co-pol surrogate run, "CLASS[:tag]"')
     ap.add_argument("--vae_tag", default=C.MOPSO_VAE_TAG)

@@ -1,0 +1,223 @@
+{
+ "device": "cp",
+ "t_sub_mm": 1.0,
+ "designs": [
+  {
+   "design": 1,
+   "cst": {
+    "Axial-ratio bandwidth (%)": 14.833719654020195,
+    "Mean axial ratio (dB)": 1.0101020207550813,
+    "Corner contacts + isolated pixels": 1.0,
+    "Lowest reflected power (dB)": -0.11212285064181851
+   },
+   "band_cst": [
+    9.277400209096273,
+    10.763830174236201
+   ],
+   "B_pred": 14.460715011662664,
+   "B_fdtd": 13.899764525574794,
+   "meets_cst": true,
+   "mse_cst_vs_pred": 0.00020408156139327697,
+   "mse_cst_vs_fdtd": 0.0003919065318458266
+  },
+  {
+   "design": 2,
+   "cst": {
+    "Axial-ratio bandwidth (%)": 15.922602549560214,
+    "Mean axial ratio (dB)": 1.0746442984519364,
+    "Corner contacts + isolated pixels": 0.0,
+    "Lowest reflected power (dB)": -0.1057520155340112
+   },
+   "band_cst": [
+    9.203633095572487,
+    10.79585238835377
+   ],
+   "B_pred": 15.982550071712277,
+   "B_fdtd": 15.58916786027726,
+   "meets_cst": true,
+   "mse_cst_vs_pred": 0.0004152677607526844,
+   "mse_cst_vs_fdtd": 9.249456621657956e-05
+  },
+  {
+   "design": 3,
+   "cst": {
+    "Axial-ratio bandwidth (%)": 16.81036858394662,
+    "Mean axial ratio (dB)": 1.0713320372858244,
+    "Corner contacts + isolated pixels": 3.0,
+    "Lowest reflected power (dB)": -0.11990023047980497
+   },
+   "band_cst": [
+    9.185646698708435,
+    10.871485635045413
+   ],
+   "B_pred": 16.029944513790948,
+   "B_fdtd": 15.419186992299203,
+   "meets_cst": true,
+   "mse_cst_vs_pred": 0.0005020772311896801,
+   "mse_cst_vs_fdtd": 0.0007710454200729051
+  },
+  {
+   "design": 4,
+   "cst": {
+    "Axial-ratio bandwidth (%)": 16.53085784680081,
+    "Mean axial ratio (dB)": 1.2558418289148268,
+    "Corner contacts + isolated pixels": 4.0,
+    "Lowest reflected power (dB)": -0.123078065739212
+   },
+   "band_cst": [
+    9.174739555222823,
+    10.828056440981907
+   ],
+   "B_pred": 15.949330850715858,
+   "B_fdtd": 15.120746091488838,
+   "meets_cst": true,
+   "mse_cst_vs_pred": 0.00022387648785470257,
+   "mse_cst_vs_fdtd": 0.0005890724659902996
+  },
+  {
+   "design": 5,
+   "cst": {
+    "Axial-ratio bandwidth (%)": 18.40893424080884,
+    "Mean axial ratio (dB)": 1.4843347731187329,
+    "Corner contacts + isolated pixels": 2.0,
+    "Lowest reflected power (dB)": -0.12341645816517623
+   },
+   "band_cst": [
+    9.158803928321307,
+    11.01576554189006
+   ],
+   "B_pred": 18.1774850301851,
+   "B_fdtd": 17.572122797260523,
+   "meets_cst": true,
+   "mse_cst_vs_pred": 0.00042694393253762307,
+   "mse_cst_vs_fdtd": 0.00032192697549903197
+  },
+  {
+   "design": 6,
+   "cst": {
+    "Axial-ratio bandwidth (%)": 17.83802466975803,
+    "Mean axial ratio (dB)": 1.2145907227570991,
+    "Corner contacts + isolated pixels": 3.0,
+    "Lowest reflected power (dB)": -0.12118801936365298
+   },
+   "band_cst": [
+    9.1652433676782,
+    10.960237487615565
+   ],
+   "B_pred": 17.364570837905433,
+   "B_fdtd": 16.393816871045605,
+   "meets_cst": true,
+   "mse_cst_vs_pred": 0.00031961883983377243,
+   "mse_cst_vs_fdtd": 0.0007763326670774653
+  },
+  {
+   "design": 7,
+   "cst": {
+    "Axial-ratio bandwidth (%)": 15.05521396375874,
+    "Mean axial ratio (dB)": 1.4136765821937316,
+    "Corner contacts + isolated pixels": 2.0,
+    "Lowest reflected power (dB)": -0.1203694411408823
+   },
+   "band_cst": [
+    9.29531383303651,
+    10.808662131368404
+   ],
+   "B_pred": 15.222134475355665,
+   "B_fdtd": 14.169888173261773,
+   "meets_cst": true,
+   "mse_cst_vs_pred": 0.00013194030164666456,
+   "mse_cst_vs_fdtd": 0.0004575572556109483
+  },
+  {
+   "design": 8,
+   "cst": {
+    "Axial-ratio bandwidth (%)": 13.889468151508385,
+    "Mean axial ratio (dB)": 1.1888888269524263,
+    "Corner contacts + isolated pixels": 2.0,
+    "Lowest reflected power (dB)": -0.10720173682993335
+   },
+   "band_cst": [
+    9.356969987828862,
+    10.75359526582623
+   ],
+   "B_pred": 14.070065939745175,
+   "B_fdtd": 13.173207268562809,
+   "meets_cst": true,
+   "mse_cst_vs_pred": 0.0002718335771806546,
+   "mse_cst_vs_fdtd": 0.00040645460306758306
+  },
+  {
+   "design": 9,
+   "cst": {
+    "Axial-ratio bandwidth (%)": 16.227343797315047,
+    "Mean axial ratio (dB)": 1.3017786212942666,
+    "Corner contacts + isolated pixels": 4.0,
+    "Lowest reflected power (dB)": -0.12498005224956603
+   },
+   "band_cst": [
+    9.19989620117185,
+    10.824619722514162
+   ],
+   "B_pred": 16.470818928903473,
+   "B_fdtd": 15.102794660822559,
+   "meets_cst": true,
+   "mse_cst_vs_pred": 0.00022433317554397382,
+   "mse_cst_vs_fdtd": 0.0004240069665101419
+  },
+  {
+   "design": 10,
+   "cst": {
+    "Axial-ratio bandwidth (%)": 16.062634754970453,
+    "Mean axial ratio (dB)": 1.2392059757439857,
+    "Corner contacts + isolated pixels": 3.0,
+    "Lowest reflected power (dB)": -0.12053946422917668
+   },
+   "band_cst": [
+    9.296816788816699,
+    10.92053660521953
+   ],
+   "B_pred": 16.218163860191538,
+   "B_fdtd": 15.554318669639509,
+   "meets_cst": true,
+   "mse_cst_vs_pred": 0.00020044672264637033,
+   "mse_cst_vs_fdtd": 0.00014966106406604277
+  },
+  {
+   "design": 11,
+   "cst": {
+    "Axial-ratio bandwidth (%)": 16.441080297540168,
+    "Mean axial ratio (dB)": 1.5063114391982586,
+    "Corner contacts + isolated pixels": 4.0,
+    "Lowest reflected power (dB)": -0.12706754408253723
+   },
+   "band_cst": [
+    9.176242465863725,
+    10.820045332600053
+   ],
+   "B_pred": 16.444195533997792,
+   "B_fdtd": 15.388405707676087,
+   "meets_cst": true,
+   "mse_cst_vs_pred": 0.0001446045094268396,
+   "mse_cst_vs_fdtd": 0.00047691857646457004
+  },
+  {
+   "design": 12,
+   "cst": {
+    "Axial-ratio bandwidth (%)": 14.083533496960545,
+    "Mean axial ratio (dB)": 1.0528110764049357,
+    "Corner contacts + isolated pixels": 1.0,
+    "Lowest reflected power (dB)": -0.10739453613196029
+   },
+   "band_cst": [
+    9.346925454101527,
+    10.763020974874346
+   ],
+   "B_pred": 14.067118720667128,
+   "B_fdtd": 13.327631801072659,
+   "meets_cst": true,
+   "mse_cst_vs_pred": 0.0001560252033087549,
+   "mse_cst_vs_fdtd": 0.0004835754185097416
+  }
+ ],
+ "n_meet_cst": 12
+}

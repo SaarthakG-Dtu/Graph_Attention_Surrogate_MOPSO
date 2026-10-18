@@ -231,19 +231,28 @@ class CrossAttentionFreq(nn.Module):
 
 
 class PolarPassivityHead(nn.Module):
-    """BiGRU -> Dropout -> Linear -> [sigmoid(a) cos b, sigmoid(a) sin b]."""
+    """BiGRU -> Dropout -> Linear -> [sigmoid(a) cos b, sigmoid(a) sin b].
+    n_out = 2 (r_xx, r_yx): rho = sigmoid(a), psi = pi/2 sigmoid(c),
+    S_xx = rho cos(psi) e^{jb}, S_yx = rho sin(psi) e^{jb'}, so that
+    |S_xx|^2 + |S_yx|^2 = rho^2 < 1; output (B, 2, K, 2)."""
 
-    def __init__(self, in_dim, gru_hidden):
+    def __init__(self, in_dim, gru_hidden, n_out=1):
         super().__init__()
+        self.n_out = n_out
         self.bigru = nn.GRU(in_dim, gru_hidden, num_layers=1, batch_first=True, bidirectional=True)
         self.head_dropout = nn.Dropout(C.P1_DROPOUT_HEAD)
-        self.mlp = nn.Linear(2 * gru_hidden, 2)
+        self.mlp = nn.Linear(2 * gru_hidden, 2 if n_out == 1 else 4)
 
     def forward(self, ctx):
         h, _ = self.bigru(ctx)
         logit = self.mlp(self.head_dropout(h))
         a, b = torch.sigmoid(logit[..., 0]), logit[..., 1]
-        return torch.stack([a * torch.cos(b), a * torch.sin(b)], dim=-1)
+        if self.n_out == 1:
+            return torch.stack([a * torch.cos(b), a * torch.sin(b)], dim=-1)
+        psi = 0.5 * math.pi * torch.sigmoid(logit[..., 2])
+        mxx, myx, byx = a * torch.cos(psi), a * torch.sin(psi), logit[..., 3]
+        return torch.stack([torch.stack([mxx * torch.cos(b), mxx * torch.sin(b)], -1),
+                            torch.stack([myx * torch.cos(byx), myx * torch.sin(byx)], -1)], dim=1)
 
 
 class ForwardSurrogate(nn.Module):
@@ -263,7 +272,7 @@ class ForwardSurrogate(nn.Module):
         self.cross_attn = CrossAttentionFreq(dim, cfg.get("heads", C.P1_CROSS_ATTN_HEADS),
                                              n_queries=cfg.get("n_queries", C.P1_FREQ_QUERIES),
                                              n_layers=cfg.get("attn_layers", C.P1_CROSS_ATTN_LAYERS))
-        self.head = PolarPassivityHead(dim, cfg.get("gru_hidden", dim))
+        self.head = PolarPassivityHead(dim, cfg.get("gru_hidden", dim), cfg.get("n_out", 1))
 
     def forward(self, images: torch.Tensor) -> torch.Tensor:
         feat = self.backbone_dropout(self.backbone(images))

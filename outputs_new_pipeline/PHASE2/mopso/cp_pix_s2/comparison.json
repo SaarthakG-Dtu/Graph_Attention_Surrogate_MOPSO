@@ -1,0 +1,31 @@
+{
+ "problem": "cp",
+ "space": "binary",
+ "surrogate": "RDN:n108000",
+ "layout_convention": "true",
+ "seconds": 32.79562711715698,
+ "evaluations": 30200,
+ "unique_designs": 30200,
+ "archive": 29,
+ "n_good": 0,
+ "best_value": [
+  16.579278945922873,
+  0.24859362840652466,
+  7.0,
+  -0.2032107710838318
+ ],
+ "objective_names": [
+  "Axial-ratio bandwidth (%)",
+  "Mean axial ratio (dB)",
+  "Corner contacts + isolated pixels",
+  "Lowest reflected power (dB)"
+ ],
+ "hv": 0.35319,
+ "database": {
+  "n_database": 110843,
+  "n_front": 35,
+  "n_good": 0,
+  "hv_true": 0.17534,
+  "hv_surrogate": 0.160825
+ }
+}

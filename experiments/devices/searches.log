@@ -1,0 +1,477 @@
+=== 21:31:08 --problem cp --space binary --surrogate RDN:n108000 --tag pix_s0 --gens 150 --swarm 200 --seed 0
+
+VAE-MOIPSO [cp / binary] -> E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\PHASE2\mopso\cp_pix_s0
+  [surrogate] E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\BOTHPOL\RDN_n108000\phase1_forward_best.pth (layout convention: true)
+  [sanity] RDN test split n=3000: lin MSE=1.16e-03 R2=0.994 phase MAE=10.3 deg
+  objectives: Axial-ratio bandwidth (%), Mean axial ratio (dB), Corner contacts + isolated pixels, Lowest reflected power (dB)  (f0 = 10.0 GHz; spec: B >= 10 %, L >= -0.5 dB, D <= 5)
+  [database] 110843 layouts: front=35  meeting the spec=0  HV=0.1753
+  gen    1/150  archive=  7  good=  0  best=3.64  0.985  16  -0.129
+  gen   10/150  archive=  7  good=  0  best=6.46  0.66  16  -0.246
+  gen   20/150  archive= 13  good=  0  best=9.85  0.66  16  -0.132
+  gen   30/150  archive= 18  good=  0  best=13.1  0.585  16  -0.154
+  gen   40/150  archive= 19  good=  0  best=13.1  0.585  16  -0.156
+  gen   50/150  archive= 18  good=  0  best=13.1  0.408  16  -0.156
+  gen   60/150  archive= 20  good=  0  best=13.1  0.208  16  -0.166
+  gen   70/150  archive= 24  good=  0  best=14.9  0.208  16  -0.166
+  gen   80/150  archive= 26  good=  0  best=14.9  0.208  16  -0.164
+  gen   90/150  archive= 30  good=  0  best=14.9  0.208  13  -0.152
+  gen  100/150  archive= 38  good=  0  best=16.5  0.208  13  -0.152
+  gen  110/150  archive= 34  good=  0  best=17.5  0.208  13  -0.152
+  gen  120/150  archive= 32  good=  0  best=17.5  0.208  11  -0.118
+  gen  130/150  archive= 36  good=  0  best=17.5  0.208  11  -0.118
+  gen  140/150  archive= 37  good=  0  best=17.5  0.208  10  -0.152
+  gen  150/150  archive= 44  good=  0  best=17.5  0.208  10  -0.152
+  done: 30,200 surrogate evaluations in 30.0s, archive = 44
+  unique designs evaluated: 30,198/30,200  meeting the spec: 0  best values: Axial-ratio bandwidth (%) = 17.5, Mean axial ratio (dB) = 0.208, Corner contacts + isolated pixels = 10, Lowest reflected power (dB) = -0.152  HV=0.3189 (database 0.1753)
+--- exit 0
+=== 21:32:24 --problem cp --space binary --surrogate RDN:n108000 --tag pix_s1 --gens 150 --swarm 200 --seed 1
+
+VAE-MOIPSO [cp / binary] -> E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\PHASE2\mopso\cp_pix_s1
+  [surrogate] E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\BOTHPOL\RDN_n108000\phase1_forward_best.pth (layout convention: true)
+  [sanity] RDN test split n=3000: lin MSE=1.16e-03 R2=0.994 phase MAE=10.3 deg
+  objectives: Axial-ratio bandwidth (%), Mean axial ratio (dB), Corner contacts + isolated pixels, Lowest reflected power (dB)  (f0 = 10.0 GHz; spec: B >= 10 %, L >= -0.5 dB, D <= 5)
+  [database] 110843 layouts: front=35  meeting the spec=0  HV=0.1753
+  gen    1/150  archive=  3  good=  0  best=6.98  1.06  23  -0.253
+  gen   10/150  archive= 11  good=  0  best=13.4  0.39  21  -0.198
+  gen   20/150  archive= 16  good=  0  best=13.7  0.39  19  -0.198
+  gen   30/150  archive= 15  good=  0  best=13.7  0.39  19  -0.198
+  gen   40/150  archive= 21  good=  0  best=13.7  0.39  16  -0.198
+  gen   50/150  archive= 26  good=  0  best=14.8  0.39  12  -0.198
+  gen   60/150  archive= 30  good=  0  best=14.8  0.39  12  -0.199
+  gen   70/150  archive= 36  good=  0  best=14.8  0.39  12  -0.205
+  gen   80/150  archive= 36  good=  0  best=14.8  0.39  12  -0.189
+  gen   90/150  archive= 50  good=  0  best=15.7  0.39  8  -0.196
+  gen  100/150  archive= 45  good=  0  best=15.7  0.39  8  -0.196
+  gen  110/150  archive= 48  good=  0  best=15.7  0.39  7  -0.196
+  gen  120/150  archive= 50  good=  0  best=15.7  0.39  7  -0.204
+  gen  130/150  archive= 50  good=  0  best=15.7  0.39  4  -0.128
+  gen  140/150  archive= 49  good=  0  best=15.7  0.39  4  -0.128
+  gen  150/150  archive= 49  good=  0  best=15.7  0.39  4  -0.128
+  done: 30,200 surrogate evaluations in 31.0s, archive = 49
+  unique designs evaluated: 30,197/30,200  meeting the spec: 0  best values: Axial-ratio bandwidth (%) = 15.7, Mean axial ratio (dB) = 0.39, Corner contacts + isolated pixels = 4, Lowest reflected power (dB) = -0.128  HV=0.3397 (database 0.1753)
+--- exit 0
+=== 21:34:09 --problem cp --space binary --surrogate RDN:n108000 --tag pix_s2 --gens 150 --swarm 200 --seed 2
+
+VAE-MOIPSO [cp / binary] -> E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\PHASE2\mopso\cp_pix_s2
+  [surrogate] E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\BOTHPOL\RDN_n108000\phase1_forward_best.pth (layout convention: true)
+  [sanity] RDN test split n=3000: lin MSE=1.16e-03 R2=0.994 phase MAE=10.3 deg
+  objectives: Axial-ratio bandwidth (%), Mean axial ratio (dB), Corner contacts + isolated pixels, Lowest reflected power (dB)  (f0 = 10.0 GHz; spec: B >= 10 %, L >= -0.5 dB, D <= 5)
+  [database] 110843 layouts: front=35  meeting the spec=0  HV=0.1753
+  gen    1/150  archive=  5  good=  0  best=3.25  1.38  19  -0.15
+  gen   10/150  archive= 10  good=  0  best=4.21  0.363  8  -0.147
+  gen   20/150  archive= 15  good=  0  best=6.19  0.259  8  -0.147
+  gen   30/150  archive= 16  good=  0  best=10.4  0.249  8  -0.147
+  gen   40/150  archive= 16  good=  0  best=10.4  0.249  8  -0.147
+  gen   50/150  archive= 17  good=  0  best=10.4  0.249  8  -0.147
+  gen   60/150  archive= 16  good=  0  best=12.5  0.249  13  -0.185
+  gen   70/150  archive= 19  good=  0  best=13  0.249  13  -0.19
+  gen   80/150  archive= 21  good=  0  best=13  0.249  13  -0.19
+  gen   90/150  archive= 18  good=  0  best=13  0.249  9  -0.19
+  gen  100/150  archive= 26  good=  0  best=14.5  0.249  9  -0.191
+  gen  110/150  archive= 26  good=  0  best=14.6  0.249  7  -0.154
+  gen  120/150  archive= 45  good=  0  best=15.1  0.249  7  -0.191
+  gen  130/150  archive= 32  good=  0  best=15.1  0.249  7  -0.193
+  gen  140/150  archive= 34  good=  0  best=15.4  0.249  7  -0.187
+  gen  150/150  archive= 29  good=  0  best=16.6  0.249  7  -0.203
+  done: 30,200 surrogate evaluations in 32.8s, archive = 29
+  unique designs evaluated: 30,200/30,200  meeting the spec: 0  best values: Axial-ratio bandwidth (%) = 16.6, Mean axial ratio (dB) = 0.249, Corner contacts + isolated pixels = 7, Lowest reflected power (dB) = -0.203  HV=0.3532 (database 0.1753)
+--- exit 0
+=== 21:35:34 --problem cp --space binary --surrogate RDN:n108000 --tag pix_long --gens 300 --swarm 1000 --seed 0
+
+VAE-MOIPSO [cp / binary] -> E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\PHASE2\mopso\cp_pix_long
+  [surrogate] E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\BOTHPOL\RDN_n108000\phase1_forward_best.pth (layout convention: true)
+  [sanity] RDN test split n=3000: lin MSE=1.16e-03 R2=0.994 phase MAE=10.3 deg
+  objectives: Axial-ratio bandwidth (%), Mean axial ratio (dB), Corner contacts + isolated pixels, Lowest reflected power (dB)  (f0 = 10.0 GHz; spec: B >= 10 %, L >= -0.5 dB, D <= 5)
+  [database] 110843 layouts: front=35  meeting the spec=0  HV=0.1753
+  gen    1/300  archive=  8  good=  0  best=8.55  0.306  16  -0.216
+  gen   10/300  archive= 16  good=  0  best=8.66  0.306  16  -0.165
+  gen   20/300  archive= 13  good=  0  best=12.5  0.155  13  -0.191
+  gen   30/300  archive= 15  good=  0  best=12.5  0.155  13  -0.191
+  gen   40/300  archive= 22  good=  0  best=16.3  0.155  13  -0.191
+  gen   50/300  archive= 30  good=  0  best=16.3  0.155  8  -0.149
+  gen   60/300  archive= 34  good=  0  best=17.4  0.155  6  -0.132
+  gen   70/300  archive= 41  good=  0  best=17.4  0.155  6  -0.132
+  gen   80/300  archive= 50  good=  0  best=17.8  0.0848  3  -0.177
+  gen   90/300  archive= 50  good=  0  best=18.3  0.0829  3  -0.177
+  gen  100/300  archive= 48  good=  0  best=18.3  0.0829  3  -0.177
+  gen  110/300  archive= 50  good=  2  best=18.4  0.0829  3  -0.177
+  gen  120/300  archive= 50  good=  3  best=18.8  0.0829  3  -0.195
+  gen  130/300  archive= 50  good=  4  best=18.8  0.0829  3  -0.196
+  gen  140/300  archive= 48  good=  7  best=18.8  0.0829  3  -0.202
+  gen  150/300  archive= 50  good=  7  best=18.8  0.0829  3  -0.202
+  gen  160/300  archive= 50  good=  7  best=18.9  0.0829  3  -0.202
+  gen  170/300  archive= 50  good=  9  best=18.9  0.0829  1  -0.199
+  gen  180/300  archive= 50  good=  6  best=18.9  0.0829  1  -0.199
+  gen  190/300  archive= 50  good= 10  best=18.9  0.0829  0  -0.2
+  gen  200/300  archive= 50  good=  9  best=18.9  0.0829  0  -0.202
+  gen  210/300  archive= 50  good=  6  best=18.9  0.0829  0  -0.203
+  gen  220/300  archive= 50  good= 11  best=18.9  0.0829  0  -0.203
+  gen  230/300  archive= 50  good= 11  best=19.3  0.0829  0  -0.202
+  gen  240/300  archive= 50  good= 11  best=19.3  0.0483  0  -0.202
+  gen  250/300  archive= 50  good= 12  best=19.3  0.0483  0  -0.202
+  gen  260/300  archive= 50  good=  9  best=19.9  0.0483  0  -0.202
+  gen  270/300  archive= 50  good= 13  best=19.9  0.0483  0  -0.203
+  gen  280/300  archive= 50  good= 11  best=19.9  0.0483  0  -0.203
+  gen  290/300  archive= 50  good= 14  best=19.9  0.0483  0  -0.203
+  gen  300/300  archive= 50  good= 12  best=19.9  0.0483  0  -0.202
+  done: 301,000 surrogate evaluations in 186.3s, archive = 50
+  unique designs evaluated: 300,990/301,000  meeting the spec: 12  best values: Axial-ratio bandwidth (%) = 19.9, Mean axial ratio (dB) = 0.0483, Corner contacts + isolated pixels = 0, Lowest reflected power (dB) = -0.202  HV=0.4863 (database 0.1753)
+--- exit 0
+=== 21:40:19 --problem rotator --space binary --surrogate RDN:n108000 --tag pix_s0 --gens 150 --swarm 200 --seed 0
+
+VAE-MOIPSO [rotator / binary] -> E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\PHASE2\mopso\rotator_pix_s0
+  [surrogate] E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\BOTHPOL\RDN_n108000\phase1_forward_best.pth (layout convention: true)
+  [sanity] RDN test split n=3000: lin MSE=1.16e-03 R2=0.994 phase MAE=10.3 deg
+  objectives: PCR > 0.9 bandwidth (%), Mean |r_yx|^2, Corner contacts + isolated pixels  (f0 = 10.2 GHz; spec: B >= 5 %, mean |r_yx|^2 >= 0.8, D <= 5)
+  [database] 110843 layouts: front=26  meeting the spec=0  HV=0.1495
+  gen    1/150  archive=  2  good=  0  best=3.13  0.924  18
+  gen   10/150  archive=  9  good=  0  best=3.13  0.929  18
+  gen   20/150  archive= 17  good=  0  best=12.6  0.929  18
+  gen   30/150  archive= 23  good=  0  best=12.6  0.929  18
+  gen   40/150  archive= 29  good=  0  best=12.6  0.929  16
+  gen   50/150  archive= 34  good=  0  best=12.6  0.93  12
+  gen   60/150  archive= 44  good=  0  best=12.6  0.93  12
+  gen   70/150  archive= 45  good=  0  best=12.6  0.93  12
+  gen   80/150  archive= 43  good=  0  best=12.6  0.93  12
+  gen   90/150  archive= 41  good=  0  best=12.6  0.93  12
+  gen  100/150  archive= 49  good=  0  best=12.7  0.93  10
+  gen  110/150  archive= 50  good=  0  best=13.3  0.93  10
+  gen  120/150  archive= 50  good=  0  best=13.9  0.93  10
+  gen  130/150  archive= 43  good=  0  best=14.2  0.93  9
+  gen  140/150  archive= 50  good=  0  best=14.3  0.93  7
+  gen  150/150  archive= 47  good=  0  best=14.3  0.93  7
+  done: 30,200 surrogate evaluations in 30.2s, archive = 47
+  unique designs evaluated: 30,200/30,200  meeting the spec: 0  best values: PCR > 0.9 bandwidth (%) = 14.3, Mean |r_yx|^2 = 0.93, Corner contacts + isolated pixels = 7  HV=0.3438 (database 0.1495)
+--- exit 0
+=== 21:41:50 --problem rotator --space binary --surrogate RDN:n108000 --tag pix_s1 --gens 150 --swarm 200 --seed 1
+
+VAE-MOIPSO [rotator / binary] -> E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\PHASE2\mopso\rotator_pix_s1
+  [surrogate] E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\BOTHPOL\RDN_n108000\phase1_forward_best.pth (layout convention: true)
+  [sanity] RDN test split n=3000: lin MSE=1.16e-03 R2=0.994 phase MAE=10.3 deg
+  objectives: PCR > 0.9 bandwidth (%), Mean |r_yx|^2, Corner contacts + isolated pixels  (f0 = 10.2 GHz; spec: B >= 5 %, mean |r_yx|^2 >= 0.8, D <= 5)
+  [database] 110843 layouts: front=26  meeting the spec=0  HV=0.1495
+  gen    1/150  archive=  4  good=  0  best=1.64  0.873  32
+  gen   10/150  archive=  9  good=  0  best=2.17  0.929  21
+  gen   20/150  archive= 15  good=  0  best=4.2  0.929  22
+  gen   30/150  archive= 28  good=  0  best=8.7  0.93  21
+  gen   40/150  archive= 25  good=  0  best=9.37  0.93  13
+  gen   50/150  archive= 18  good=  0  best=9.9  0.93  13
+  gen   60/150  archive= 25  good=  0  best=11.4  0.93  13
+  gen   70/150  archive= 34  good=  0  best=12.5  0.93  13
+  gen   80/150  archive= 28  good=  0  best=13.3  0.93  13
+  gen   90/150  archive= 34  good=  0  best=13.6  0.93  10
+  gen  100/150  archive= 41  good=  0  best=14.5  0.93  9
+  gen  110/150  archive= 41  good=  0  best=14.5  0.93  8
+  gen  120/150  archive= 44  good=  0  best=14.6  0.93  7
+  gen  130/150  archive= 42  good=  1  best=14.6  0.93  5
+  gen  140/150  archive= 49  good=  2  best=14.6  0.93  3
+  gen  150/150  archive= 50  good=  3  best=14.6  0.93  3
+  done: 30,200 surrogate evaluations in 29.2s, archive = 50
+  unique designs evaluated: 30,199/30,200  meeting the spec: 3  best values: PCR > 0.9 bandwidth (%) = 14.6, Mean |r_yx|^2 = 0.93, Corner contacts + isolated pixels = 3  HV=0.3927 (database 0.1495)
+--- exit 0
+=== 21:43:27 --problem rotator --space binary --surrogate RDN:n108000 --tag pix_s2 --gens 150 --swarm 200 --seed 2
+
+VAE-MOIPSO [rotator / binary] -> E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\PHASE2\mopso\rotator_pix_s2
+  [surrogate] E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\BOTHPOL\RDN_n108000\phase1_forward_best.pth (layout convention: true)
+  [sanity] RDN test split n=3000: lin MSE=1.16e-03 R2=0.994 phase MAE=10.3 deg
+  objectives: PCR > 0.9 bandwidth (%), Mean |r_yx|^2, Corner contacts + isolated pixels  (f0 = 10.2 GHz; spec: B >= 5 %, mean |r_yx|^2 >= 0.8, D <= 5)
+  [database] 110843 layouts: front=26  meeting the spec=0  HV=0.1495
+  gen    1/150  archive=  1  good=  0  best=0  0.894  31
+  gen   10/150  archive=  8  good=  0  best=1.09  0.907  21
+  gen   20/150  archive= 10  good=  0  best=2.35  0.923  21
+  gen   30/150  archive= 11  good=  0  best=9.71  0.929  20
+  gen   40/150  archive= 15  good=  0  best=11.8  0.929  17
+  gen   50/150  archive= 21  good=  0  best=11.8  0.93  11
+  gen   60/150  archive= 19  good=  0  best=13.5  0.93  9
+  gen   70/150  archive= 21  good=  0  best=13.5  0.93  9
+  gen   80/150  archive= 24  good=  0  best=13.5  0.93  9
+  gen   90/150  archive= 23  good=  0  best=14.1  0.93  9
+  gen  100/150  archive= 30  good=  0  best=14.1  0.93  8
+  gen  110/150  archive= 36  good=  0  best=14.1  0.93  7
+  gen  120/150  archive= 44  good=  0  best=14.9  0.93  7
+  gen  130/150  archive= 49  good=  0  best=15.3  0.93  6
+  gen  140/150  archive= 49  good=  0  best=15.3  0.93  4
+  gen  150/150  archive= 50  good=  0  best=15.3  0.93  4
+  done: 30,200 surrogate evaluations in 25.4s, archive = 50
+  unique designs evaluated: 30,195/30,200  meeting the spec: 0  best values: PCR > 0.9 bandwidth (%) = 15.3, Mean |r_yx|^2 = 0.93, Corner contacts + isolated pixels = 4  HV=0.3620 (database 0.1495)
+--- exit 0
+=== 21:44:56 --problem rotator --space binary --surrogate RDN:n108000 --tag pix_long --gens 300 --swarm 1000 --seed 0
+
+VAE-MOIPSO [rotator / binary] -> E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\PHASE2\mopso\rotator_pix_long
+  [surrogate] E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\BOTHPOL\RDN_n108000\phase1_forward_best.pth (layout convention: true)
+  [sanity] RDN test split n=3000: lin MSE=1.16e-03 R2=0.994 phase MAE=10.3 deg
+  objectives: PCR > 0.9 bandwidth (%), Mean |r_yx|^2, Corner contacts + isolated pixels  (f0 = 10.2 GHz; spec: B >= 5 %, mean |r_yx|^2 >= 0.8, D <= 5)
+  [database] 110843 layouts: front=26  meeting the spec=0  HV=0.1495
+  gen    1/300  archive= 10  good=  0  best=6.1  0.93  29
+  gen   10/300  archive= 24  good=  0  best=13.8  0.93  15
+  gen   20/300  archive= 44  good=  0  best=14.2  0.93  16
+  gen   30/300  archive= 50  good=  0  best=15.6  0.93  11
+  gen   40/300  archive= 46  good=  0  best=15.6  0.93  8
+  gen   50/300  archive= 50  good=  0  best=15.6  0.93  7
+  gen   60/300  archive= 50  good=  0  best=15.6  0.93  5
+  gen   70/300  archive= 50  good=  0  best=15.8  0.93  5
+  gen   80/300  archive= 50  good=  0  best=15.8  0.93  5
+  gen   90/300  archive= 50  good=  0  best=15.8  0.93  1
+  gen  100/300  archive= 50  good=  2  best=15.8  0.93  1
+  gen  110/300  archive= 50  good=  2  best=15.8  0.93  1
+  gen  120/300  archive= 50  good=  3  best=15.8  0.93  1
+  gen  130/300  archive= 50  good=  3  best=15.8  0.93  1
+  gen  140/300  archive= 50  good=  3  best=15.8  0.93  1
+  gen  150/300  archive= 50  good=  4  best=15.8  0.93  1
+  gen  160/300  archive= 50  good=  4  best=15.8  0.93  1
+  gen  170/300  archive= 50  good=  5  best=15.8  0.93  1
+  gen  180/300  archive= 50  good=  7  best=15.8  0.93  0
+  gen  190/300  archive= 50  good=  8  best=15.8  0.93  0
+  gen  200/300  archive= 50  good=  8  best=15.8  0.93  0
+  gen  210/300  archive= 50  good=  9  best=15.8  0.93  0
+  gen  220/300  archive= 50  good=  7  best=15.8  0.93  0
+  gen  230/300  archive= 50  good=  6  best=15.8  0.93  0
+  gen  240/300  archive= 50  good=  8  best=15.9  0.93  0
+  gen  250/300  archive= 50  good=  9  best=15.9  0.93  0
+  gen  260/300  archive= 50  good=  9  best=15.9  0.93  0
+  gen  270/300  archive= 50  good=  9  best=15.9  0.93  0
+  gen  280/300  archive= 50  good= 10  best=15.9  0.93  0
+  gen  290/300  archive= 50  good= 10  best=15.9  0.93  0
+  gen  300/300  archive= 50  good= 11  best=15.9  0.93  0
+  done: 301,000 surrogate evaluations in 165.6s, archive = 50
+  unique designs evaluated: 300,985/301,000  meeting the spec: 11  best values: PCR > 0.9 bandwidth (%) = 15.9, Mean |r_yx|^2 = 0.93, Corner contacts + isolated pixels = 0  HV=0.4584 (database 0.1495)
+--- exit 0
+=== 21:48:55 --problem cp --space latent --vae_tag rdn_d200 --surrogate RDN:n108000 --tag vae_s0 --gens 150 --swarm 200 --seed 0
+
+VAE-MOIPSO [cp / latent] -> E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\PHASE2\mopso\cp_vae_s0
+  [surrogate] E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\BOTHPOL\RDN_n108000\phase1_forward_best.pth (layout convention: true)
+  [sanity] RDN test split n=3000: lin MSE=1.16e-03 R2=0.994 phase MAE=10.3 deg
+  objectives: Axial-ratio bandwidth (%), Mean axial ratio (dB), Corner contacts + isolated pixels, Lowest reflected power (dB)  (f0 = 10.0 GHz; spec: B >= 10 %, L >= -0.5 dB, D <= 5)
+  [database] 110843 layouts: front=35  meeting the spec=0  HV=0.1753
+  gen    1/150  archive=  3  good=  0  best=2.02  1.23  26  -0.147
+  gen   10/150  archive= 13  good=  0  best=10.8  0.66  13  -0.168
+  gen   20/150  archive= 12  good=  0  best=10.8  0.899  10  -0.18
+  gen   30/150  archive= 11  good=  0  best=17.9  0.889  10  -0.189
+  gen   40/150  archive=  7  good=  0  best=17.9  0.789  8  -0.203
+  gen   50/150  archive= 11  good=  0  best=17.9  0.787  8  -0.203
+  gen   60/150  archive= 12  good=  0  best=17.9  0.704  8  -0.136
+  gen   70/150  archive= 14  good=  0  best=17.9  0.704  8  -0.205
+  gen   80/150  archive= 20  good=  0  best=17.9  0.687  8  -0.19
+  gen   90/150  archive= 24  good=  0  best=17.9  0.687  8  -0.17
+  gen  100/150  archive= 28  good=  0  best=17.9  0.612  7  -0.163
+  gen  110/150  archive= 38  good=  0  best=18.3  0.612  7  -0.163
+  gen  120/150  archive= 48  good=  0  best=18.3  0.612  5  -0.179
+  gen  130/150  archive= 47  good=  4  best=18.3  0.612  4  -0.197
+  gen  140/150  archive= 34  good=  2  best=18.4  0.612  3  -0.199
+  gen  150/150  archive= 38  good=  3  best=18.4  0.612  3  -0.197
+  done: 30,200 surrogate evaluations in 29.5s, archive = 38
+  unique designs evaluated: 30,200/30,200  meeting the spec: 3  best values: Axial-ratio bandwidth (%) = 18.4, Mean axial ratio (dB) = 0.612, Corner contacts + isolated pixels = 3, Lowest reflected power (dB) = -0.197  HV=0.4218 (database 0.1753)
+--- exit 0
+=== 21:50:12 --problem cp --space latent --vae_tag rdn_d200 --surrogate RDN:n108000 --tag vae_s1 --gens 150 --swarm 200 --seed 1
+
+VAE-MOIPSO [cp / latent] -> E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\PHASE2\mopso\cp_vae_s1
+  [surrogate] E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\BOTHPOL\RDN_n108000\phase1_forward_best.pth (layout convention: true)
+  [sanity] RDN test split n=3000: lin MSE=1.16e-03 R2=0.994 phase MAE=10.3 deg
+  objectives: Axial-ratio bandwidth (%), Mean axial ratio (dB), Corner contacts + isolated pixels, Lowest reflected power (dB)  (f0 = 10.0 GHz; spec: B >= 10 %, L >= -0.5 dB, D <= 5)
+  [database] 110843 layouts: front=35  meeting the spec=0  HV=0.1753
+  gen    1/150  archive=  4  good=  0  best=6.68  1.27  22  -0.134
+  gen   10/150  archive=  7  good=  0  best=10.8  0.627  18  -0.14
+  gen   20/150  archive=  8  good=  0  best=13.8  0.627  16  -0.14
+  gen   30/150  archive= 12  good=  0  best=13.8  0.593  16  -0.136
+  gen   40/150  archive= 15  good=  0  best=15  0.593  12  -0.195
+  gen   50/150  archive= 16  good=  0  best=15  0.593  14  -0.138
+  gen   60/150  archive= 18  good=  0  best=15  0.593  11  -0.123
+  gen   70/150  archive= 15  good=  0  best=15.9  0.593  7  -0.219
+  gen   80/150  archive= 20  good=  0  best=17.2  0.593  7  -0.211
+  gen   90/150  archive= 25  good=  1  best=18.4  0.593  5  -0.211
+  gen  100/150  archive= 21  good=  1  best=18.4  0.593  5  -0.211
+  gen  110/150  archive= 27  good=  3  best=18.7  0.593  4  -0.206
+  gen  120/150  archive= 33  good=  4  best=18.7  0.593  4  -0.206
+  gen  130/150  archive= 45  good=  5  best=19.8  0.593  3  -0.206
+  gen  140/150  archive= 50  good=  7  best=19.8  0.593  3  -0.211
+  gen  150/150  archive= 46  good=  8  best=19.8  0.593  1  -0.212
+  done: 30,200 surrogate evaluations in 22.8s, archive = 46
+  unique designs evaluated: 30,200/30,200  meeting the spec: 8  best values: Axial-ratio bandwidth (%) = 19.8, Mean axial ratio (dB) = 0.593, Corner contacts + isolated pixels = 1, Lowest reflected power (dB) = -0.212  HV=0.4588 (database 0.1753)
+--- exit 0
+=== 21:51:28 --problem cp --space latent --vae_tag rdn_d200 --surrogate RDN:n108000 --tag vae_s2 --gens 150 --swarm 200 --seed 2
+
+VAE-MOIPSO [cp / latent] -> E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\PHASE2\mopso\cp_vae_s2
+  [surrogate] E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\BOTHPOL\RDN_n108000\phase1_forward_best.pth (layout convention: true)
+  [sanity] RDN test split n=3000: lin MSE=1.16e-03 R2=0.994 phase MAE=10.3 deg
+  objectives: Axial-ratio bandwidth (%), Mean axial ratio (dB), Corner contacts + isolated pixels, Lowest reflected power (dB)  (f0 = 10.0 GHz; spec: B >= 10 %, L >= -0.5 dB, D <= 5)
+  [database] 110843 layouts: front=35  meeting the spec=0  HV=0.1753
+  gen    1/150  archive=  5  good=  0  best=5.55  1.31  18  -0.129
+  gen   10/150  archive=  9  good=  0  best=15  0.852  15  -0.124
+  gen   20/150  archive= 14  good=  0  best=15.4  0.45  11  -0.108
+  gen   30/150  archive= 11  good=  0  best=15.4  0.45  11  -0.108
+  gen   40/150  archive= 19  good=  0  best=15.4  0.45  11  -0.108
+  gen   50/150  archive= 24  good=  0  best=15.4  0.45  11  -0.108
+  gen   60/150  archive= 29  good=  0  best=16.4  0.45  10  -0.108
+  gen   70/150  archive= 15  good=  0  best=16.4  0.45  6  -0.108
+  gen   80/150  archive= 18  good=  0  best=17.6  0.45  6  -0.108
+  gen   90/150  archive= 21  good=  0  best=17.6  0.45  6  -0.162
+  gen  100/150  archive= 24  good=  0  best=17.6  0.45  5  -0.122
+  gen  110/150  archive= 24  good=  0  best=17.6  0.45  5  -0.122
+  gen  120/150  archive= 32  good=  0  best=17.6  0.45  4  -0.165
+  gen  130/150  archive= 24  good=  1  best=17.6  0.45  3  -0.165
+  gen  140/150  archive= 19  good=  2  best=17.6  0.45  3  -0.2
+  gen  150/150  archive= 22  good=  2  best=17.6  0.45  3  -0.2
+  done: 30,200 surrogate evaluations in 29.1s, archive = 22
+  unique designs evaluated: 30,200/30,200  meeting the spec: 2  best values: Axial-ratio bandwidth (%) = 17.6, Mean axial ratio (dB) = 0.45, Corner contacts + isolated pixels = 3, Lowest reflected power (dB) = -0.2  HV=0.4063 (database 0.1753)
+--- exit 0
+=== 21:52:35 --problem cp --space latent --vae_tag rdn_d200 --surrogate RDN:n108000 --tag vae_long --gens 300 --swarm 1000 --seed 0
+
+VAE-MOIPSO [cp / latent] -> E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\PHASE2\mopso\cp_vae_long
+  [surrogate] E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\BOTHPOL\RDN_n108000\phase1_forward_best.pth (layout convention: true)
+  [sanity] RDN test split n=3000: lin MSE=1.16e-03 R2=0.994 phase MAE=10.3 deg
+  objectives: Axial-ratio bandwidth (%), Mean axial ratio (dB), Corner contacts + isolated pixels, Lowest reflected power (dB)  (f0 = 10.0 GHz; spec: B >= 10 %, L >= -0.5 dB, D <= 5)
+  [database] 110843 layouts: front=35  meeting the spec=0  HV=0.1753
+  gen    1/300  archive=  8  good=  0  best=11.9  0.929  15  -0.206
+  gen   10/300  archive= 18  good=  0  best=13.5  0.295  14  -0.165
+  gen   20/300  archive= 26  good=  0  best=14.2  0.295  11  -0.113
+  gen   30/300  archive= 29  good=  0  best=16.3  0.179  11  -0.113
+  gen   40/300  archive= 19  good=  0  best=16.3  0.179  8  -0.175
+  gen   50/300  archive= 21  good=  0  best=16.7  0.179  8  -0.197
+  gen   60/300  archive= 24  good=  0  best=16.7  0.179  8  -0.197
+  gen   70/300  archive= 26  good=  0  best=16.7  0.179  8  -0.197
+  gen   80/300  archive= 26  good=  0  best=17.1  0.179  8  -0.197
+  gen   90/300  archive= 31  good=  0  best=17.1  0.179  7  -0.197
+  gen  100/300  archive= 38  good=  0  best=17.1  0.179  7  -0.197
+  gen  110/300  archive= 36  good=  0  best=17.3  0.179  7  -0.206
+  gen  120/300  archive= 40  good=  0  best=17.3  0.179  5  -0.206
+  gen  130/300  archive= 50  good=  1  best=18.6  0.179  5  -0.184
+  gen  140/300  archive= 50  good=  1  best=18.6  0.179  5  -0.184
+  gen  150/300  archive= 50  good=  1  best=18.6  0.179  5  -0.184
+  gen  160/300  archive= 50  good=  1  best=18.6  0.179  5  -0.184
+  gen  170/300  archive= 50  good=  2  best=18.9  0.143  3  -0.175
+  gen  180/300  archive= 50  good=  1  best=19.1  0.143  3  -0.175
+  gen  190/300  archive= 50  good=  1  best=19.1  0.143  3  -0.175
+  gen  200/300  archive= 50  good=  3  best=19.1  0.143  2  -0.204
+  gen  210/300  archive= 41  good=  6  best=19.1  0.143  2  -0.209
+  gen  220/300  archive= 50  good= 10  best=19.1  0.143  2  -0.202
+  gen  230/300  archive= 50  good=  9  best=19.1  0.143  0  -0.202
+  gen  240/300  archive= 50  good= 11  best=19.1  0.143  0  -0.202
+  gen  250/300  archive= 50  good= 11  best=19.1  0.143  0  -0.209
+  gen  260/300  archive= 50  good= 14  best=19.2  0.143  0  -0.203
+  gen  270/300  archive= 50  good= 15  best=19.2  0.143  0  -0.203
+  gen  280/300  archive= 50  good= 10  best=19.5  0.139  0  -0.209
+  gen  290/300  archive= 50  good= 11  best=19.5  0.139  0  -0.199
+  gen  300/300  archive= 50  good= 13  best=19.5  0.139  0  -0.203
+  done: 301,000 surrogate evaluations in 181.3s, archive = 50
+  unique designs evaluated: 300,998/301,000  meeting the spec: 13  best values: Axial-ratio bandwidth (%) = 19.5, Mean axial ratio (dB) = 0.139, Corner contacts + isolated pixels = 0, Lowest reflected power (dB) = -0.203  HV=0.4787 (database 0.1753)
+--- exit 0
+=== 21:57:15 --problem rotator --space latent --vae_tag rdn_d200 --surrogate RDN:n108000 --tag vae_s0 --gens 150 --swarm 200 --seed 0
+
+VAE-MOIPSO [rotator / latent] -> E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\PHASE2\mopso\rotator_vae_s0
+  [surrogate] E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\BOTHPOL\RDN_n108000\phase1_forward_best.pth (layout convention: true)
+  [sanity] RDN test split n=3000: lin MSE=1.16e-03 R2=0.994 phase MAE=10.3 deg
+  objectives: PCR > 0.9 bandwidth (%), Mean |r_yx|^2, Corner contacts + isolated pixels  (f0 = 10.2 GHz; spec: B >= 5 %, mean |r_yx|^2 >= 0.8, D <= 5)
+  [database] 110843 layouts: front=26  meeting the spec=0  HV=0.1495
+  gen    1/150  archive=  5  good=  0  best=0.256  0.926  31
+  gen   10/150  archive= 11  good=  0  best=9.32  0.926  19
+  gen   20/150  archive= 15  good=  0  best=9.32  0.93  11
+  gen   30/150  archive= 20  good=  0  best=9.32  0.93  11
+  gen   40/150  archive= 22  good=  0  best=13.6  0.93  9
+  gen   50/150  archive= 26  good=  0  best=15.1  0.93  8
+  gen   60/150  archive= 27  good=  0  best=15.1  0.93  8
+  gen   70/150  archive= 29  good=  0  best=15.1  0.93  8
+  gen   80/150  archive= 32  good=  0  best=15.1  0.93  8
+  gen   90/150  archive= 37  good=  0  best=15.5  0.93  7
+  gen  100/150  archive= 43  good=  0  best=15.5  0.93  7
+  gen  110/150  archive= 42  good=  1  best=15.5  0.93  5
+  gen  120/150  archive= 36  good=  1  best=15.5  0.93  5
+  gen  130/150  archive= 44  good=  1  best=15.5  0.93  0
+  gen  140/150  archive= 45  good=  1  best=15.5  0.93  0
+  gen  150/150  archive= 47  good=  6  best=15.5  0.93  0
+  done: 30,200 surrogate evaluations in 29.7s, archive = 47
+  unique designs evaluated: 30,200/30,200  meeting the spec: 6  best values: PCR > 0.9 bandwidth (%) = 15.5, Mean |r_yx|^2 = 0.93, Corner contacts + isolated pixels = 0  HV=0.4411 (database 0.1495)
+--- exit 0
+=== 21:58:47 --problem rotator --space latent --vae_tag rdn_d200 --surrogate RDN:n108000 --tag vae_s1 --gens 150 --swarm 200 --seed 1
+
+VAE-MOIPSO [rotator / latent] -> E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\PHASE2\mopso\rotator_vae_s1
+  [surrogate] E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\BOTHPOL\RDN_n108000\phase1_forward_best.pth (layout convention: true)
+  [sanity] RDN test split n=3000: lin MSE=1.16e-03 R2=0.994 phase MAE=10.3 deg
+  objectives: PCR > 0.9 bandwidth (%), Mean |r_yx|^2, Corner contacts + isolated pixels  (f0 = 10.2 GHz; spec: B >= 5 %, mean |r_yx|^2 >= 0.8, D <= 5)
+  [database] 110843 layouts: front=26  meeting the spec=0  HV=0.1495
+  gen    1/150  archive=  5  good=  0  best=1.97  0.91  24
+  gen   10/150  archive= 14  good=  0  best=12.7  0.929  17
+  gen   20/150  archive= 24  good=  0  best=13  0.93  15
+  gen   30/150  archive= 23  good=  0  best=13  0.93  11
+  gen   40/150  archive= 25  good=  0  best=13.8  0.93  11
+  gen   50/150  archive= 30  good=  0  best=13.8  0.93  11
+  gen   60/150  archive= 22  good=  0  best=13.8  0.93  11
+  gen   70/150  archive= 41  good=  0  best=14.3  0.93  6
+  gen   80/150  archive= 37  good=  0  best=14.8  0.93  6
+  gen   90/150  archive= 46  good=  1  best=14.9  0.93  5
+  gen  100/150  archive= 49  good=  4  best=15  0.93  1
+  gen  110/150  archive= 42  good=  6  best=15  0.93  1
+  gen  120/150  archive= 48  good=  9  best=15.6  0.93  1
+  gen  130/150  archive= 49  good= 13  best=15.6  0.93  1
+  gen  140/150  archive= 49  good=  9  best=15.6  0.93  1
+  gen  150/150  archive= 48  good=  8  best=15.6  0.93  1
+  done: 30,200 surrogate evaluations in 27.9s, archive = 48
+  unique designs evaluated: 30,200/30,200  meeting the spec: 8  best values: PCR > 0.9 bandwidth (%) = 15.6, Mean |r_yx|^2 = 0.93, Corner contacts + isolated pixels = 1  HV=0.4374 (database 0.1495)
+--- exit 0
+=== 22:00:29 --problem rotator --space latent --vae_tag rdn_d200 --surrogate RDN:n108000 --tag vae_s2 --gens 150 --swarm 200 --seed 2
+
+VAE-MOIPSO [rotator / latent] -> E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\PHASE2\mopso\rotator_vae_s2
+  [surrogate] E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\BOTHPOL\RDN_n108000\phase1_forward_best.pth (layout convention: true)
+  [sanity] RDN test split n=3000: lin MSE=1.16e-03 R2=0.994 phase MAE=10.3 deg
+  objectives: PCR > 0.9 bandwidth (%), Mean |r_yx|^2, Corner contacts + isolated pixels  (f0 = 10.2 GHz; spec: B >= 5 %, mean |r_yx|^2 >= 0.8, D <= 5)
+  [database] 110843 layouts: front=26  meeting the spec=0  HV=0.1495
+  gen    1/150  archive=  3  good=  0  best=0.379  0.891  23
+  gen   10/150  archive= 12  good=  0  best=14  0.924  11
+  gen   20/150  archive= 19  good=  0  best=14  0.93  10
+  gen   30/150  archive= 25  good=  0  best=14.1  0.93  10
+  gen   40/150  archive= 26  good=  0  best=14.1  0.93  10
+  gen   50/150  archive= 25  good=  0  best=14.1  0.93  9
+  gen   60/150  archive= 38  good=  0  best=15.7  0.93  4
+  gen   70/150  archive= 40  good=  0  best=15.7  0.93  4
+  gen   80/150  archive= 37  good=  0  best=15.7  0.93  4
+  gen   90/150  archive= 33  good=  0  best=15.8  0.93  4
+  gen  100/150  archive= 41  good=  1  best=15.8  0.93  4
+  gen  110/150  archive= 43  good=  1  best=15.8  0.93  4
+  gen  120/150  archive= 47  good=  1  best=16  0.93  4
+  gen  130/150  archive= 50  good=  2  best=16  0.93  4
+  gen  140/150  archive= 50  good=  2  best=16  0.93  4
+  gen  150/150  archive= 50  good=  6  best=16  0.93  1
+  done: 30,200 surrogate evaluations in 27.7s, archive = 50
+  unique designs evaluated: 30,200/30,200  meeting the spec: 6  best values: PCR > 0.9 bandwidth (%) = 16, Mean |r_yx|^2 = 0.93, Corner contacts + isolated pixels = 1  HV=0.4457 (database 0.1495)
+--- exit 0
+=== 22:02:11 --problem rotator --space latent --vae_tag rdn_d200 --surrogate RDN:n108000 --tag vae_long --gens 300 --swarm 1000 --seed 0
+
+VAE-MOIPSO [rotator / latent] -> E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\PHASE2\mopso\rotator_vae_long
+  [surrogate] E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\BOTHPOL\RDN_n108000\phase1_forward_best.pth (layout convention: true)
+  [sanity] RDN test split n=3000: lin MSE=1.16e-03 R2=0.994 phase MAE=10.3 deg
+  objectives: PCR > 0.9 bandwidth (%), Mean |r_yx|^2, Corner contacts + isolated pixels  (f0 = 10.2 GHz; spec: B >= 5 %, mean |r_yx|^2 >= 0.8, D <= 5)
+  [database] 110843 layouts: front=26  meeting the spec=0  HV=0.1495
+  gen    1/300  archive=  8  good=  0  best=3.55  0.929  17
+  gen   10/300  archive= 25  good=  0  best=11.8  0.93  13
+  gen   20/300  archive= 31  good=  0  best=13  0.93  7
+  gen   30/300  archive= 32  good=  0  best=14.6  0.93  6
+  gen   40/300  archive= 34  good=  0  best=14.6  0.93  5
+  gen   50/300  archive= 36  good=  0  best=14.8  0.93  5
+  gen   60/300  archive= 46  good=  2  best=15.1  0.93  3
+  gen   70/300  archive= 50  good=  4  best=15.1  0.93  1
+  gen   80/300  archive= 50  good=  3  best=15.7  0.93  1
+  gen   90/300  archive= 50  good=  8  best=15.7  0.93  1
+  gen  100/300  archive= 50  good=  9  best=15.7  0.93  1
+  gen  110/300  archive= 50  good=  7  best=16.2  0.93  1
+  gen  120/300  archive= 50  good=  7  best=16.2  0.93  1
+  gen  130/300  archive= 49  good=  7  best=16.2  0.93  1
+  gen  140/300  archive= 50  good=  8  best=16.2  0.93  1
+  gen  150/300  archive= 48  good=  7  best=16.2  0.93  1
+  gen  160/300  archive= 50  good=  8  best=16.2  0.93  1
+  gen  170/300  archive= 49  good=  9  best=16.2  0.93  0
+  gen  180/300  archive= 50  good= 10  best=16.2  0.93  0
+  gen  190/300  archive= 50  good= 12  best=16.2  0.93  0
+  gen  200/300  archive= 50  good= 11  best=16.2  0.93  0
+  gen  210/300  archive= 50  good= 14  best=16.2  0.93  0
+  gen  220/300  archive= 50  good= 16  best=16.2  0.93  0
+  gen  230/300  archive= 50  good= 17  best=16.2  0.93  0
+  gen  240/300  archive= 50  good= 16  best=16.2  0.93  0
+  gen  250/300  archive= 50  good= 18  best=16.3  0.93  0
+  gen  260/300  archive= 50  good= 17  best=16.3  0.93  0
+  gen  270/300  archive= 50  good= 16  best=16.3  0.93  0
+  gen  280/300  archive= 50  good= 14  best=16.3  0.93  0
+  gen  290/300  archive= 50  good= 17  best=16.3  0.93  0
+  gen  300/300  archive= 50  good= 15  best=16.3  0.93  0
+  done: 301,000 surrogate evaluations in 168.1s, archive = 50
+  unique designs evaluated: 301,000/301,000  meeting the spec: 15  best values: PCR > 0.9 bandwidth (%) = 16.3, Mean |r_yx|^2 = 0.93, Corner contacts + isolated pixels = 0  HV=0.4734 (database 0.1495)
+--- exit 0
+=== SEARCHES DONE 22:06:21

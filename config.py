@@ -63,11 +63,17 @@ MSDCNN_PLG_BAND = (9.5, 12.0)   # MSDCNN reports PLG on this sub-band only
 # stored spectra, the layout as stored does not). With "physical", RDN layouts
 # are inverted on loading so that 1 = copper for every class. Each run records
 # the convention it was trained with (run_config.json).
-LAYOUT_CONVENTION = "physical"          # "physical" | "file"
+# "true" is the layout as built, needed once r_yx is predicted: the RDN files are
+# also mirrored (a mirror keeps r_xx and reverses r_yx), so the true RDN layout is
+# flipud(1 - stored), except for the rows of RDN_STORED_AS_IS, which are stored like
+# the other classes (copper = 1, not mirrored); both checked with FDTD
+# (experiments/dataset_checks/rdn_block_orientation.py).
+LAYOUT_CONVENTION = "physical"          # "physical" | "file" | "true"
 FILE_INVERTED_CLASSES = ["RDN"]
+RDN_STORED_AS_IS = os.path.join(PROJECT_ROOT, "outputs_new_pipeline", "notes", "rdn_not_inverted_mask.npy")
 
-TARGET_CHANNELS = {"co": 0, "cross": 1}
-OUTPUT_SUBDIR   = {"co": "COPOL", "cross": "XPOL"}
+TARGET_CHANNELS = {"co": 0, "cross": 1, "both": (0, 1)}
+OUTPUT_SUBDIR   = {"co": "COPOL", "cross": "XPOL", "both": "BOTHPOL"}
 
 
 # Reported per-class runs, trained as in MSDCNN: 27,000 training layouts per class
@@ -130,6 +136,7 @@ P1_W_KK      = 0.02
 # and its phase term is weighted by the target magnitude.
 P1_LOSS_OPTIONS = {"co":    dict(db_floor=None,  phase_mag_ref=None),
                    "cross": dict(db_floor=-40.0, phase_mag_ref=0.1)}
+P1_LOSS_OPTIONS["both"] = dict(co=P1_LOSS_OPTIONS["co"], cross=P1_LOSS_OPTIONS["cross"])   # one loss per output
 
 P1_BATCH_SIZE     = 256
 P1_EPOCHS         = 500
@@ -137,7 +144,7 @@ P1_LR             = 2e-4
 P1_WEIGHT_DECAY   = 1e-5
 P1_GRAD_CLIP      = 1.0
 P1_EARLY_STOP_PAT = 25
-P1_CKPT_CRITERION = {"co": "db_mse", "cross": "lin_mse"}   # validation metric for the best checkpoint
+P1_CKPT_CRITERION = {"co": "db_mse", "cross": "lin_mse", "both": "lin_mse"}   # validation metric for the best checkpoint
 
 BAND_EDGE_FRAC = 0.10            # band-edge |dB| error metric uses 10% each side
 EVAL_N_PLOT    = 12              # sample panels in evaluation figures
@@ -151,7 +158,8 @@ EVAL_N_PLOT    = 12              # sample panels in evaluation figures
 # exceeds 1 (d = 64: 2.0). d = 150 keeps the ratio of the 12x12 VAE
 # (144 pixels, d = 84: 0.86).
 VAE_TRAIN_CLASSES        = ["RDN"]
-VAE_LATENT_DIM           = 150
+VAE_CONVENTION           = "true"             # same layout orientation as the two-output surrogates
+VAE_LATENT_DIM           = 200
 VAE_CONV_CHANNELS        = [32, 64, 128]      # 16x16 -> 8x8 -> 4x4 and back
 VAE_FINAL_ACTIVATION     = "sigmoid"          # "sigmoid" | "st" (0.5(1+tanh((x-0.5)m)))
 VAE_ST_M                 = (1.0, 15.0, 50)    # ST sharpness start, end, anneal epochs
@@ -180,8 +188,6 @@ def vae_dir(tag: str = "") -> str:
 # ─────────────────────────────────────────────────────────────────────────────
 # Co-pol surrogate ("CLASS[:tag]" of a Phase 1 run) and design VAE.
 MOPSO_SURROGATE   = "RDN:n108000"    # RDN108000 of the MSDCNN comparison
-MOPSO_TRUST       = 0.0              # max. disagreement with the checker surrogates (median on RDN test); 0 = off
-MOPSO_TRUST_CHECKERS = ["RDN:n108000_nopga", "RDN:n27000"]
 MOPSO_VAE_TAG     = "rdn_d200"
 MOPSO_SEARCH_SPACE = "latent"     # "latent" (VAE) | "binary" (256 pixels, threshold 0.5)
 MOPSO_NP          = 200           # swarm size
@@ -242,4 +248,5 @@ CST_CONDUCTOR        = "copper"
 # (1.5e-3; PLG and PLR ~1e-6, phase within 0.1 deg). The phase reference
 # (cst_reference.py) is 10.707 mm at 1.0 mm, the same as at 0.8 mm.
 CST_SUB_T_MM         = 1.0
+CST_RYX_SIGN = -1          # r_yx = CST_RYX_SIGN * S(mode 2 -> mode 1) for layouts placed as is (checked on PLG/PLR, MSE 1e-5)
 CST_DIR              = os.path.join(OUTPUT_ROOT, "CST")

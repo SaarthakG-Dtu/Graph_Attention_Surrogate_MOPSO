@@ -1,0 +1,65 @@
+{
+  "config": {
+    "LATENT_BOUND": 1.5,
+    "LATENT_MAXVEL": 0.2,
+    "MOPSO_INIT": "prior",
+    "MOPSO_MAXGEN": 150,
+    "MOPSO_NP": 200,
+    "MOPSO_NR": 50,
+    "MOPSO_PROBLEM": "amc_x",
+    "MOPSO_SAVE_EVERY": 25,
+    "MOPSO_SEARCH_SPACE": "latent",
+    "MOPSO_SEED": 1,
+    "MOPSO_SURROGATE": "RDN:n108000",
+    "MOPSO_U_MUT": 0.5,
+    "MOPSO_VAE_TAG": "rdn_d200",
+    "MOPSO_W_END": 0.4,
+    "MOPSO_W_START": 0.9,
+    "PHASE_REF_SHIFT_MM": 10.705
+  },
+  "objectives": {
+    "f0": 10.0,
+    "thr": [
+      2.5,
+      3.0
+    ],
+    "names": [
+      "Axial-ratio bandwidth (%)",
+      "Mean axial ratio (dB)",
+      "Corner contacts + isolated pixels",
+      "Lowest reflected power (dB)"
+    ],
+    "ideal": [
+      30,
+      0,
+      0,
+      0
+    ],
+    "worst": [
+      0,
+      3,
+      60,
+      -20
+    ],
+    "spec": "B >= 10 %, L >= -0.5 dB, D <= 5"
+  },
+  "args": {
+    "problem": "cp",
+    "space": "latent",
+    "surrogate": "RDN:n108000",
+    "vae_tag": "rdn_d200",
+    "tag": "vae_s1",
+    "database_only": false,
+    "gens": 150,
+    "swarm": 200,
+    "seed": 1
+  },
+  "sanity": {
+    "key": "E:\\SUTD_BENCHMARK_NOVEL_GNN\\outputs_new_pipeline\\BOTHPOL\\RDN_n108000\\phase1_forward_best.pth@1792252240",
+    "n": 3000,
+    "split": "test",
+    "lin_mse": 0.0011550802737474442,
+    "r2": 0.9939919710159302,
+    "phase_mae_deg": 10.316961288452148
+  }
+}

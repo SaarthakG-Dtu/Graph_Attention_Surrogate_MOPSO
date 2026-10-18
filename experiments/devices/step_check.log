@@ -1,0 +1,49 @@
+
+VAE-MOIPSO [cp / binary] -> E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\PHASE2\mopso\cp_pix_v0.0416667
+  [surrogate] E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\BOTHPOL\RDN_n108000\phase1_forward_best.pth (layout convention: true)
+  [sanity] RDN test split n=3000: lin MSE=1.16e-03 R2=0.994 phase MAE=10.3 deg
+  objectives: Axial-ratio bandwidth (%), Mean axial ratio (dB), Corner contacts + isolated pixels, Lowest reflected power (dB)  (f0 = 10.0 GHz; spec: B >= 10 %, L >= -0.5 dB, D <= 5)
+  [database] 110843 layouts: front=35  meeting the spec=0  HV=0.1753
+  gen    1/150  archive=  7  good=  0  best=3.64  0.985  16  -0.129
+  gen   10/150  archive=  7  good=  0  best=6.46  0.66  16  -0.246
+  gen   20/150  archive= 13  good=  0  best=9.85  0.66  16  -0.132
+  gen   30/150  archive= 18  good=  0  best=13.1  0.585  16  -0.154
+  gen   40/150  archive= 19  good=  0  best=13.1  0.585  16  -0.156
+  gen   50/150  archive= 18  good=  0  best=13.1  0.408  16  -0.156
+  gen   60/150  archive= 20  good=  0  best=13.1  0.208  16  -0.166
+  gen   70/150  archive= 24  good=  0  best=14.9  0.208  16  -0.166
+  gen   80/150  archive= 26  good=  0  best=14.9  0.208  16  -0.164
+  gen   90/150  archive= 30  good=  0  best=14.9  0.208  13  -0.152
+  gen  100/150  archive= 38  good=  0  best=16.5  0.208  13  -0.152
+  gen  110/150  archive= 34  good=  0  best=17.5  0.208  13  -0.152
+  gen  120/150  archive= 32  good=  0  best=17.5  0.208  11  -0.118
+  gen  130/150  archive= 36  good=  0  best=17.5  0.208  11  -0.118
+  gen  140/150  archive= 37  good=  0  best=17.5  0.208  10  -0.152
+  gen  150/150  archive= 44  good=  0  best=17.5  0.208  10  -0.152
+  done: 30,200 surrogate evaluations in 34.7s, archive = 44
+  unique designs evaluated: 30,198/30,200  meeting the spec: 0  best values: Axial-ratio bandwidth (%) = 17.5, Mean axial ratio (dB) = 0.208, Corner contacts + isolated pixels = 10, Lowest reflected power (dB) = -0.152  HV=0.3189 (database 0.1753)
+
+VAE-MOIPSO [cp / binary] -> E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\PHASE2\mopso\cp_pix_v0.5
+  [surrogate] E:\SUTD_BENCHMARK_NOVEL_GNN\outputs_new_pipeline\BOTHPOL\RDN_n108000\phase1_forward_best.pth (layout convention: true)
+  [sanity] RDN test split n=3000: lin MSE=1.16e-03 R2=0.994 phase MAE=10.3 deg
+  objectives: Axial-ratio bandwidth (%), Mean axial ratio (dB), Corner contacts + isolated pixels, Lowest reflected power (dB)  (f0 = 10.0 GHz; spec: B >= 10 %, L >= -0.5 dB, D <= 5)
+  [database] 110843 layouts: front=35  meeting the spec=0  HV=0.1753
+  gen    1/150  archive=  7  good=  0  best=3.64  0.985  16  -0.129
+  gen   10/150  archive=  6  good=  0  best=4.55  1.14  16  -0.179
+  gen   20/150  archive= 14  good=  0  best=9.18  0.412  16  -0.179
+  gen   30/150  archive= 14  good=  0  best=9.18  0.412  16  -0.129
+  gen   40/150  archive= 17  good=  0  best=9.18  0.412  16  -0.129
+  gen   50/150  archive= 15  good=  0  best=15.3  0.412  15  -0.178
+  gen   60/150  archive= 19  good=  0  best=15.3  0.412  15  -0.178
+  gen   70/150  archive= 19  good=  0  best=15.3  0.412  15  -0.178
+  gen   80/150  archive= 22  good=  0  best=15.3  0.412  15  -0.178
+  gen   90/150  archive= 21  good=  0  best=15.3  0.412  15  -0.178
+  gen  100/150  archive= 24  good=  0  best=15.3  0.412  15  -0.178
+  gen  110/150  archive= 21  good=  0  best=15.3  0.412  15  -0.154
+  gen  120/150  archive= 23  good=  0  best=15.3  0.412  15  -0.154
+  gen  130/150  archive= 14  good=  0  best=15.3  0.412  15  -0.184
+  gen  140/150  archive= 15  good=  0  best=15.3  0.412  15  -0.184
+  gen  150/150  archive= 17  good=  0  best=15.3  0.412  15  -0.184
+  done: 30,200 surrogate evaluations in 29.6s, archive = 17
+  unique designs evaluated: 30,200/30,200  meeting the spec: 0  best values: Axial-ratio bandwidth (%) = 15.3, Mean axial ratio (dB) = 0.412, Corner contacts + isolated pixels = 15, Lowest reflected power (dB) = -0.184  HV=0.1898 (database 0.1753)
+DONE
